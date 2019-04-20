@@ -1,53 +1,64 @@
-const Koa = require('koa')
-const app = new Koa()
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
-const cors = require('koa2-cors');
+import Koa from 'koa'
+import views from 'koa-views'
+import helmet from 'koa-helmet'
+import json from 'koa-json'
+import onerror from 'koa-onerror'
+import bodyparser from 'koa-bodyparser'
+import logger from 'koa-logger'
+import cors from 'koa2-cors'
+// jwt 验证
+import jwtKoa from 'koa-jwt'
 
-const config = require('./config');
+const app = new Koa()
+
+import config from './config';
 
 // 自定义中间件
-const pv = require('./middleware/koa-pv')
+import pv from './middleware/koa-pv'
 app.use(pv())
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+// Token 错误处理
+import errorHandle from './middleware/error';
+app
+  .use(errorHandle)
+  .use(jwtKoa({
+    secret: config.secret
+  }).unless({
+    path: [/\/register/, /\/login/],
+  }))
+  .use(logger())
+  .use(bodyparser({
+    enableTypes: ['json', 'form', 'text']
+  }))
+  .use(helmet())
+  .use(cors({
+    origin: function (ctx) {
+      const regexp = new RegExp('/api');
+      const regexpWith = new RegExp('/download');
+      if (regexpWith.test(ctx.url)) {
+        return `http://${config.url.download}`;
+      } else if (~String(ctx.url).indexOf('/imgs/')) {
+        return `http://${config.url.image}`;
+      } else if (regexp.test(ctx.url)) {
+        return '*'
+      }
+      return false;
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Date'],
+    maxAge: 100,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],
+  }))
+  .use(json())
+
+import index from './routes/index'
+import users from './routes/users'
+import api from './routes/api'
 
 // error handler
 onerror(app)
 
-// middlewares
-
-// 跨域设置
-app.use(cors({
-  origin: function (ctx) {
-    const regexp = new RegExp('/api');
-    const regexpWith = new RegExp('/download');
-    if (regexpWith.test(ctx.url)) {
-      return `http://${config.url.download}`;
-    } else if (~String(ctx.url).indexOf('/imgs/')) {
-      return `http://${config.url.image}`;
-    } else if (regexp.test(ctx.url)) {
-      return '*'
-    }
-    return false;
-  },
-  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Date'],
-  maxAge: 100,
-  credentials: true,
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],
-}));
-
-app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text']
-}))
-
-app.use(json())
-app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
@@ -65,6 +76,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(users.api(), api.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
