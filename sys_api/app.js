@@ -6,12 +6,13 @@ import onerror from 'koa-onerror'
 import bodyparser from 'koa-bodyparser'
 import logger from 'koa-logger'
 import cors from 'koa2-cors'
+
+import config from './config';
+
 // jwt 验证
 import jwtKoa from 'koa-jwt'
 
 const app = new Koa()
-
-import config from './config';
 
 // 自定义中间件
 import pv from './middleware/koa-pv'
@@ -76,7 +77,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-app.use(users.api(), api.allowedMethods())
+app.use(api.routes(), api.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
