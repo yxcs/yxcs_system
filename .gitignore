@@ -28,3 +28,4 @@ yarn-error.log*
 /**/**/yarn-error.log*
 /**/**/build
 /**/**/yarn.lock
+/**/**/package-lock.json
