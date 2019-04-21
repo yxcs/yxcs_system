@@ -1,0 +1,41 @@
+.login__bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url('../../assets/bg/bg1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  .login__box--container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 440px;
+    padding: 100px 40px 40px;
+    margin-top: -290px;
+    margin-left: -200px;
+
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background: -webkit-linear-gradient(220deg,rgba(53,57,74,0),#000);
+    background: -o-linear-gradient(220deg,rgba(53,57,74,0) 0,#000 100%);
+    background: linear-gradient(230deg,rgba(53,57,74,0),#000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="rgba(53, 57, 74, 0)",endColorstr="rgb(0, 0, 0)",GradientType=1);
+    -webkit-box-shadow: -15px 15px 15px rgba(0,0,0,.4);
+    box-shadow: -15px 15px 15px rgba(0,0,0,.4);
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+
+    .title {
+      height: 60px;
+      color: #d3d7f7;
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+  }
+}
