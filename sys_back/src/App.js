@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { Button } from 'antd';
+import LoginPage from './pages/login/LoginPage'
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
-      <div className="App">
-        <Button>test</Button>
-      </div>
-    );
+      <Router>
+        <Switch>
+          <Route path="/login" component={LoginPage}></Route>
+        </Switch>
+      </Router>
+    )
   }
 }
 
