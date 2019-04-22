@@ -55,7 +55,6 @@ class LoginController {
    */
   async register(ctx) {
     const { body } = ctx.request;
-    console.log(body)
     try {
       if (!body.username || !body.password) {
         ctx.status = 400;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import PrivateRoute from './components/routes/PrivateRoute';
 import LoginPage from './pages/login/LoginPage'
-// import LayoutPage from './pages/layout/LayoutPage'
+import MenuPage from './pages/menu/MenuPage'
 import HomePage from './pages/home/HomePage'
 import {
   Layout, Menu, Breadcrumb, Icon,
@@ -56,61 +56,60 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
+        <div>
           <Route path="/login" component={LoginPage}></Route>
-          <div>
+          <Layout>
+            <Header className="header">
+              <div className="logo" />
+            </Header>
             <Layout>
-              <Header className="header">
-                <div className="logo" />
-              </Header>
-              <Layout>
-                <Sider className="sider" width={200} style={{ background: '#fff' }}>
-                  <Menu
-                    mode="inline"
-                    defaultSelectedKeys={['11']}
-                    defaultOpenKeys={['1']}
-                    onOpenChange={this.switchCollapse.bind(this)}
-                    onSelect={this.menuItemSelect.bind(this)}
-                    theme="dark"
-                    style={{ height: '100%', borderRight: 0 }}
-                  >
-                    {
-                      this.state.menus.map(item => {
-                        let menu = '';
-                        if (item.type === 1 && item.sub.length) {
-                          menu = (
-                            <SubMenu key={item.key} title={<span> {item.icon && <Icon type={item.icon} />}{item.name}</span>}>
-                              {
-                                item.sub.map(sItem => {
-                                  return <Menu.Item key={sItem.key}>{sItem.name}</Menu.Item>
-                                })
-                              }
-                            </SubMenu>
-                          )
-                        } else {
-                          menu = <Menu.Item key={item.key}>{item.icon && <Icon type={item.icon} />}{item.name}</Menu.Item>
-                        }
-                        return menu;
-                      })
-                    }
-                  </Menu>
-                </Sider>
-                <Layout style={{ padding: '0 24px 24px' }}>
-                  <Breadcrumb style={{ margin: '16px 0' }}>
+              <Sider className="sider" width={200} style={{ background: '#fff' }}>
+                <Menu
+                  mode="inline"
+                  defaultSelectedKeys={['11']}
+                  defaultOpenKeys={['1']}
+                  onOpenChange={this.switchCollapse.bind(this)}
+                  onSelect={this.menuItemSelect.bind(this)}
+                  theme="dark"
+                  style={{ height: '100%', borderRight: 0 }}
+                >
                   {
-                    this.state.breadcrumb.map(item => {
-                      return <Breadcrumb.Item>{item.name}</Breadcrumb.Item>
+                    this.state.menus.map(item => {
+                      let menu = '';
+                      if (item.type === 1 && item.sub.length) {
+                        menu = (
+                          <SubMenu key={item.key} title={<span> {item.icon && <Icon type={item.icon} />}{item.name}</span>}>
+                            {
+                              item.sub.map(sItem => {
+                                return <Menu.Item key={sItem.key}>{sItem.name}</Menu.Item>
+                              })
+                            }
+                          </SubMenu>
+                        )
+                      } else {
+                        menu = <Menu.Item key={item.key}>{item.icon && <Icon type={item.icon} />}{item.name}</Menu.Item>
+                      }
+                      return menu;
                     })
                   }
-                  </Breadcrumb>
-                  <Content style={{ background: '#fff', padding: 24, margin: 0}}>
-                    <Route path="/" exact component={HomePage}></Route>
-                  </Content>
-                </Layout>
+                </Menu>
+              </Sider>
+              <Layout style={{ padding: '0 24px 24px' }}>
+                <Breadcrumb style={{ margin: '16px 0' }}>
+                {
+                  this.state.breadcrumb.map(item => {
+                    return <Breadcrumb.Item key={item.key}>{item.name}</Breadcrumb.Item>
+                  })
+                }
+                </Breadcrumb>
+                <Content style={{ background: '#fff', padding: 24, margin: 0}}>
+                  <Route path="/" exact component={HomePage}></Route>
+                  <Route path="/menu" exact component={MenuPage}></Route>
+                </Content>
               </Layout>
             </Layout>
-          </div>
-        </Switch>
+          </Layout>
+        </div>
       </Router>
     )
   }
