@@ -41,7 +41,7 @@ app
       } else if (~String(ctx.url).indexOf('/imgs/')) {
         return `http://${config.url.image}`;
       } else if (regexp.test(ctx.url)) {
-        return '*'
+        return 'http://localhost:3000'
       }
       return false;
     },

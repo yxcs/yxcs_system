@@ -25,7 +25,11 @@ class LoginController {
         ctx.status = 200
         ctx.body = {
           message: '登录成功',
-          user: user.userInfo,
+          data: {
+            logindate: user.logindate,
+            username: user.username,
+            id: user._id
+          },
           // 生成 token 返回给客户端
           token: jsonwebtoken.sign({
             data: user,
@@ -36,6 +40,7 @@ class LoginController {
       } else {
         ctx.status = 401
         ctx.body = {
+          errorCode: 4001,
           message: '密码错误',
         }
       }
@@ -50,6 +55,7 @@ class LoginController {
    */
   async register(ctx) {
     const { body } = ctx.request;
+    console.log(body)
     try {
       if (!body.username || !body.password) {
         ctx.status = 400;
@@ -66,7 +72,11 @@ class LoginController {
         ctx.status = 200;
         ctx.body = {
           message: '注册成功',
-          user,
+          data: {
+            logindate: user.logindate,
+            username: user.username,
+            id: user._id
+          },
         }
       } else {
         ctx.status = 406;

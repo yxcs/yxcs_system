@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import PrivateRoute from './components/routes/PrivateRoute';
 import LoginPage from './pages/login/LoginPage'
 
 
