@@ -29,6 +29,7 @@ axios.interceptors.response.use(
       if (response.data.errorCode == 4001) {
         message.error(response.data.message);
       } else {
+        localStorage.removeItem('J_TOKEN');
         message.error('您的登录信息已失效，请重新登录');
         let timer = setTimeout(_ => {
           clearTimeout(timer);
