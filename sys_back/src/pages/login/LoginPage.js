@@ -5,12 +5,14 @@ import {
 } from 'antd';
 
 import login from '../../services/login';
+import config from '../../config'
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: true,
-      user: {}
+      user: {},
+      redirectUrl: '/'
     }
   }
 
@@ -29,7 +31,7 @@ class LoginPage extends Component {
               this.setState({
                 user: res.data.data
               })
-              this.props.history.push('/')
+              window.location.href = this.state.redirectUrl;
             } else {
               message.error('服务器出错，稍后重试')
             }
@@ -78,7 +80,15 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    console.log(this)
+    const query = {};
+    const aParams = window.location.search.substr(1).split("&");
+    for (let i = 0; i < aParams.length; i++) {
+  　　 let aParam = aParams[i].split("=");
+  　　 query[aParam[0]] = aParam[1]
+    }
+    this.setState({
+      redirectUrl: query['redirectUrl'] || config.baseUrl
+    })
   }
 
   render() {
