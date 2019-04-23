@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import PrivateRoute from './components/routes/PrivateRoute';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PrivateRoute from './components/routes/PrivateRoute';
 import LoginPage from './pages/login/LoginPage'
 import MenuPage from './pages/menu/MenuPage'
 import HomePage from './pages/home/HomePage'
@@ -55,8 +55,8 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
+      <BrowserRouter>
+        <Switch>
           <Route path="/login" component={LoginPage}></Route>
           <Layout>
             <Header className="header">
@@ -103,14 +103,14 @@ class App extends Component {
                 }
                 </Breadcrumb>
                 <Content style={{ background: '#fff', padding: 24, margin: 0}}>
-                  <Route path="/" exact component={HomePage}></Route>
-                  <Route path="/menu" exact component={MenuPage}></Route>
+                  <PrivateRoute path="/" component={HomePage}></PrivateRoute>
+                  <PrivateRoute path="/menu" component={MenuPage}></PrivateRoute>
                 </Content>
               </Layout>
             </Layout>
           </Layout>
-        </div>
-      </Router>
+        </Switch>
+      </BrowserRouter>
     )
   }
 }

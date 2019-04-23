@@ -25,12 +25,18 @@ axios.interceptors.response.use(
   },
   error => {
     const response = error.response
-    if (response.status === 401) {
+    if (response && response.status && response.status === 401) {
       if (response.data.errorCode == 4001) {
         message.error(response.data.message);
       } else {
         message.error('您的登录信息已失效，请重新登录');
-        window.location.href = decodeURI(`${window.location.protocol}//${window.location.host}/login`)
+        let timer = setTimeout(_ => {
+          clearTimeout(timer);
+          timer = null;
+          let redirectUrl = window.location.href;
+          redirectUrl = encodeURI(redirectUrl);
+          window.location.href = `${window.location.protocol}//${window.location.host}/login?redirectUrl=${redirectUrl}`;
+        }, 2000)
       }
     }
     return Promise.reject(response);

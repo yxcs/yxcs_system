@@ -9,7 +9,12 @@ const register = (params) => {
   return axios.post(api.register, {...params})
 }
 
+const addMenu = (params) => {
+  return axios.post(api.addMenu, {...params})
+}
+
 export default {
   login,
-  register
+  register,
+  addMenu
 }

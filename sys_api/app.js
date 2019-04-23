@@ -22,11 +22,6 @@ app.use(pv())
 import errorHandle from './middleware/error';
 app
   .use(errorHandle)
-  .use(jwtKoa({
-    secret: config.secret
-  }).unless({
-    path: [/\/register/, /\/login/],
-  }))
   .use(logger())
   .use(bodyparser({
     enableTypes: ['json', 'form', 'text']
@@ -50,6 +45,11 @@ app
     credentials: true,
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],
+  }))
+  .use(jwtKoa({
+    secret: config.secret
+  }).unless({
+    path: [/\/register/, /\/login/],
   }))
   .use(json())
 
