@@ -33,6 +33,18 @@ class MenuController {
       data: menu
     }
   }
+
+  async deleteMenu(ctx) {
+    const { body } = ctx.request;
+    const menu = await Menu.findByIdAndRemove(body.id, {})
+    console.log(menu)
+    ctx.status = 200;
+    ctx.body = {
+      message: '删除成功',
+      data: 1
+    }
+  }
+
 }
 
 export default new MenuController()

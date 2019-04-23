@@ -13,5 +13,6 @@ router.get('/getUser', UserController.getUsers)
 router.get('/getMenu', MenuController.getMenuList)
 router.post('/insertMenu', MenuController.insertMenu)
 router.post('/updateMenu', MenuController.updateMenu)
+router.post('/deleteMenu', MenuController.deleteMenu)
 
 export default router

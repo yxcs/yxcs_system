@@ -10,11 +10,26 @@ const register = (params) => {
 }
 
 const addMenu = (params) => {
+  params.type = 1;
   return axios.post(api.addMenu, {...params})
+}
+
+const getMenu = () => {
+  return axios.get(api.getMenu, {})
+}
+
+const updateMenu = (params) => {
+  return axios.post(api.updateMenu, {...params})
+}
+
+const deleteMenu = (id) => {
+  return axios.post(api.deleteMenu, {id})
 }
 
 export default {
   login,
   register,
-  addMenu
+  addMenu,
+  getMenu,
+  deleteMenu
 }

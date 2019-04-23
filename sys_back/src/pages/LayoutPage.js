@@ -6,6 +6,7 @@ import HomePage from './home/HomePage'
 import {
   Layout, Menu, Breadcrumb, Icon,
 } from 'antd';
+import http from '../services/login'
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -15,6 +16,7 @@ class LayoutPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lists: [],
       menus: [
         {type: 1, name: 'subnav 1', key: '1', icon: 'user', sub: [
           {type: 2, name: 'option1', key: '11', icon: '', path: '/option11', sub: []},
@@ -35,20 +37,42 @@ class LayoutPage extends Component {
         {type: 2, name: 'option4', key: '4', icon: 'laptop', path: '/option4', sub: []},
       ],
       breadcrumb: [
-        {idx: 1, name: '首页', path: '/', key: 0,},
-        {idx: 2, name: '列表', path: '/list', key: 1,},
-        {idx: 3, name: '详情', path: '/detail', key: 2,},
+        // {idx: 1, name: '首页', path: '/', key: 0,},
+        // {idx: 2, name: '列表', path: '/list', key: 1,},
+        // {idx: 3, name: '详情', path: '/detail', key: 2,},
       ]
     }
   }
 
-  switchCollapse = (collapsed, type) => {
-    console.log(collapsed, type)
+  componentDidMount() {
+    this.getMenuList();
+  }
 
+  getMenuList = () => {
+    http.getMenu().then(res => {
+      if (res.data.status === 200) {
+        this.setState({
+          lists: res.data.data,
+          visible: false
+        })
+      }
+    })
+  }
+
+  switchCollapse = (collapsed, type) => {
+    // console.log(collapsed, type)
+    // console.log(1)
   }
 
   menuItemSelect = (e) => {
-    console.log(e)
+    const lists = this.state.lists;
+    let path = '/';
+    lists.forEach(item => {
+      if (e.key === item.key) {
+        path = item.path;
+      }
+    })
+    this.props.history.push(path);
   }
 
   render() {
@@ -69,7 +93,7 @@ class LayoutPage extends Component {
               style={{ height: '100%', borderRight: 0 }}
             >
               {
-                this.state.menus.map(item => {
+                this.state.lists.map(item => {
                   let menu = '';
                   if (item.type === 1 && item.sub.length) {
                     menu = (
