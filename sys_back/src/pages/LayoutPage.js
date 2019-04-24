@@ -17,7 +17,7 @@ class LayoutPage extends Component {
     super(props);
     this.state = {
       lists: [],
-      openKeys: ['HOME_PAGE_11'],
+      openKeys: [''],
       selectedKeys: ['HOME_PAGE_1'],
       menus: [
         {type: 1, name: 'subnav 1', key: '1', icon: 'user', sub: [
@@ -82,8 +82,9 @@ class LayoutPage extends Component {
   }
 
   switchCollapse = (collapsed, type) => {
-    console.log(collapsed, type)
-    console.log(1)
+    this.setState({
+      openKeys: collapsed
+    })
   }
 
   menuItemSelect = (e) => {
@@ -120,7 +121,7 @@ class LayoutPage extends Component {
               {
                 this.state.lists.map(item => {
                   let menu = '';
-                  if (item.type === 1 && item.sub.length) {
+                  if (item.type == 1 && item.sub.length) {
                     menu = (
                       <SubMenu key={item.key} title={<span> {item.icon && <Icon type={item.icon} />}{item.name}</span>}>
                         {

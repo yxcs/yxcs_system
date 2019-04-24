@@ -19,6 +19,7 @@ const getMenu = () => {
 }
 
 const updateMenu = (params) => {
+  params.params.type = 1;
   return axios.post(api.updateMenu, {...params})
 }
 
@@ -31,5 +32,6 @@ export default {
   register,
   addMenu,
   getMenu,
-  deleteMenu
+  deleteMenu,
+  updateMenu
 }
