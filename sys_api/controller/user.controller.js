@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken'
 import User from '../dbs/user/userSchema';
-import config from '../config';
 
 class UserController {
 
