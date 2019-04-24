@@ -3,6 +3,8 @@ import { Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../components/routes/PrivateRoute';
 import MenuPage from './menu/MenuPage'
 import HomePage from './home/HomePage'
+import BlogList from './blog/BlogList'
+import BlogEdit from './blog/BlogEdit'
 import {
   Layout, Menu, Breadcrumb, Icon,
 } from 'antd';
@@ -91,8 +93,16 @@ class LayoutPage extends Component {
     const lists = this.state.lists;
     let path = '/';
     lists.forEach(item => {
-      if (e.key === item.key) {
-        path = item.path;
+      if (item.type == 1 && item.sub.length) {
+        item.sub.forEach(sItem => {
+          if (e.key === sItem.key) {
+            path = sItem.path;
+          }
+        })
+      } else {
+        if (e.key === item.key) {
+          path = item.path;
+        }
       }
     })
     this.setState({
@@ -151,6 +161,8 @@ class LayoutPage extends Component {
               <Switch>
                 <PrivateRoute exact path="/" component={HomePage}></PrivateRoute>
                 <PrivateRoute exact path="/menu" component={MenuPage}></PrivateRoute>
+                <PrivateRoute exact path="/blog/list" component={BlogList}></PrivateRoute>
+                <PrivateRoute exact path="/blog/edit" component={BlogEdit}></PrivateRoute>
                 <Redirect exact from="*" to="/"/>
               </Switch>
             </Content>

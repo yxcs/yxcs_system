@@ -28,11 +28,29 @@ class MenuPage extends Component {
   }
 
   componentDidMount() {
+    
     this.getMenuList();
   }
 
 
   handleShowAdd = () => {
+    this.setState({
+      menuValue: {
+        id: '',
+        menu_name: '',
+        menu_key: '',
+        menu_icon: '',
+        menu_path: ''
+      },
+      superMenu: {
+        id: '',
+        name: '',
+        key: '',
+        icon: '',
+        path: '',
+        sub: []
+      },
+    })
     this.setState({
       visible: true
     })
@@ -47,10 +65,19 @@ class MenuPage extends Component {
         menu_icon: '',
         menu_path: ''
       },
+      superMenu: {
+        id: '',
+        name: '',
+        key: '',
+        icon: '',
+        path: '',
+        sub: []
+      }
     })
   }
 
   getMenuList = () => {
+    this.handleHideAdd();
     http.getMenu().then(res => {
       if (res.data.status === 200) {
         this.setState({
@@ -66,6 +93,7 @@ class MenuPage extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        console.log(superMenu)
         if (superMenu.id) {
           const params = {
             name: superMenu.name,
@@ -75,16 +103,24 @@ class MenuPage extends Component {
           }
 
           if (menuValue.id) {
-            superMenu.sub[menuValue.id] = {
-              name: values.menu_name,
-              key: values.menu_key,
-              icon: values.menu_icon,
-              path: values.menu_path
-            }
-            params.sub = [...superMenu]
+            superMenu.sub = superMenu.sub.map(item => {
+              if (item.id == menuValue.id) {
+                item = {
+                  id: item.id,
+                  type: 2,
+                  name: values.menu_name,
+                  key: values.menu_key,
+                  icon: values.menu_icon,
+                  path: values.menu_path
+                }
+              }
+              return item;
+            })
+            params.sub = [...superMenu.sub]
           } else {
             params.sub = [
               {
+                id: Date.now(),
                 type: 2,
                 name: values.menu_name,
                 key: values.menu_key,
@@ -94,6 +130,8 @@ class MenuPage extends Component {
               ...superMenu.sub
             ]
           }
+
+          console.log({id: superMenu.id, params})
 
           http.updateMenu({id: superMenu.id, params}).then(res => {
             if (res.status === 200) {
@@ -147,6 +185,27 @@ class MenuPage extends Component {
     })
   }
 
+  onEditSubMenu = (v, superMenu) => {
+    this.setState({
+      visible: true,
+      superMenu: {
+        id: superMenu.id || superMenu._id,
+        name: superMenu.name,
+        key: superMenu.key,
+        icon: superMenu.icon,
+        path: superMenu.path,
+        sub: [...superMenu.sub]
+      },
+      menuValue: {
+        id: v.id,
+        menu_name: v.name,
+        menu_key: v.key,
+        menu_icon: v.icon,
+        menu_path: v.path
+      }
+    })
+  }
+
   onAddSubMenu = (v) => {
     this.setState({
       visible: true,
@@ -161,21 +220,9 @@ class MenuPage extends Component {
     })
   }
 
-  handleHideSubAdd = () => {
-    this.setState({
-      subVisible: false,
-      superMenu: {
-        menu_name: '',
-        menu_key: '',
-        menu_icon: '',
-        menu_path: ''
-      },
-    })
-  }
-
   onDelMenu = (v) => {
     http.deleteMenu(v._id).then(res => {
-      if (res.status === 200 && res.data === 1) {
+      if (res.status === 200 && res.data.data === 1) {
         message.success('删除成功');
         this.getMenuList();
       }
@@ -191,7 +238,7 @@ class MenuPage extends Component {
       }
     })
     delItem.sub = delItem.sub.filter(item => {
-      return item.key !== v.key
+      return item.id !== v.id
     })
     const params = {
       type: delItem.type,
@@ -212,6 +259,14 @@ class MenuPage extends Component {
 
   expandedRowRender = (record, index, indent, expanded) => {
     const id = record._id;
+    const superMenu = {
+      id,
+      name: record.name,
+      key: record.key,
+      icon: record.icon,
+      path: record.path,
+      sub: [...record.sub]
+    }
     const columns = [{
       title: '级别',
       dataIndex: 'type',
@@ -239,7 +294,7 @@ class MenuPage extends Component {
       render: (text, record, index) => {
         return (
           <div>
-            <Button type="primary" size="small" onClick={this.onEditMenu.bind(this, record)}>编辑</Button>
+            <Button type="primary" size="small" onClick={this.onEditSubMenu.bind(this, record, superMenu)}>编辑</Button>
             <span className="btn-pad"></span>
             <Popconfirm title="确定删除吗？" okText="删除" cancelText="取消" onConfirm={this.onDelSubMenu.bind(this, record, id)}>
               <Button type="danger" size="small">删除</Button>
@@ -337,69 +392,73 @@ class MenuPage extends Component {
           size="small"
           expandedRowRender={this.expandedRowRender.bind(this)} />
 
-        <Modal
-          title={this.state.menuValue.menu_key?'编辑':'添加菜单'}
-          visible={this.state.visible}
-          footer={null}
-          onCancel={this.handleHideAdd.bind(this)}
-        >
-          <Form {...formItemLayout} onSubmit={this.handleMenuAddSubmit}>
+        {
+          this.state.visible ? (
+            <Modal
+              title={this.state.menuValue.menu_key?'编辑':'添加菜单'}
+              visible={this.state.visible}
+              footer={null}
+              onCancel={this.handleHideAdd.bind(this)}
+            >
+              <Form {...formItemLayout} onSubmit={this.handleMenuAddSubmit}>
 
-            {
-              superMenu.id ? (
-                <div>
-                  <Form.Item label="父菜单名称">
-                    <Input disabled value={superMenu.name}/>
-                  </Form.Item>
-                  <Form.Item label="父菜单标识">
-                    <Input disabled value={superMenu.key}/>
-                  </Form.Item>
-                </div>
-              ) : ''
-            }
+                {
+                  superMenu.id ? (
+                    <div>
+                      <Form.Item label="父菜单名称">
+                        <Input disabled value={superMenu.name}/>
+                      </Form.Item>
+                      <Form.Item label="父菜单标识">
+                        <Input disabled value={superMenu.key}/>
+                      </Form.Item>
+                    </div>
+                  ) : ''
+                }
 
-            <Form.Item label="菜单名称">
-              {getFieldDecorator('menu_name', {
-                rules: [{
-                  required: true, message: '请输入菜单名称',
-                }],
-                initialValue: this.state.menuValue.menu_name
-              })(
-                <Input placeholder="菜单名称"/>
-              )}
-            </Form.Item>
-            <Form.Item label="GUID">
-              {getFieldDecorator('menu_key', {
-                rules: [{
-                  required: true, message: '请填写唯一标识',
-                }],
-                initialValue: this.state.menuValue.menu_key
-              })(
-                <Input placeholder="全局唯一标识" />
-              )}
-            </Form.Item>
-            <Form.Item label="Icon">
-              {getFieldDecorator('menu_icon', {
-                initialValue: this.state.menuValue.menu_icon
-              })(
-                <Input placeholder="菜单左方图标"/>
-              )}
-            </Form.Item>
-            <Form.Item label="链接">
-              {getFieldDecorator('menu_path', {
-                rules: [{
-                  required: true, message: '请填写链接',
-                }],
-                initialValue: this.state.menuValue.menu_path
-              })(
-                <Input placeholder="请填写链接"/>
-              )}
-            </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">保存</Button>
-            </Form.Item>
-          </Form>
-        </Modal>
+                <Form.Item label="菜单名称">
+                  {getFieldDecorator('menu_name', {
+                    rules: [{
+                      required: true, message: '请输入菜单名称',
+                    }],
+                    initialValue: this.state.menuValue.menu_name
+                  })(
+                    <Input placeholder="菜单名称"/>
+                  )}
+                </Form.Item>
+                <Form.Item label="GUID">
+                  {getFieldDecorator('menu_key', {
+                    rules: [{
+                      required: true, message: '请填写唯一标识',
+                    }],
+                    initialValue: this.state.menuValue.menu_key
+                  })(
+                    <Input placeholder="全局唯一标识" />
+                  )}
+                </Form.Item>
+                <Form.Item label="Icon">
+                  {getFieldDecorator('menu_icon', {
+                    initialValue: this.state.menuValue.menu_icon
+                  })(
+                    <Input placeholder="菜单左方图标"/>
+                  )}
+                </Form.Item>
+                <Form.Item label="链接">
+                  {getFieldDecorator('menu_path', {
+                    rules: [{
+                      required: true, message: '请填写链接',
+                    }],
+                    initialValue: this.state.menuValue.menu_path
+                  })(
+                    <Input placeholder="请填写链接"/>
+                  )}
+                </Form.Item>
+                <Form.Item {...tailFormItemLayout}>
+                  <Button type="primary" htmlType="submit">保存</Button>
+                </Form.Item>
+              </Form>
+            </Modal>
+          ) : ''
+        }
       </div>
     )
   }
