@@ -68,7 +68,10 @@ class BlogEdit extends Component {
     super(props);
     this.state = {
       title: '',
-      editorState: null
+      editorState: null,
+      type: '1',
+      subType:'11',
+      source: '1'
     }
   }
 
@@ -87,6 +90,18 @@ class BlogEdit extends Component {
       editorState,
     });
   };
+
+  onTypeChange = (v) => {
+
+  }
+
+  onSubTypeChange = (v) => {
+
+  }
+
+  onSourceChange = (v) => {
+
+  }
 
   render () {
     const { getFieldDecorator } = this.props.form;
@@ -141,7 +156,7 @@ class BlogEdit extends Component {
                   required: true, message: '请选择分类',
                 }]
               })(
-                <Radio.Group onChange={this.handleSizeChange}>
+                <Radio.Group onChange={this.onTypeChange.bind(this)}>
                 {
                   type.map(item => {
                     return <Radio.Button key={item.key} value={item.key}>{item.name}</Radio.Button>
@@ -160,6 +175,7 @@ class BlogEdit extends Component {
                 <Select
                   mode="tags"
                   placeholder="Please select"
+                  onChange={this.onSubTypeChange.bind(this)}
                   style={{ width: '100%' }}
                 >
                   {children}
@@ -172,7 +188,7 @@ class BlogEdit extends Component {
                   required: true, message: '请选择来源',
                 }]
               })(
-                <Radio.Group onChange={this.handleSizeChange}>
+                <Radio.Group onChange={this.onSourceChange}>
                   {
                     source.map(item => {
                       return <Radio.Button key={item.key} value={item.key}>{item.name}</Radio.Button>
