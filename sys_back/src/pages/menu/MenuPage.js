@@ -137,7 +137,7 @@ class MenuPage extends Component {
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '唯一标示',
+      title: '唯一标识',
       dataIndex: 'key',
       key: 'key',
     }, {

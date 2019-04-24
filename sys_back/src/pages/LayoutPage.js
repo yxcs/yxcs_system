@@ -17,6 +17,8 @@ class LayoutPage extends Component {
     super(props);
     this.state = {
       lists: [],
+      openKeys: ['HOME_PAGE_11'],
+      selectedKeys: ['HOME_PAGE_1'],
       menus: [
         {type: 1, name: 'subnav 1', key: '1', icon: 'user', sub: [
           {type: 2, name: 'option1', key: '11', icon: '', path: '/option11', sub: []},
@@ -49,10 +51,30 @@ class LayoutPage extends Component {
   }
 
   getMenuList = () => {
+    const pathname = this.props.location.pathname
+    let {openKeys, selectedKeys} = this.state;
     http.getMenu().then(res => {
       if (res.data.status === 200) {
+        const lists = res.data.data;
+        lists.forEach(item => {
+          if (item.sub.length) {
+            item.sub.forEach(sItem => {
+              if (sItem.path === pathname) {
+                openKeys = [item.key];
+                selectedKeys = [sItem.key]
+              }
+            })
+          } else {
+            if (item.path === pathname) {
+              openKeys = [];
+              selectedKeys = [item.key]
+            }
+          }
+        })
         this.setState({
-          lists: res.data.data,
+          openKeys,
+          selectedKeys,
+          lists,
           visible: false
         })
       }
@@ -60,8 +82,8 @@ class LayoutPage extends Component {
   }
 
   switchCollapse = (collapsed, type) => {
-    // console.log(collapsed, type)
-    // console.log(1)
+    console.log(collapsed, type)
+    console.log(1)
   }
 
   menuItemSelect = (e) => {
@@ -71,6 +93,9 @@ class LayoutPage extends Component {
       if (e.key === item.key) {
         path = item.path;
       }
+    })
+    this.setState({
+      selectedKeys: [e.key]
     })
     this.props.history.push(path);
   }
@@ -85,8 +110,8 @@ class LayoutPage extends Component {
           <Sider className="sider" width={200} style={{ background: '#fff' }}>
             <Menu
               mode="inline"
-              defaultSelectedKeys={['11']}
-              defaultOpenKeys={['1']}
+              openKeys={this.state.openKeys}
+              selectedKeys={this.state.selectedKeys}
               onOpenChange={this.switchCollapse.bind(this)}
               onSelect={this.menuItemSelect.bind(this)}
               theme="dark"
