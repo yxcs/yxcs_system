@@ -77,7 +77,7 @@ class BlogDraft extends Component {
 
   onPublishDraft = (id) => {
     http.updateArticle({id, params: {draft: false}}).then(res => {
-      if (res.data.status === 1 && res.data.data) {
+      if (res.data.status === 200 && res.data.data) {
         message.success('发布成功');
         this.getDrafList();
       }

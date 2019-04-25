@@ -23,7 +23,7 @@ const ArticleSchema = new Schema({
     default: 1
   },
   subType: {                                                  // 文章类型
-    type: Array,                                             // [1:js 2:css 3: html 4:react 5:vue]
+    type: Array,                                              // [1:js 2:css 3: html 4:react 5:vue]
     default: []
   },
   source: {                                                   // 文章来源  转载|原创

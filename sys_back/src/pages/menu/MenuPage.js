@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './menu.less'
 import { Button, Modal, Form, Input, Table, message, Popconfirm } from 'antd'
 import http from '../../services/login'
+import tool from '../../utils/tool'
 
 class MenuPage extends Component {
   constructor(props) {
@@ -80,8 +81,13 @@ class MenuPage extends Component {
     this.handleHideAdd();
     http.getMenu().then(res => {
       if (res.data.status === 200) {
+        let lists = res.data.data;
+        lists = lists.map(item => {
+          item.updateText = tool.formatTime(item.updateAt);
+          return item;
+        })
         this.setState({
-          lists: res.data.data,
+          lists,
           visible: false
         })
       }
@@ -358,8 +364,8 @@ class MenuPage extends Component {
       key: 'path',
     }, {
       title: '更新时间',
-      dataIndex: 'updateAt',
-      key: 'updateAt',
+      dataIndex: 'updateText',
+      key: 'updateText',
     }, {
       title: '操作',
       dataIndex: 'operate',
