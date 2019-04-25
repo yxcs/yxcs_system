@@ -28,6 +28,7 @@ class LoginPage extends Component {
             if (res.status === 200) {
               message.success('登录成功')
               localStorage.setItem('J_TOKEN', res.data.token)
+              localStorage.setItem('user', JSON.stringify(res.data.data))
               this.setState({
                 user: res.data.data
               })

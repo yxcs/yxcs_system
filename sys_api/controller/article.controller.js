@@ -1,4 +1,16 @@
+import jsonwebtoken from 'jsonwebtoken';
+import config from '../config';
 import Article from '../dbs/blog/ArticleSchema';
+
+const verifyToken = (_token) => {
+  let verify = jsonwebtoken.verify(_token, config.secret, (error, decoded) => {
+      if(error) {
+          return "Token Invalid";
+      }
+      return decoded;
+  });
+  return verify;
+};
 
 class ArticleController {
 
@@ -81,18 +93,12 @@ class ArticleController {
     }
     const skipnum = (current - 1) * limit;
     const data = await Article.find(where).skip(skipnum).limit(limit).sort(sort).exec();
-    if (data instanceof []) {
-      ctx.body = {
-        status: 200,
-        data: data,
-        message: '查找成功'
-      }
-    } else {
-      ctx.body = {
-        status: 200,
-        data: [],
-        message: '查找失败'
-      }
+    const count = await Article.count(where);
+    ctx.body = {
+      status: 200,
+      data: data,
+      total: count || 0,
+      message: '查找成功'
     }
   }
 

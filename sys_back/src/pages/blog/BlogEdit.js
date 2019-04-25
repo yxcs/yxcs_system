@@ -7,7 +7,7 @@ import draftToMarkdown from 'draftjs-to-markdown';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import {
-  Form, Input, Radio, Select, Checkbox, Button
+  Form, Input, Radio, Select, Checkbox, Button, message
 } from 'antd';
 
 const { Option } = Select;
@@ -71,12 +71,17 @@ class BlogEdit extends Component {
       editorState: null,
       type: '1',
       subType:'11',
-      source: '1'
+      source: '1',
+      subTypeList: []
     }
   }
 
   componentDidMount() {
-
+    let subTypeList = type[0].subType;
+    subTypeList = subTypeList.map(item => {
+      return <Option key={item.key} value={item.key}>{item.name}</Option>
+    })
+    this.setState({ subTypeList })
   }
 
   onTitleChange = (v) => {
@@ -92,7 +97,20 @@ class BlogEdit extends Component {
   };
 
   onTypeChange = (v) => {
-
+    const currType = v.target.value;
+    let subTypeList = [];
+    type.forEach(item => {
+      if(item.key === currType) {
+        subTypeList = item.subType;
+      }
+    })
+    subTypeList = subTypeList.map(item => {
+      return <Option key={item.key} value={item.key}>{item.name}</Option>
+    })
+    this.setState({
+      type: currType,
+      subTypeList: [...subTypeList]
+    })
   }
 
   onSubTypeChange = (v) => {
@@ -103,9 +121,41 @@ class BlogEdit extends Component {
 
   }
 
+  handleSubmit = (e) => {
+    const { title, editorState, type } = this.state;
+    e.preventDefault();
+    if (!title) {
+      message.success('请填写标题');
+      return false;
+    }
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const params = {
+          draft: !values.draft,           //  取反
+          type: values.type,
+          subType: values.subType,
+          source: values.source,
+          content: '',
+          title: title
+        }
+        params.content = editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        http.insertArticle(params).then(res => {
+          if (res.data.status === 200 && res.data.data === 1) {
+            message.success('添加成功');
+            if (values.draft) {
+              this.props.history.push('/blog/list');
+            } else {
+              this.props.history.push('/blog/draft');
+            }
+          }
+        })
+      }
+    })
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form;
-    const { editorState } = this.state;
+    const { subTypeList } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -130,11 +180,6 @@ class BlogEdit extends Component {
       },
     };
 
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-      children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
-
     return (
       <div className="blog__edit--wrap">
         <div className="blog__edit--title">
@@ -154,7 +199,8 @@ class BlogEdit extends Component {
               {getFieldDecorator('type', {
                 rules: [{
                   required: true, message: '请选择分类',
-                }]
+                }],
+                initialValue: '1'
               })(
                 <Radio.Group onChange={this.onTypeChange.bind(this)}>
                 {
@@ -169,16 +215,15 @@ class BlogEdit extends Component {
              {getFieldDecorator('subType', {
                 rules: [{
                   required: true, message: '请添加标签',
-                }],
-                initialValue: ['a10', 'c12']
+                }]
               })(
                 <Select
-                  mode="tags"
-                  placeholder="Please select"
+                  mode="multiple"
+                  placeholder="请选择 多选"
                   onChange={this.onSubTypeChange.bind(this)}
                   style={{ width: '100%' }}
                 >
-                  {children}
+                  {subTypeList}
                 </Select>
               )}
             </Form.Item>
@@ -186,7 +231,8 @@ class BlogEdit extends Component {
               {getFieldDecorator('source', {
                 rules: [{
                   required: true, message: '请选择来源',
-                }]
+                }],
+                initialValue: '1'
               })(
                 <Radio.Group onChange={this.onSourceChange}>
                   {
@@ -200,6 +246,7 @@ class BlogEdit extends Component {
             <Form.Item {...tailFormItemLayout}>
               {getFieldDecorator('draft', {
                 valuePropName: 'checked',
+                initialValue: false
               })(
                 <Checkbox>直接发送</Checkbox>
               )}
@@ -209,11 +256,6 @@ class BlogEdit extends Component {
             </Form.Item>
           </Form>
         </div>
-
-        {/* <textarea
-          disabled
-          value={editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent()))}
-        /> */}
       </div>
     )
   }

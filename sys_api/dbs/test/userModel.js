@@ -252,7 +252,7 @@ function deleteById(id, options, callback) {
 
 /** 数量查询 */
 function getCountByConditions(where, callback) {
-  User.where(where, function (err, res) {
+  User.count(where, function (err, res) {
     if (err) {
       console.log("Error:" + err);
       callback({

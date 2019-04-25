@@ -16,7 +16,7 @@ const ArticleSchema = new Schema({
   },
   coverImg: {                                                 // 封面图片
     type: String,
-    default: ''
+    default: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
   },
   type: {                                                     // 文章类型
     type: Number,                                             // 1:前端 2:后端 3:面试 4:杂文

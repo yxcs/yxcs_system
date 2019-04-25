@@ -5,6 +5,7 @@ import MenuPage from './menu/MenuPage'
 import HomePage from './home/HomePage'
 import BlogList from './blog/BlogList'
 import BlogEdit from './blog/BlogEdit'
+import BlogDraft from './blog/BlogDraft'
 import {
   Layout, Menu, Breadcrumb, Icon,
 } from 'antd';
@@ -163,6 +164,7 @@ class LayoutPage extends Component {
                 <PrivateRoute exact path="/menu" component={MenuPage}></PrivateRoute>
                 <PrivateRoute exact path="/blog/list" component={BlogList}></PrivateRoute>
                 <PrivateRoute exact path="/blog/edit" component={BlogEdit}></PrivateRoute>
+                <PrivateRoute exact path="/blog/draft" component={BlogDraft}></PrivateRoute>
                 <Redirect exact from="*" to="/"/>
               </Switch>
             </Content>
