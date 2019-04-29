@@ -13,3 +13,10 @@ export const updateArticle = `${config.apiHost}/api/updateArticle`
 export const deleteArticle = `${config.apiHost}/api/deleteArticle`
 export const getArticle = `${config.apiHost}/api/getArticle`
 export const getArticles = `${config.apiHost}/api/getArticles`
+
+// blog相关
+export const insertLink = `${config.apiHost}/api/insertLink`
+export const updateLink = `${config.apiHost}/api/updateLink`
+export const deleteLink = `${config.apiHost}/api/deleteLink`
+export const getLink = `${config.apiHost}/api/getLink`
+export const getLinks = `${config.apiHost}/api/getLinks`

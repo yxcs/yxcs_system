@@ -5,7 +5,7 @@ const insertArticle = (params) => {
   let user = localStorage.getItem('user')
   user = JSON.parse(user);
   params.authorName = user.username
-  params.authorId = user._id
+  params.authorId = user.id
   return axios.post(api.insertArticle, {...params})
 }
 

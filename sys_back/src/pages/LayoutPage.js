@@ -6,6 +6,9 @@ import HomePage from './home/HomePage'
 import BlogList from './blog/BlogList'
 import BlogEdit from './blog/BlogEdit'
 import BlogDraft from './blog/BlogDraft'
+
+import LinkList from './link/LinkList'
+import LinkEdit from './link/LinkEdit'
 import {
   Layout, Menu, Breadcrumb, Icon,
 } from 'antd';
@@ -165,6 +168,8 @@ class LayoutPage extends Component {
                 <PrivateRoute exact path="/blog/list" component={BlogList}></PrivateRoute>
                 <PrivateRoute exact path="/blog/edit" component={BlogEdit}></PrivateRoute>
                 <PrivateRoute exact path="/blog/draft" component={BlogDraft}></PrivateRoute>
+                <PrivateRoute exact path="/bookmark" component={LinkList}></PrivateRoute>
+                <PrivateRoute exact path="/bookmark/edit" component={LinkEdit}></PrivateRoute>
                 <Redirect exact from="*" to="/"/>
               </Switch>
             </Content>
