@@ -86,7 +86,7 @@ class BlogList extends Component {
 
   onDelDraft = (id) => {
     http.deleteArticle(id).then(res => {
-      if (res.data.status === 1 && res.data.data) {
+      if (res.data.status === 200 && res.data.data) {
         message.success('删除成功');
         this.getDrafList();
       }

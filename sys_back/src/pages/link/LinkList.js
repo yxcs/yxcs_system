@@ -31,6 +31,12 @@ class LinkList extends Component {
       pager: {
         size: 10,
         page: 1
+      },
+      link: {
+        id: '',
+        title: '',
+        url: '',
+        type: ''  
       }
     }
   }
@@ -74,16 +80,24 @@ class LinkList extends Component {
   }
 
 
-  onEditLink = () => {
-
+  onEditLink = (e) => {
+    this.setState({
+      visible: true,
+      link: {
+        id: e._id,
+        title: e.title,
+        url: e.url,
+        type: e.type
+      }
+    })
   }
-
-  onUnPublishLink = () => {
-
-  }
-
-  onDelLink = () =>{
-
+  onDelLink = (id) => {
+    http.deleteLink(id).then(res => {
+      if (res.data.status === 200 && res.data.data) {
+        message.success('删除成功');
+        this.getList();
+      }
+    })
   }
 
   handleCancel = () => {
@@ -94,7 +108,13 @@ class LinkList extends Component {
 
   addLink = () => {
     this.setState({
-      visible: true
+      visible: true,
+      link: {
+        id: '',
+        title: '',
+        url: '',
+        type: ''  
+      }
     })
   }
 
@@ -117,6 +137,7 @@ class LinkList extends Component {
   }
 
   handleSubmit = (e) => {
+    const { link } = this.state;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -125,21 +146,39 @@ class LinkList extends Component {
           url: values.url,
           type: values.type
         }
-        http.insertLink(params).then(res => {
-          if (res.data.status === 200 && res.data.data === 1) {
-            message.success('添加成功');
-            this.setState({
-              visible: false
-            })
-            this.getList()
-          }
-        })
+        if (link.id) {
+          http.updateLink({id: link.id, params}).then(res => {
+            if (res.data.status === 200 && res.data.data === 1) {
+              message.success('编辑成功');
+              this.setState({
+                visible: false,
+                link: {
+                  id: '',
+                  title: '',
+                  url: '',
+                  type: ''  
+                }
+              })
+              this.getList()
+            }
+          })
+        } else {
+          http.insertLink(params).then(res => {
+            if (res.data.status === 200 && res.data.data === 1) {
+              message.success('添加成功');
+              this.setState({
+                visible: false
+              })
+              this.getList()
+            }
+          })
+        }
       }
     })
   }
 
   render () {
-    const { pager } = this.state;
+    const { pager, link } = this.state;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -203,9 +242,7 @@ class LinkList extends Component {
         render: (id, record, index) => {
           return (
             <div>
-              <Button type="primary" size="small" onClick={this.onEditLink.bind(this, id)}>编辑</Button>
-              <span className="btn-pad"></span>
-              <Button size="small" onClick={this.onUnPublishLink.bind(this, id)}>撤销</Button>
+              <Button type="primary" size="small" onClick={this.onEditLink.bind(this, record)}>编辑</Button>
               <span className="btn-pad"></span>
               <Popconfirm title="确定删除吗？" okText="删除" cancelText="取消" onConfirm={this.onDelLink.bind(this, id)}>
                 <Button type="danger" size="small">删除</Button>
@@ -235,7 +272,7 @@ class LinkList extends Component {
             }
           } />
         <Modal
-          title="添加书签"
+          title={link.id ? '编辑书签' : '添加书签'}
           visible={this.state.visible}
           footer={null}
           onCancel={this.handleCancel}
@@ -248,6 +285,7 @@ class LinkList extends Component {
                 rules: [{
                   required: true, message: '请输入书签标题',
                 }],
+                initialValue: link.title
               })(
                 <Input type="text" />
               )}
@@ -261,6 +299,7 @@ class LinkList extends Component {
                 }, {
                   validator: this.validateWebsite,
                 }],
+                initialValue: link.url
               })(
                 <Input type="text" />
               )}
@@ -272,6 +311,7 @@ class LinkList extends Component {
                 rules: [{
                   required: true, message: '请选择类型',
                 }],
+                initialValue: link.type + ''
               })(
                 <Select
                   style={{ width: '100%' }}
@@ -284,7 +324,7 @@ class LinkList extends Component {
               )}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">添加</Button>
+              <Button type="primary" htmlType="submit">{link.id ? '保存' : '添加'}</Button>
             </Form.Item>
           </Form>
         </Modal>
