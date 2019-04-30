@@ -287,7 +287,7 @@ class LinkList extends Component {
                 }],
                 initialValue: link.title
               })(
-                <Input type="text" />
+                <Input placeholder="请输入标题" type="text" />
               )}
             </Form.Item>
             <Form.Item
@@ -301,7 +301,7 @@ class LinkList extends Component {
                 }],
                 initialValue: link.url
               })(
-                <Input type="text" />
+                <Input placeholder="请输入书签链接" type="text" />
               )}
             </Form.Item>
             <Form.Item
@@ -317,6 +317,7 @@ class LinkList extends Component {
                   style={{ width: '100%' }}
                   placeholder="请选择类型"
                 >
+                  <Option value="">请选择类型</Option>
                   {
                     linkType.map(item => <Option key={item.key} value={item.key}>{item.value}</Option>)
                   }
