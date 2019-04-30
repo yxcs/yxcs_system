@@ -1,11 +1,15 @@
 import axios from 'axios'
 import * as api from './apis'
+import md5 from 'md5'
+import config from '../config'
 
 const login = (params) => {
+  params.password = md5(md5(params.password + config.secret))
   return axios.post(api.login, {...params})
 }
 
 const register = (params) => {
+  params.password = md5(md5(params.password + config.secret))
   return axios.post(api.register, {...params})
 }
 
