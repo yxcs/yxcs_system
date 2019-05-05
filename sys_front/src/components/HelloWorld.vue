@@ -84,12 +84,27 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  computed: {
+    ...mapState('footerStatus', [
+      'changableNum'
+    ]),
+    ...mapGetters('footerStatus', [
+      'isShow',
+      'getChangedNum'
+    ])
+  },
+  mounted () {
+    console.log(this.changableNum)
+    console.log(this.getChangedNum)
+    console.log(this.changableNum)
   }
 }
 </script>
