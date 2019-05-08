@@ -3,9 +3,13 @@
     <div class="carousel">
       <el-image :src="src">
         <div slot="placeholder" class="image-slot">
-          <i class="el-icon-picture-outline"></i>
         </div>
       </el-image>
+    </div>
+    <div class="list">
+      <div class="li">
+        
+      </div>
     </div>
   </div>
 </template>
@@ -28,12 +32,14 @@ export default {
     width: 750px;
     height: 187px;
     background: #fff;
+    margin-bottom: 20px;
+    border-radius: 20px;
   }
   .image-slot {
-    line-height: 100%;
-    text-align: center;
-  }
-  .image-slot i {
-    width: 120px;
+    width: 750px;
+    height: 187px;
+    background: url('../assets/img-holder.png') no-repeat;
+    background-size: 90px 90px;
+    background-position: center center;
   }
 </style>
