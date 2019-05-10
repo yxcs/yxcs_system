@@ -22,4 +22,20 @@ export default {
     color: #505050;
     text-decoration: none;
   }
+  ::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+    background-color: #f5f5f5;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
 </style>
