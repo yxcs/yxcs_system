@@ -36,8 +36,8 @@ export default {
     }
   },
   methods: {
-    changeNav() {
-      this.navShow = !this.navShow;
+    changeNav () {
+      this.navShow = !this.navShow
     }
   }
 }
@@ -68,9 +68,6 @@ export default {
   .avatar-small img {
     width: 100%;
     height: 100%;
-  }
-  .avatar-small img:hvoer {
-    
   }
   .menu {
     display: flex;

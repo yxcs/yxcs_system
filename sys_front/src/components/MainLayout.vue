@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Top from './Top';
+import Top from './Top'
 export default {
   name: 'MainLayout',
   data () {

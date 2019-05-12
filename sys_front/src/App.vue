@@ -17,6 +17,9 @@ export default {
     color: #505050;
     font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
   }
+  #app {
+    height: 100%;
+  }
   a {
     color: #505050;
     text-decoration: none;

@@ -72,17 +72,17 @@
 
 <script>
 export default {
-  name: "Home",
-  data() {
+  name: 'Home',
+  data () {
     return {
-      bgHeight: "75px",
-      src: "https://yxcs.github.io/img/head-img.jpg"
-    };
+      bgHeight: '75px',
+      src: 'https://yxcs.github.io/img/head-img.jpg'
+    }
   },
-  mounted() {
-    this.bgHeight = document.body.clientHeight + "px";
+  mounted () {
+    this.bgHeight = document.body.clientHeight + 'px'
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
