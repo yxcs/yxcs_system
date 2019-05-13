@@ -1,23 +1,41 @@
 <template>
-  <div class="wrap">
-    <div class="avatar-small">
-      <router-link to="/"><img src="../assets/login.png" /></router-link>
+  <div @mouseover="mouseOverHeader"
+    :class="['fixed__header', isHeaderShow?'':'opacity']"
+    :style="{'top': headerTop}">
+    <div class="fixed__header--avatar">
+      <img src="../assets/login.png" alt="用户头像">
     </div>
-    <div class="menu">
-      <div v-if="navShow">nav</div>
-      <div @click="changeNav" :class="['show-nav', navShow ? 'show' : '']">
+    <div class="fixed__header--group">
+      <div v-if="isShowNav" class="fixed__header--nav">
+        <div>
+          <router-link to="/">首页</router-link>
+        </div>
+        <div>
+          <router-link to="/">前端</router-link>
+        </div>
+        <div>
+          <router-link to="/">后端</router-link>
+        </div>
+        <div>
+          <router-link to="/">工具</router-link>
+        </div>
+        <div>
+          <router-link to="/">杂文</router-link>
+        </div>
+      </div>
+      <div @click="showNav" :class="['fixed__header--menu', isShowNav ? 'close' : '']">
         <div class="line1"></div>
         <div class="line2"></div>
         <div class="line3"></div>
       </div>
-      <div class="icon"><i class="el-icon-search"></i></div>
-      <div class="icon"><i class="el-icon-user"></i></div>
+      <div class="fixed__header--user">
+        <i class="el-icon-user"></i>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { mapState, mapGetters } from 'vuex'
 export default {
   name: 'Top',
   data () {
@@ -45,84 +63,96 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 75px;
-    background: rgba(255,255,255,0);
-    box-shadow: 0 0 1px rgba(0,0,0,.15);
-  }
-  .avatar-small {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-    overflow: hidden;
-    margin: 0 30px;
-  }
-  .avatar-small img {
-    width: 100%;
-    height: 100%;
-  }
-  .menu {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 75px;
-    padding-right: 30px;
-  }
-  .show-nav {
-    position: relative;
-    margin-left: 20px;
-    display: block;
-    width: 30px;
-    height: 33px;
-    cursor: pointer;
-    z-index: 999;
-  }
-  .line1,
-  .line2,
-  .line3 {
-    position: absolute;
-    top: 7px;
-    left: 50%;
-    width: 26px;
-    margin-left: -15px;
-    height: 2px;
-    background: #666;
-    -webkit-transition: all .2s ease;
-            transition: all .2s ease;
-  }
-  .line1 {
-    top: 15px;
-  }
-  .line3 {
-    top: 25px;
-  }
-  .show .line1 {
-    top: 18px;
-    -webkit-transform: rotateZ(45deg);
-            transform: rotateZ(45deg);
-  }
-  .show .line3 {
-    top: 18px;
-    -webkit-transform: rotateZ(-45deg);
-            transform: rotateZ(-45deg);
-  }
-  .show .line2 {
-    display: none;
-  }
-  .menu .icon {
-    width: 27px;
-    height: 27px;
-    margin-left: 20px;
-  }
-  .menu .icon i {
-    font-size: 26px;
-  }
+  
+.fixed__header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 1);
+  transition: all ease 1s;
+  /* -webkit-box-shadow: 0px 1px 5px 2px #ccc;
+     -moz-box-shadow: 0px 1px 5px 2px #ccc;
+         box-shadow: 0px 1px 5px 2px #ccc; */
+}
+.fixed__header.opacity {
+  background-color: rgba(255, 255, 255, 0);
+}
+.fixed__header--avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 0 40px;
+}
+.fixed__header--avatar img {
+  width: 100%;
+  height: 100%;
+}
+.fixed__header--group {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 40px;
+}
+.fixed__header--user {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+.fixed__header--group i {
+  font-size: 30px;
+  margin-top: 10px;
+}
+.fixed__header--menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 26px;
+  margin-left: 30px;
+}
+.fixed__header--menu > div {
+  width: 30px;
+  height: 2px;
+  background: #666;
+}
+.fixed__header--menu.close .line1 {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  transform: rotateZ(45deg) translate(6px, 10px);
+}
+.fixed__header--menu.close .line2 {
+  visibility: hidden;
+}
+.fixed__header--menu.close .line3 {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  transform: rotateZ(-45deg) translate(6px, -10px);
+}
+.fixed__header--nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.fixed__header--nav > div {
+  height: 50px;
+  line-height: 50px;
+}
+.fixed__header--nav a {
+  display: inline-block;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 14px;
+  transition: color 0.2s ease-out, border 0.2s ease-out, opacity 0.2s ease-out;
+}
+.fixed__header--nav a:hover {
+  color: royalblue;
+}
 </style>

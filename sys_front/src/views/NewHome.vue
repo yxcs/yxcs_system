@@ -3,7 +3,6 @@
    <div>
       <div 
         @mouseover="mouseOverHeader"
-        @mouseleave="mouseLeaveHeader"
         :class="['fixed__header', isHeaderShow?'':'opacity']"
         :style="{'top': headerTop}">
         <div class="fixed__header--avatar">
@@ -285,9 +284,9 @@ export default {
 .fixed__header--menu {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 30px;
-  height: 33px;
+  height: 26px;
   margin-left: 30px;
 }
 .fixed__header--menu > div {
@@ -298,7 +297,7 @@ export default {
 .fixed__header--menu.close .line1 {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
-  transform: rotateZ(45deg) translate(5px, 10px);
+  transform: rotateZ(45deg) translate(6px, 10px);
 }
 .fixed__header--menu.close .line2 {
   visibility: hidden;
@@ -306,7 +305,7 @@ export default {
 .fixed__header--menu.close .line3 {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
-  transform: rotateZ(-45deg) translate(5px, -10px);
+  transform: rotateZ(-45deg) translate(6px, -10px);
 }
 .fixed__header--nav {
   display: flex;
