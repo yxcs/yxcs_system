@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import MainLayout from '@/components/MainLayout'
 import Home from '@/views/Home'
 import NewHome from '@/views/NewHome'
+import Article from '@/views/Article'
 
 Vue.use(Router)
 
@@ -24,6 +25,10 @@ export default new Router({
       path: '/new',
       name: 'NewHome',
       component: NewHome
+    }, {
+      path: '/article',
+      name: 'Article',
+      component: Article
     }, {
       path: '/test',
       name: 'HelloWorld',

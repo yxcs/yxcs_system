@@ -175,7 +175,7 @@ export default {
       if (!wrap) return false
       wrap.removeEventListener('scroll', _ => {})
       wrap.addEventListener('scroll', e => {
-        const top = e.target.scrollTop;
+        const top = e.target.scrollTop
         if (top < 80) {
           this.isHeaderShow = false
           this.isShowNav = false
@@ -212,7 +212,7 @@ export default {
       this.isShowNav = false
     },
     goBackTop () {
-      document.getElementById("full__bg").scrollIntoView();
+      document.getElementById('full__bg').scrollIntoView()
     }
   }
 }
