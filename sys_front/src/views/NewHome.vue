@@ -1,141 +1,97 @@
 <template>
-  <div class="wrap" ref="scroll">
-   <div>
-      <div 
-        @mouseover="mouseOverHeader"
-        :class="['fixed__header', isHeaderShow?'':'opacity']"
-        :style="{'top': headerTop}">
-        <div class="fixed__header--avatar">
-          <img src="../assets/login.png" alt="用户头像">
+  <div>
+    <div id="full__bg" class="full__bg" :style="{'height': bgHeight}">
+      <div class="full__bg--content">
+        <div class="full__bg--avatar">
+          <router-link to="/">
+            <img src="../assets/login.png">
+          </router-link>
         </div>
-        <div class="fixed__header--group">
-          <div v-if="isShowNav" class="fixed__header--nav">
-            <div>
-              <router-link to="/">首页</router-link>
+        <div class="full__bg--info">真正的英雄主义，是认清生活的真相后还依然热爱它。</div>
+        <div class="full__bg--icon">
+          <a href="#">
+            <div @mouseover="isShowQrcode = true" @mouseout="isShowQrcode = false" class="weixin">
+              <div class="qrcode" :style="isShowQrcode ? qrcodeStyle : ''">
+                <img src="http://img.skyarea.cn/wp-content/uploads/2018/07/weixin-1.jpg">
+              </div>
             </div>
-            <div>
-              <router-link to="/">前端</router-link>
-            </div>
-            <div>
-              <router-link to="/">后端</router-link>
-            </div>
-            <div>
-              <router-link to="/">工具</router-link>
-            </div>
-            <div>
-              <router-link to="/">杂文</router-link>
+          </a>
+          <a href="#">
+            <div class="qq"></div>
+          </a>
+          <a href="#">
+            <div class="github"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="content__wrap">
+      <div class="content__notice">
+        <i class="el-icon-message-solid"></i>更新到1.6，接下来进入慢更新节奏。最后还是poiplayer好看.....
+      </div>
+      <div class="content__gallery">
+        <div class="content__gallery--title">
+          <i class="el-icon-chat-dot-square"></i>聚焦
+        </div>
+        <div class="content__gallery--img">
+          <div>
+            <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
+            <div class="gallery__animation">
+              <div class="title">江东一日游</div>
             </div>
           </div>
-          <div @click="showNav" :class="['fixed__header--menu', isShowNav ? 'close' : '']">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+          <div>
+            <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
+            <div class="gallery__animation">
+              <div class="title">江东一日游</div>
+            </div>
           </div>
-          <div class="fixed__header--user">
-            <i class="el-icon-user"></i>
+          <div>
+            <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
+            <div class="gallery__animation">
+              <div class="title">江东一日游</div>
+            </div>
           </div>
         </div>
       </div>
-      <div id="full__bg" class="full__bg" :style="{'height': bgHeight}">
-        <div class="full__bg--content">
-          <div class="full__bg--avatar">
-            <router-link to="/">
-              <img src="../assets/login.png">
-            </router-link>
-          </div>
-          <div class="full__bg--info">真正的英雄主义，是认清生活的真相后还依然热爱它。</div>
-          <div class="full__bg--icon">
-            <a href="#">
-              <div @mouseover="isShowQrcode = true" @mouseout="isShowQrcode = false" class="weixin">
-                <div class="qrcode" :style="isShowQrcode ? qrcodeStyle : ''">
-                  <img src="http://img.skyarea.cn/wp-content/uploads/2018/07/weixin-1.jpg">
-                </div>
-              </div>
-            </a>
-            <a href="#">
-              <div class="qq"></div>
-            </a>
-            <a href="#">
-              <div class="github"></div>
-            </a>
-          </div>
+      <div class="content__list">
+        <div class="content__list--title">
+          <i class="el-icon-notebook-2"></i>Posts
         </div>
-      </div>
-      <div class="content__wrap">
-        <div class="content__notice">
-          <i class="el-icon-message-solid"></i>更新到1.6，接下来进入慢更新节奏。最后还是poiplayer好看.....
-        </div>
-        <div class="content__gallery">
-          <div class="content__gallery--title">
-            <i class="el-icon-chat-dot-square"></i>聚焦
-          </div>
-          <div class="content__gallery--img">
-            <div>
-              <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
-              <div class="gallery__animation">
-                <div class="title">江东一日游</div>
+        <template v-for="i in 10">
+          <div :key="i" :class="['content__list--item', i%2?'t1':'t2']">
+            <div class="content__list--info">
+              <div class="time">
+                <i class="el-icon-time"></i> 发布于 2017-04-09{{i}}
               </div>
-            </div>
-            <div>
-              <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
-              <div class="gallery__animation">
-                <div class="title">江东一日游</div>
+              <div class="title">
+                <router-link to="/"><h3>ASky主题（19年2月21日更新1.7）</h3></router-link>
               </div>
-            </div>
-            <div>
-              <img src="http://img.skyarea.cn/wp-content/uploads/2018/09/Dong_Jiang_Hu_-_Wu_77.jpg">
-              <div class="gallery__animation">
-                <div class="title">江东一日游</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="content__list">
-          <div class="content__list--title">
-            <i class="el-icon-notebook-2"></i>Posts
-          </div>
-          <template v-for="i in 10">
-            <div :key="i" :class="['content__list--item', i%2?'t1':'t2']">
-              <div class="content__list--info">
-                <div class="time">
-                  <i class="el-icon-time"></i> 发布于 2017-04-09{{i}}
-                </div>
-                <div class="title">
-                  <router-link to="/"><h3>ASky主题（19年2月21日更新1.7）</h3></router-link>
-                </div>
-                <div class="info">
-                  <i class="el-icon-view"></i> 116.68k 热度
-                  <i class="el-icon-chat-line-round"></i> 524 条评论
-                  <router-link to="/">
-                    <i class="el-icon-files"></i> 分享
-                  </router-link>
-                </div>
-                <div class="desc">
-                  <p>最新版本说明 ASky1.7更新--2019-02-21 不太记得改了些什么了，记得的写在下面了，总之就和博主现在用的一样一样的，1. ...</p>
-                </div>
-                <div class="more">
-                  <router-link to="/">
-                    <i class="el-icon-more"></i>
-                  </router-link>
-                </div>
-              </div>
-              <div class="content__list--img">
+              <div class="info">
+                <i class="el-icon-view"></i> 116.68k 热度
+                <i class="el-icon-chat-line-round"></i> 524 条评论
                 <router-link to="/">
-                  <img src="http://img.skyarea.cn/wp-content/uploads/2017/04/wallpaper.jpg" alt>
+                  <i class="el-icon-files"></i> 分享
+                </router-link>
+              </div>
+              <div class="desc">
+                <p>最新版本说明 ASky1.7更新--2019-02-21 不太记得改了些什么了，记得的写在下面了，总之就和博主现在用的一样一样的，1. ...</p>
+              </div>
+              <div class="more">
+                <router-link to="/">
+                  <i class="el-icon-more"></i>
                 </router-link>
               </div>
             </div>
-          </template>
-        </div>
+            <div class="content__list--img">
+              <router-link to="/">
+                <img src="http://img.skyarea.cn/wp-content/uploads/2017/04/wallpaper.jpg" alt>
+              </router-link>
+            </div>
+          </div>
+        </template>
       </div>
-      <div class="footer__wrap">
-        <div v-if="isLoading" class="loading"><i class="el-icon-loading"></i></div>
-        <div v-else class="no-more">没有更多了</div>
-        <p class="text">日月盈昃，辰宿列张，寒来暑往，秋收冬藏。</p>
-        <p class="copyright">Copyright © 2017 . All rights reserved. | Sitemap   Statistics   | Theme   | Powered by WordPress</p>
-      </div>
-   </div>
-   <div v-if="isShowGoTop" class="back-top" @click="goBackTop"></div>
+    </div>
   </div>
 </template>
 
@@ -145,71 +101,13 @@ export default {
   name: 'NewHome',
   data () {
     return {
-      isShowNav: false,
-      isHeaderShow: false,
-      isShowQrcode: false,
-      isLoading: false,
-      bgHeight: '80px',
-      qrcodeStyle: {
-        opacity: 1,
-        display: 'block'
-      },
-      scrollY: 0,
-      headerTop: '0px',
-      isShowGoTop: false
+      bgHeight: '80px'
     }
   },
   mounted () {
     this.bgHeight = document.body.clientHeight + 'px'
-    this.$nextTick(_ => {
-      this._initScroll()
-    })
   },
   methods: {
-    showNav () {
-      this.isShowNav = !this.isShowNav
-    },
-    _initScroll () {
-      const wrap = document.querySelector('.wrap')
-      if (!wrap) return false
-      wrap.removeEventListener('scroll', _ => {})
-      wrap.addEventListener('scroll', e => {
-        const top = e.target.scrollTop
-        if (top < 80) {
-          this.isHeaderShow = false
-          this.isShowNav = false
-        } else if (top >= 80) {
-          this.headerTop = '-80px'
-        }
-        if (this.scrollY > top) {
-          this.isHeaderShow = true
-          this.headerTop = '0px'
-        } else {
-          this.isHeaderShow = false
-          this.isShowNav = false
-          this.headerTop = '-80px'
-        }
-
-        if (top > parseInt(this.bgHeight, 10)) {
-          this.isShowGoTop = true
-        } else {
-          this.isShowGoTop = false
-        }
-
-        if (wrap.scrollHeight <= wrap.clientHeight + wrap.scrollTop + 40) {
-          console.log('加载更多')
-        }
-
-        this.scrollY = top
-      })
-    },
-    mouseOverHeader () {
-      this.isHeaderShow = true
-    },
-    mouseLeaveHeader () {
-      this.isHeaderShow = false
-      this.isShowNav = false
-    },
     goBackTop () {
       document.getElementById('full__bg').scrollIntoView()
     }
@@ -227,104 +125,6 @@ export default {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.wrap {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.fixed__header {
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  height: 80px;
-  background-color: rgba(255, 255, 255, 1);
-  transition: all ease 1s;
-  /* -webkit-box-shadow: 0px 1px 5px 2px #ccc;
-     -moz-box-shadow: 0px 1px 5px 2px #ccc;
-         box-shadow: 0px 1px 5px 2px #ccc; */
-}
-.fixed__header.opacity {
-  background-color: rgba(255, 255, 255, 0);
-}
-.fixed__header--avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  overflow: hidden;
-  margin: 0 40px;
-}
-.fixed__header--avatar img {
-  width: 100%;
-  height: 100%;
-}
-.fixed__header--group {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin: 0 40px;
-}
-.fixed__header--user {
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
-}
-.fixed__header--group i {
-  font-size: 30px;
-  margin-top: 10px;
-}
-.fixed__header--menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 26px;
-  margin-left: 30px;
-}
-.fixed__header--menu > div {
-  width: 30px;
-  height: 2px;
-  background: #666;
-}
-.fixed__header--menu.close .line1 {
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  transform: rotateZ(45deg) translate(6px, 10px);
-}
-.fixed__header--menu.close .line2 {
-  visibility: hidden;
-}
-.fixed__header--menu.close .line3 {
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  transform: rotateZ(-45deg) translate(6px, -10px);
-}
-.fixed__header--nav {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.fixed__header--nav > div {
-  height: 50px;
-  line-height: 50px;
-}
-.fixed__header--nav a {
-  display: inline-block;
-  height: 100%;
-  padding: 0 20px;
-  font-size: 14px;
-  transition: color 0.2s ease-out, border 0.2s ease-out, opacity 0.2s ease-out;
-}
-.fixed__header--nav a:hover {
-  color: royalblue;
 }
 
 .full__bg {
@@ -615,47 +415,5 @@ export default {
 }
 .content__list--item:hover .content__list--img img {
   transform: scale(1.1, 1.1);
-}
-
-.footer__wrap {
-  width: 100%;
-  text-align: center;
-}
-.footer__wrap .loading {
-  height: 40px;
-  font-size: 30px;
-}
-.footer__wrap .text {
-  text-align: center;
-  font-size: 13px;
-  color: #B9B9B9;
-  padding: 10px;
-  margin-top: 20px;
-}
-.footer__wrap .copyright {
-  text-align: center;
-  font-size: 13px;
-  color: #B9B9B9;
-  margin-bottom: 30px;
-}
-.footer__wrap .no-more {
-  text-align: center;
-  font-size: 14px;
-  color: #B9B9B9;
-}
-
-.back-top {
-  position: fixed;
-  right: 1%;
-  bottom: 6%;
-  z-index: 999;
-  width: 60px;
-  height: 60px;
-  background: url('../assets/gotop.png') no-repeat center;
-  background-size: contain;
-  opacity: .85;
-}
-.back-top:hover {
-  opacity: 1;
 }
 </style>
