@@ -92,6 +92,10 @@
         </template>
       </div>
     </div>
+    <div class="loading-wrap">
+      <div v-if="isLoading" class="loading"><i class="el-icon-loading"></i></div>
+      <div v-else class="no-more">没有更多了</div>
+    </div>
   </div>
 </template>
 
@@ -415,5 +419,27 @@ export default {
 }
 .content__list--item:hover .content__list--img img {
   transform: scale(1.1, 1.1);
+}
+
+.loading-wrap {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 40px;
+}
+.loading-wrap .loading {
+  height: 40px;
+  font-size: 30px;
+}
+.loading-wrap .text {
+  text-align: center;
+  font-size: 13px;
+  color: #B9B9B9;
+  padding: 10px;
+  margin-top: 20px;
+}
+.loading-wrap .no-more {
+  text-align: center;
+  font-size: 14px;
+  color: #B9B9B9;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" ref="scroll">
+  <div id="wrap" class="wrap" ref="scroll">
    <div>
       <div 
         @mouseover="mouseOverHeader"
@@ -37,12 +37,7 @@
         </div>
       </div>
       <router-view></router-view>
-      <div class="footer__wrap">
-        <div v-if="isLoading" class="loading"><i class="el-icon-loading"></i></div>
-        <div v-else class="no-more">没有更多了</div>
-        <p class="text">日月盈昃，辰宿列张，寒来暑往，秋收冬藏。</p>
-        <p class="copyright">Copyright © 2017 . All rights reserved. | Sitemap   Statistics   | Theme   | Powered by WordPress</p>
-      </div>
+      <Bottom />
    </div>
    <div v-if="isShowGoTop" class="back-top" @click="goBackTop"></div>
   </div>
@@ -50,6 +45,7 @@
 
 <script>
 import Top from './Top'
+import Bottom from './Bottom'
 export default {
   name: 'MainLayout',
   data () {
@@ -74,12 +70,15 @@ export default {
       this._initScroll()
     })
   },
+  components: {
+    Bottom
+  },
   methods: {
     showNav () {
       this.isShowNav = !this.isShowNav
     },
     _initScroll () {
-      const wrap = document.querySelector('.wrap')
+      const wrap = document.getElementById('wrap')
       if (!wrap) return false
       wrap.removeEventListener('scroll', _ => {})
       wrap.addEventListener('scroll', e => {
@@ -525,33 +524,6 @@ export default {
 }
 .content__list--item:hover .content__list--img img {
   transform: scale(1.1, 1.1);
-}
-
-.footer__wrap {
-  width: 100%;
-  text-align: center;
-}
-.footer__wrap .loading {
-  height: 40px;
-  font-size: 30px;
-}
-.footer__wrap .text {
-  text-align: center;
-  font-size: 13px;
-  color: #B9B9B9;
-  padding: 10px;
-  margin-top: 20px;
-}
-.footer__wrap .copyright {
-  text-align: center;
-  font-size: 13px;
-  color: #B9B9B9;
-  margin-bottom: 30px;
-}
-.footer__wrap .no-more {
-  text-align: center;
-  font-size: 14px;
-  color: #B9B9B9;
 }
 
 .back-top {
