@@ -100,18 +100,30 @@
 </template>
 
 <script>
-// import BScroll from 'better-scroll'
+import http from '../services/article'
 export default {
   name: 'NewHome',
   data () {
     return {
-      bgHeight: '80px'
+      bgHeight: '80px',
+      isShowQrcode: false,
+      isLoading: false,
+      qrcodeStyle: {
+        opacity: 1,
+        display: 'block'
+      }
     }
   },
   mounted () {
     this.bgHeight = document.body.clientHeight + 'px'
+    this.getList()
   },
   methods: {
+    getList () {
+      http.getArticleList({limit: 10, current: 1}).then(res => {
+        console.log(res)
+      })
+    },
     goBackTop () {
       document.getElementById('full__bg').scrollIntoView()
     }

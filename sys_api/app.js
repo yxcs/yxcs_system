@@ -30,6 +30,7 @@ app
   .use(cors({
     origin: function (ctx) {
       const regexp = new RegExp('/api');
+      const front_rep = new RegExp('/v1');
       const regexpWith = new RegExp('/download');
       if (regexpWith.test(ctx.url)) {
         return `http://${config.url.download}`;
@@ -37,6 +38,8 @@ app
         return `http://${config.url.image}`;
       } else if (regexp.test(ctx.url)) {
         return 'http://localhost:3000'
+      } else if (front_rep.test(ctx.url)) {
+        return 'http://localhost:8080'
       }
       return false;
     },
@@ -49,13 +52,14 @@ app
   .use(jwtKoa({
     secret: config.secret
   }).unless({
-    path: [/\/register/, /\/login/],
+    path: [/\/register/, /\/login/, /\/v1/],
   }))
   .use(json())
 
 import index from './routes/index'
 import users from './routes/users'
 import api from './routes/api'
+import v1 from './routes/v1'
 
 // error handler
 onerror(app)
@@ -78,6 +82,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
+app.use(v1.routes(), v1.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

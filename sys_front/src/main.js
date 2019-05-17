@@ -10,9 +10,12 @@ import router from './router'
 
 import store from './model'
 
+import axios from './services/axios.config'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
+Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
 new Vue({
