@@ -8,6 +8,10 @@ const ArticleSchema = new Schema({
   content: {                                                  // 文章内容
     type: String
   },
+  abstract: {                                                 // 摘要
+    type: String,
+    default: '文章摘要'
+  },
   authorName: {                                               // 作者名称
     type: String
   },

@@ -1,6 +1,6 @@
 <template>
   <div id="wrap" class="wrap" ref="scroll">
-   <div>
+   <div id="full__bg">
       <div 
         @mouseover="mouseOverHeader"
         :class="['fixed__header', isHeaderShow?'':'opacity']"
@@ -104,9 +104,9 @@ export default {
           this.isShowGoTop = false
         }
 
-        if (wrap.scrollHeight <= wrap.clientHeight + wrap.scrollTop + 40) {
-          console.log('加载更多')
-        }
+        // if (wrap.scrollHeight <= wrap.clientHeight + wrap.scrollTop + 40) {
+        //   console.log('加载更多')
+        // }
 
         this.scrollY = top
       })
