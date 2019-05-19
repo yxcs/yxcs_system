@@ -105,14 +105,22 @@ const blogTypeObj = [
     ]
   }
 ]
-
 const blogSource = {
   '1': '原创',
   '2': '转载'
 }
+
+const navs = [
+  {url: '/home', txt: '首页'},
+  {url: '/front', txt: '前端'},
+  {url: '/back', txt: '后端'},
+  {url: '/interview', txt: '面试'},
+  {url: '/draft', txt: '杂文'},
+]
 export default {
   formatTime,
   blogType,
   blogTypeObj,
-  blogSource
+  blogSource,
+  navs
 }
