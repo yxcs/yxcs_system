@@ -1,6 +1,6 @@
 <template>
   <div id="wrap" class="wrap" ref="scroll">
-   <div>
+   <div id="full__bg">
       <div 
         @mouseover="mouseOverHeader"
         :class="['fixed__header', isHeaderShow?'':'opacity']"
@@ -10,21 +10,11 @@
         </div>
         <div class="fixed__header--group">
           <div v-if="isShowNav" class="fixed__header--nav">
-            <div>
-              <router-link to="/">首页</router-link>
-            </div>
-            <div>
-              <router-link to="/">前端</router-link>
-            </div>
-            <div>
-              <router-link to="/">后端</router-link>
-            </div>
-            <div>
-              <router-link to="/">工具</router-link>
-            </div>
-            <div>
-              <router-link to="/">杂文</router-link>
-            </div>
+            <template v-for="item in navs">
+              <div :key="item.url">
+                <router-link :to="item.url">{{item.txt}}</router-link>
+              </div>
+            </template>
           </div>
           <div @click="showNav" :class="['fixed__header--menu', isShowNav ? 'close' : '']">
             <div class="line1"></div>
@@ -46,6 +36,7 @@
 <script>
 import Top from './Top'
 import Bottom from './Bottom'
+import tool from '../utils/tool'
 export default {
   name: 'MainLayout',
   data () {
@@ -61,7 +52,8 @@ export default {
       },
       scrollY: 0,
       headerTop: '0px',
-      isShowGoTop: false
+      isShowGoTop: false,
+      navs: tool.navs
     }
   },
   mounted () {
@@ -104,9 +96,9 @@ export default {
           this.isShowGoTop = false
         }
 
-        if (wrap.scrollHeight <= wrap.clientHeight + wrap.scrollTop + 40) {
-          console.log('加载更多')
-        }
+        // if (wrap.scrollHeight <= wrap.clientHeight + wrap.scrollTop + 40) {
+        //   console.log('加载更多')
+        // }
 
         this.scrollY = top
       })

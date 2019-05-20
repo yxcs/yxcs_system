@@ -1,24 +1,28 @@
 <template>
   <div class="wrap">
     <div class="article__header">
-      <div class="article__header--title">ASky 1.6修改记录（已更新）</div>
+      <div class="article__header--title">{{detail.title}}</div>
       <div class="article__header--info">
         <img src="../assets/login.png" alt="">
-        <span>keith</span> ·
-        <span>2018-08-19</span> ·
-        <span>4.47k 次阅读</span>
+        <span>{{detail.authorName}}</span> ·
+        <span>{{detail.createAt}}</span> ·
+        <span>{{detail.readCount}} 次阅读</span>
       </div>
     </div>
     <div class="article__content">
-      <mavon-editor v-html="value" :subfield="false" :defaultOpen="defaultData" :toolbarsFlag="false" :boxShadow="false" @change="changeData" />
+      <mavon-editor v-html="detail.content" :subfield="false" :defaultOpen="defaultData" :toolbarsFlag="false" :boxShadow="false" @change="changeData" />
     </div>
     <div class="article_tags">
       <p>
         <i class="el-icon-price-tag"></i>
-        <router-link to="/">ASKY</router-link>
+        <router-link :to="`source/${detail.source}`">{{detail.sourceTxt}}</router-link>
+        <router-link :to="`source/${detail.type}`">{{detail.typeTxt}}</router-link>
+        <template v-for="item in detail.tags">
+          <router-link :key="item.key" :to="`tags/${item.key}`">{{item.value}}</router-link>
+        </template>
       </p>
     </div>
-    <div class="article__page">
+    <div v-if="false" class="article__page">
       <div>
         <img src="http://img.skyarea.cn/wp-content/uploads/2018/06/Xing_Kong.jpg" />
         <div @click="goPre" class="page left">
@@ -39,17 +43,39 @@
 
 <script>
 import { markdown } from 'markdown'
+import http from '../services/article'
+import tool from '../utils/tool'
 export default {
   name: 'Article',
   data() {
     return {
-      value: markdown.toHTML(`## 测试使用 \n** 我的家 ** - 是吧`),
-      defaultData: "preview"
+      defaultData: "preview",
+      detail: {}
     }
+  },
+  mounted () {
+    this.getDetail()
   },
   methods: {
     changeData(value, render) {
       console.log(value, render)
+    },
+    getDetail () {
+      const id = this.$route.params.id || null
+      http.getArticleDetails({id}).then(res => {
+        const detail = res.data.data
+        detail.content = markdown.toHTML(detail.content)
+        detail.createAt = tool.formatTime(detail.createAt, 3)
+        detail.sourceTxt = tool.blogSource[''+detail.source]
+        detail.typeTxt = tool.blogType[''+detail.type]
+        detail.tags = detail.subType.map(item => {
+          return {
+            key: item,
+            value: tool.blogType[''+item]
+          }
+        })
+        this.detail = detail
+      })
     },
     goPre () {
 
@@ -109,7 +135,7 @@ export default {
     padding: 10px 0;
     border-bottom: 1px dashed #ddd;
     border-top: 1px dashed #ddd;
-    margin: 30px auto 0;
+    margin: 30px auto;
     height: 42px;
   }
   .article_tags p {

@@ -4,6 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import MainLayout from '@/components/MainLayout'
 import NewHome from '@/views/NewHome'
 import Article from '@/views/Article'
+import BackPage from '@/views/BackPage'
+import DraftPage from '@/views/DraftPage'
+import FrontPage from '@/views/FrontPage'
+import InterviewPage from '@/views/InterviewPage'
 
 Vue.use(Router)
 
@@ -17,14 +21,42 @@ const router = new Router({
       name: 'NewHome',
       component: NewHome,
       meta: {
-        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
       },
     }, {
-      path: '/article',
+      path: '/article/:id',
       name: 'Article',
       component: Article,
       meta: {
-        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true,
+      },
+    }, {
+      path: '/back',
+      name: 'BackPage',
+      component: BackPage,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/draft',
+      name: 'DraftPage',
+      component: DraftPage,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/front',
+      name: 'FrontPage',
+      component: FrontPage,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/interview',
+      name: 'InterviewPage',
+      component: InterviewPage,
+      meta: {
+        requireAuth: true,
       },
     }]
   }, {

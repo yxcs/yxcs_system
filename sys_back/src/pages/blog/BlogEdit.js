@@ -11,6 +11,7 @@ import {
 } from 'antd';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const type = [
   {
@@ -90,6 +91,12 @@ class BlogEdit extends Component {
     })
   }
 
+  onAbstractChange = (v) => {
+    this.setState({
+      absrtact: v.target.value
+    })
+  }
+
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
@@ -136,9 +143,13 @@ class BlogEdit extends Component {
           subType: values.subType,
           source: values.source,
           content: '',
-          title: title
+          title: title,
+          abstract: values.abstract.substr(0, 66) + '...'
         }
         params.content = editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        console.log(editorState.getCurrentContent())
+        console.log(convertToRaw(editorState.getCurrentContent()))
+        console.log(params.content)
         http.insertArticle(params).then(res => {
           if (res.data.status === 200 && res.data.data === 1) {
             message.success('添加成功');
@@ -209,6 +220,15 @@ class BlogEdit extends Component {
                   })
                 }
                 </Radio.Group>
+              )}
+            </Form.Item>
+            <Form.Item label="摘要">
+             {getFieldDecorator('abstract', {
+                rules: [{
+                  required: true, message: '请添加摘要'
+                }]
+              })(
+                <TextArea onChange={this.onAbstractChange.bind(this)} placeholder="填写简介，66字以内"></TextArea>
               )}
             </Form.Item>
             <Form.Item label="标签">

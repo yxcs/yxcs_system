@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="full__bg" class="full__bg" :style="{'height': bgHeight}">
+    <div class="full__bg" :style="{'height': bgHeight}">
       <div class="full__bg--content">
         <div class="full__bg--avatar">
           <router-link to="/">
@@ -58,60 +58,67 @@
         <div class="content__list--title">
           <i class="el-icon-notebook-2"></i>Posts
         </div>
-        <template v-for="i in 10">
-          <div :key="i" :class="['content__list--item', i%2?'t1':'t2']">
+        <template v-for="(item, index) in list">
+          <div :key="item._id" :class="['content__list--item', index%2?'t1':'t2']">
             <div class="content__list--info">
               <div class="time">
-                <i class="el-icon-time"></i> 发布于 2017-04-09{{i}}
+                <i class="el-icon-time"></i> 发布于 {{item.createAt}}
               </div>
               <div class="title">
-                <router-link to="/"><h3>ASky主题（19年2月21日更新1.7）</h3></router-link>
+                <router-link :to="`/article/${item._id}`"><h3>{{item.title}}</h3></router-link>
               </div>
               <div class="info">
-                <i class="el-icon-view"></i> 116.68k 热度
-                <i class="el-icon-chat-line-round"></i> 524 条评论
-                <router-link to="/">
-                  <i class="el-icon-files"></i> 分享
+                <i class="el-icon-view"></i> {{item.readCount}} 热度
+                <i class="el-icon-chat-line-round"></i> {{item.typeTxt}}
+                <router-link :to="`/article/${item._id}`">
+                  <i class="el-icon-files"></i> {{item.sourceTxt}}
                 </router-link>
               </div>
               <div class="desc">
-                <p>最新版本说明 ASky1.7更新--2019-02-21 不太记得改了些什么了，记得的写在下面了，总之就和博主现在用的一样一样的，1. ...</p>
+                <p>{{item.abstract}}</p>
               </div>
               <div class="more">
-                <router-link to="/">
+                <router-link :to="`/article/${item._id}`">
                   <i class="el-icon-more"></i>
                 </router-link>
               </div>
             </div>
             <div class="content__list--img">
-              <router-link to="/">
-                <img src="http://img.skyarea.cn/wp-content/uploads/2017/04/wallpaper.jpg" alt>
+              <router-link :to="`/article/${item._id}`">
+                <img :src="item.coverImg" alt>
               </router-link>
             </div>
           </div>
         </template>
       </div>
     </div>
+    <div v-if="!isLoading && !isNoMore" class="next-page" @click="getList">加载更多</div>
     <div class="loading-wrap">
       <div v-if="isLoading" class="loading"><i class="el-icon-loading"></i></div>
-      <div v-else class="no-more">没有更多了</div>
+      <div v-if="isNoMore" class="no-more">没有更多了</div>
     </div>
   </div>
 </template>
 
 <script>
 import http from '../services/article'
+import tool from '../utils/tool'
 export default {
   name: 'NewHome',
   data () {
     return {
+      page: 1,
+      limit: 10,
       bgHeight: '80px',
       isShowQrcode: false,
-      isLoading: false,
+      isLoading: true,
+      isNoMore: false,
       qrcodeStyle: {
         opacity: 1,
         display: 'block'
-      }
+      },
+      list: [],
+      types: []
     }
   },
   mounted () {
@@ -120,12 +127,23 @@ export default {
   },
   methods: {
     getList () {
-      http.getArticleList({limit: 10, current: 1}).then(res => {
-        console.log(res)
+      this.isLoading = true
+      http.getArticleList({limit: this.limit, current: this.page}).then(res => {
+        this.isLoading = false
+        const list = res.data.data
+        const total = res.data.total
+        if (parseInt(total / this.limit) <= this.page) {
+          this.isNoMore = true
+        } else {
+          this.page = this.page + 1
+        }
+        this.list = list.map(item => {
+          item.createAt = tool.formatTime(item.createAt, 3)
+          item.sourceTxt = tool.blogSource[''+item.source]
+          item.typeTxt = tool.blogType[''+item.type]
+          return item
+        })
       })
-    },
-    goBackTop () {
-      document.getElementById('full__bg').scrollIntoView()
     }
   }
 }
@@ -453,5 +471,19 @@ export default {
   text-align: center;
   font-size: 14px;
   color: #B9B9B9;
+}
+
+.next-page {
+  width: 720px;
+  height: 40px;
+  margin: 0px auto 40px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+}
+.next-page:hover {
+  opacity: 0.8;
 }
 </style>
