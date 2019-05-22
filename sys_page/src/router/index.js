@@ -57,7 +57,7 @@ const router = new Router({
         page: 'draft'
       }
     }, {
-      path: '/article:id',
+      path: '/article/:id',
       name: 'ArticlesDetail',
       component: ArticlesDetail,
       meta:{

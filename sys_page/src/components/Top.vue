@@ -82,7 +82,7 @@ export default {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        width: 1100px;
+        width: 800px;
         margin: 0 auto;
         font-size: 14px;
         .nav-item {
