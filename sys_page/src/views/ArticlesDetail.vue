@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div class="article__content">
+    <div class="article__content vhtml">
       <div v-html="detail.content"></div>
     </div>
   </div>
@@ -138,8 +138,5 @@ export default {
   margin: 40px auto;
   border: 1px solid rgba(0,0,0,0.08);
   min-height: 400px;
-  .hljs {
-    font-size: 14px;
-  }
 }
 </style>

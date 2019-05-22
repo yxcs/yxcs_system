@@ -9,6 +9,7 @@
     "customize-cra": "^0.2.12",
     "draft-js": "^0.10.5",
     "draftjs-to-markdown": "^0.5.1",
+    "for-editor": "^0.0.13",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "md5": "^2.2.1",

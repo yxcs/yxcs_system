@@ -4,6 +4,7 @@ import PrivateRoute from '../components/routes/PrivateRoute';
 import MenuPage from './menu/MenuPage'
 import HomePage from './home/HomePage'
 import BlogList from './blog/BlogList'
+import BlogAdd from './blog/BlogAdd'
 import BlogEdit from './blog/BlogEdit'
 import BlogDraft from './blog/BlogDraft'
 
@@ -25,25 +26,7 @@ class LayoutPage extends Component {
       lists: [],
       openKeys: [''],
       selectedKeys: ['HOME_PAGE_1'],
-      menus: [
-        {type: 1, name: 'subnav 1', key: '1', icon: 'user', sub: [
-          {type: 2, name: 'option1', key: '11', icon: '', path: '/option11', sub: []},
-          {type: 2, name: 'option2', key: '12', icon: '', path: '/option12', sub: []},
-          {type: 2, name: 'option3', key: '13', icon: '', path: '/option13', sub: []},
-          {type: 2, name: 'option4', key: '14', icon: '', path: '/option14', sub: []},
-        ]},
-        {type: 1, name: 'subnav 2', key: '2', icon: 'laptop', sub: [
-          {type: 2, name: 'option21', key: '21', icon: '', path: '/option21', sub: []},
-          {type: 2, name: 'option22', key: '22', icon: '', path: '/option22', sub: []},
-          {type: 2, name: 'option23', key: '23', icon: '', path: '/option23', sub: []},
-        ]},
-        {type: 1, name: 'subnav 4', key: '3', icon: 'notification', sub: [
-          {type: 2, name: 'option31', key: '31', icon: '', path: '/option31', sub: []},
-          {type: 2, name: 'option32', key: '32', icon: '', path: '/option32', sub: []},
-          {type: 2, name: 'option33', key: '33', icon: '', path: '/option33', sub: []},
-        ]},
-        {type: 2, name: 'option4', key: '4', icon: 'laptop', path: '/option4', sub: []},
-      ],
+      menus: [],
       breadcrumb: [
         // {idx: 1, name: '首页', path: '/', key: 0,},
         // {idx: 2, name: '列表', path: '/list', key: 1,},
@@ -166,6 +149,7 @@ class LayoutPage extends Component {
                 <PrivateRoute exact path="/" component={HomePage}></PrivateRoute>
                 <PrivateRoute exact path="/menu" component={MenuPage}></PrivateRoute>
                 <PrivateRoute exact path="/blog/list" component={BlogList}></PrivateRoute>
+                <PrivateRoute exact path="/blog/add" component={BlogAdd}></PrivateRoute>
                 <PrivateRoute exact path="/blog/edit" component={BlogEdit}></PrivateRoute>
                 <PrivateRoute exact path="/blog/draft" component={BlogDraft}></PrivateRoute>
                 <PrivateRoute exact path="/bookmark" component={LinkList}></PrivateRoute>

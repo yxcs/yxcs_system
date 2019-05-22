@@ -3,6 +3,15 @@
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
 
 */
+.vhtml p {
+  line-height: 26px;
+  font-size: 14px;
+}
+.vhtml img {
+  max-width: 720px;
+  height: auto;
+  margin: 10px auto;
+}
 .hljs {
   display: block;
   overflow-x: auto;
