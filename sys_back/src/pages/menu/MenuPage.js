@@ -142,8 +142,9 @@ class MenuPage extends Component {
           http.updateMenu({id: superMenu.id, params}).then(res => {
             if (res.status === 200) {
               message.success('编辑成功');
-              this.handleHideAdd();
-              this.getMenuList();
+              setTimeout(_ => {
+                window.location.reload()
+              }, 2000)
             }
           })
 
@@ -159,16 +160,18 @@ class MenuPage extends Component {
             http.updateMenu({id: menuValue.id, params}).then(res => {
               if (res.status === 200) {
                 message.success('编辑成功');
-                this.handleHideAdd();
-                this.getMenuList();
+                setTimeout(_ => {
+                  window.location.reload()
+                }, 2000)
               }
             })
           } else {
             http.addMenu(params).then(res => {
               if (res.status === 200) {
                 message.success('添加成功');
-                this.handleHideAdd();
-                this.getMenuList();
+                setTimeout(_ => {
+                  window.location.reload()
+                }, 2000)
               }
             })
           }
@@ -230,7 +233,9 @@ class MenuPage extends Component {
     http.deleteMenu(v._id).then(res => {
       if (res.status === 200 && res.data.data === 1) {
         message.success('删除成功');
-        this.getMenuList();
+        setTimeout(_ => {
+          window.location.reload()
+        }, 2000)
       }
     })
   }
@@ -257,8 +262,9 @@ class MenuPage extends Component {
     http.updateMenu({id, params}).then(res => {
       if (res.status === 200) {
         message.success('删除成功');
-        this.handleHideAdd();
-        this.getMenuList();
+        setTimeout(_ => {
+          window.location.reload()
+        }, 2000)
       }
     })
   }
