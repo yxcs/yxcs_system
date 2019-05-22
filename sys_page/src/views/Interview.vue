@@ -1,54 +1,78 @@
 <template>
-  <div class="interview__wrap">
-    <div class="interview__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>面试</h1></div>
-    <ArticleBlock :list="[]"/>
-    <div class="page">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="50"
-        :page-size="10"
-        @current-change="onPageChange">
-      </el-pagination>
+  <div class="wrap">
+    <Top />
+    <div ref="interview" class="home__wrap">
+      <div class="home__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>全部</h1></div>
+      <ArticleBlock :list="list"/>
+      <div class="page">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="10"
+          @current-change="getList">
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Top from '@/components/Top'
 import ArticleBlock from '@/components/ArticleBlock'
+import { mapMutations } from 'vuex'
+import tool from '../utils/tool'
 export default {
   name: 'Interview',
+  data () {
+    return {
+      page: {
+        limit: 10,
+        current: 1
+      },
+      total: 0,
+      list: []
+    }
+  },
   components: {
+    Top,
     ArticleBlock
   },
+  mounted () {
+    this.setNavType('interview')
+    this.getList()
+  },
   methods: {
-    onPageChange (e) {
-      console.log(e)
+    ...mapMutations('global', [
+      'setNavType'
+    ]),
+    getList(index) {
+      const params = {
+        where: {
+          type: 3
+        },
+        limit: this.page.limit,
+        current: index || 1
+      }
+      this.page.current = 1
+      this.$http.article.getArticleList(params).then(res => {
+        if (res.status === 200 && res.data.status === 200) {
+          if (index) {
+            this.$refs.home.scrollIntoView()
+          }
+          this.total = res.data.total
+          this.list = res.data.data.map(item => {
+            item.createAt = tool.formatTime(item.createAt, 3)
+            item.typeTxt = tool.blogType[''+item.type]
+            return item
+          })
+        }
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .interview__wrap {
-    position: relative;
-    min-height: 400px;
-    width: 800px;
-    margin: 0 auto;
-    .interview__list--title {
-      padding: 10px 20px;
-      color: #666;
-      font-weight: 400;
-      border-bottom: 1px dashed #ececec;
-      background: #fff;
-      h1 {
-        font-size: 16px;
-      }
-      i {
-        font-size: 18px;
-        margin-right: 6px;
-      }
-    }
-  }
   .page {
     display: flex;
     justify-content: center;

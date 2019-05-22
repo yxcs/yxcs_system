@@ -1,21 +1,21 @@
 <template>
   <div class="article__wrap">
-    <template v-for="i in 10">
-      <div :key="i" class="article__item">
-        <div :class="['post-list-thumb', i % 2 ? 'left' : 'right']">
+    <template v-for="(item, index) in list">
+      <div :key="item._id" class="article__item">
+        <div :class="['post-list-thumb', index % 2 ? 'left' : 'right']">
           <div class="post-thumb-desc">
-            <p class="time"><i class="el-icon-time"></i>发布于 2017-04-09</p>
-            <div class="post-title"><router-link to="/test"><h3>ASky主题（19年2月21日更新1.7）</h3></router-link></div>
+            <p class="time"><i class="el-icon-time"></i>发布于 {{item.createAt}}</p>
+            <div class="post-title"><router-link :to="`/article/${item._id}`"><h3>{{item.title}}</h3></router-link></div>
             <div class="post-desc">
-              <i class="el-icon-lollipop"></i> 1.4k 热度 
-              <router-link to="/test"> <i class="el-icon-ice-cream"></i> 前端  </router-link>
-              <router-link to="/test"> <i class="el-icon-share"></i>分享</router-link>
+              <i class="el-icon-lollipop"></i> {{item.readCount}} 热度 
+              <router-link :to="`/article/${item._id}`"> <i class="el-icon-ice-cream"></i> {{item.typeTxt}}  </router-link>
+              <router-link :to="`/article/${item._id}`"> <i class="el-icon-share"></i>分享</router-link>
             </div>
-            <div class="post-text">前方迷途太多 坚持就有突破 正确做事就会越来越广阔   工作里怪事真多奇葩围绕着我今天必须吐 ...</div>
-            <div class="post-more"><router-link to="/test"><i class="el-icon-more"></i></router-link></div>
+            <div class="post-text">{{item.abstract}}</div>
+            <div class="post-more"><router-link :to="`/article/${item._id}`"><i class="el-icon-more"></i></router-link></div>
           </div>
           <div class="post-thumb-img">
-            <router-link to="/test"><img src="http://img.skyarea.cn/wp-content/uploads/2017/04/wallpaper.jpg" alt=""></router-link>
+            <router-link :to="`/article/${item._id}`"><img :src="item.coverImg" alt=""></router-link>
           </div>
         </div>
       </div>
@@ -92,6 +92,7 @@ export default {
         transition: .5s all;
         width: 100%;
         height: auto;
+        max-height: 260px;
       }
     }
     .time {

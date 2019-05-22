@@ -13,7 +13,7 @@
         <template v-for="item in menu">
           <div 
             :key="item.page" 
-            :class="['nav-item', item.page === 'home' ? 'active': '']">
+            :class="['nav-item', item.page === getNavType ? 'active': '']">
             <router-link :to="item.url">{{item.title}}</router-link>
           </div>
         </template>
@@ -24,6 +24,7 @@
 
 <script>
 import tool from '@/utils/tool'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Top',
   data () {
@@ -33,6 +34,11 @@ export default {
   },
   mounted () {
     this.menu = tool.menu
+  },
+  computed: {
+    ...mapGetters('global', [
+      'getNavType'
+    ])
   }
 }
 </script>
@@ -78,6 +84,7 @@ export default {
     .top__nav {
       height: 60px;
       background: #fff;
+      box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.1);
       .top__nav--inner {
         display: flex;
         justify-content: flex-start;

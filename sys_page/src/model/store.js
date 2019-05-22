@@ -35,10 +35,10 @@ const actions = {
     context.commit('newNum', num)
   }
 };
-const store = new Vuex.Store({
+
+export default {
   state,
   getters,
   mutations,
   actions
-})
-export default store
+}

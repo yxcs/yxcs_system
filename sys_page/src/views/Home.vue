@@ -1,16 +1,16 @@
 <template>
   <div class="wrap">
     <Top />
-    <div class="home__wrap">
+    <div ref="home" class="home__wrap">
       <div class="home__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>全部</h1></div>
-      <ArticleBlock :list="[]"/>
+      <ArticleBlock :list="list"/>
       <div class="page">
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="50"
+          :total="total"
           :page-size="10"
-          @current-change="onPageChange">
+          @current-change="getList">
         </el-pagination>
       </div>
     </div>
@@ -20,40 +20,57 @@
 <script>
 import Top from '@/components/Top'
 import ArticleBlock from '@/components/ArticleBlock'
+import { mapMutations } from 'vuex'
+import tool from '../utils/tool'
 export default {
   name: 'Home',
+  data () {
+    return {
+      page: {
+        limit: 10,
+        current: 1
+      },
+      total: 0,
+      list: []
+    }
+  },
   components: {
     Top,
     ArticleBlock
   },
+  mounted () {
+    this.setNavType('home')
+    this.getList()
+  },
   methods: {
-    onPageChange (e) {
-      console.log(e)
+    ...mapMutations('global', [
+      'setNavType'
+    ]),
+    getList(index) {
+      const params = {
+        where: {},
+        limit: this.page.limit,
+        current: index || 1
+      }
+      this.page.current = 1
+      this.$http.article.getArticleList(params).then(res => {
+        if (res.status === 200 && res.data.status === 200) {
+          if (index) {
+            this.$refs.home.scrollIntoView()
+          }
+          this.total = res.data.total
+          this.list = res.data.data.map(item => {
+            item.createAt = tool.formatTime(item.createAt, 3)
+            item.typeTxt = tool.blogType[''+item.type]
+            return item
+          })
+        }
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .home__wrap {
-    position: relative;
-    min-height: 400px;
-    width: 800px;
-    margin: 0 auto;
-    .home__list--title {
-      padding: 10px 20px;
-      color: #666;
-      font-weight: 400;
-      border-bottom: 1px dashed #ececec;
-      background: #fff;
-      h1 {
-        font-size: 16px;
-      }
-      i {
-        font-size: 18px;
-        margin-right: 6px;
-      }
-    }
-  }
   .page {
     display: flex;
     justify-content: center;

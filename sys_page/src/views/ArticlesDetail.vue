@@ -2,16 +2,16 @@
   <div class="article__wrap">
     <div class="article__top">
       <div class="article__top--abstract">
-        <div class="article__top--title">ASky主题（19年2月21日更新1.7）</div>
+        <div class="article__top--title">{{detail.title}}</div>
         <div class="article__top--line"></div>
         <div class="article__top--desc">
           <div class="avatar"><img src="../assets/logo.png" /></div>
-          <div>keith<span>·</span>2017-04-09<span>·</span>120.55k 次阅读</div>
+          <div>{{detail.authorName}}<span>·</span>{{detail.createAt}}<span>·</span>{{detail.readCount}} 次阅读</div>
         </div>
       </div>
     </div>
     <div class="article__content">
-      <div v-html="msg"></div>
+      <div v-html="detail.content"></div>
     </div>
   </div>
 </template>
@@ -20,36 +20,48 @@
 import marked from 'marked'
 import hljs from "highlight.js"
 import '../utils/markdown.css'
+import tool from '../utils/tool'
 export default {
   name: 'ArticlesDetail',
   data () {
     return {
-      msg: '#### 撒地方撒范德萨发的\n#### 撒地方撒范德萨发的\n```javascript\n \/\/ 测试 \n console.log(111)\n alert(234324);\nfor(var i=0;i<10;i++){\n  console.log(i);\n}\n```\n'
+      id: '',
+      detail: {}
     }
   },
   mounted () {
-    // this.msg = markdown.parse(this.msg)
-    marked.setOptions({
-        renderer: new marked.Renderer(),
-        highlight: function(code) {
-          return hljs.highlightAuto(code).value;
-        },
-        pedantic: false,
-        gfm: true,
-        tables: true,
-        breaks: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-        xhtml: false
-      }
-    );
-    this.msg = marked(this.msg)
-    this.msg = this.msg.replace(/<pre>/ig, '<pre class="hljs">')
-    console.log(this.msg)
+    this.id = this.$route.params.id
+    if (!this.id) {
+      this.$router.history.push('/test')
+    }
+    this.getDetail(this.id)
   },
-  components: {
-    // VueMarkdown
+  methods: {
+    getDetail(id) {
+      this.$http.article.getArticleDetails({id}).then(res => {
+        if (res.status === 200 && res.data.status === 200) {
+          const detail = res.data.data
+          marked.setOptions({
+            renderer: new marked.Renderer(),
+            highlight: function(code) {
+              return hljs.highlightAuto(code).value;
+            },
+            pedantic: false,
+            gfm: true,
+            tables: true,
+            breaks: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false,
+            xhtml: false
+          })
+          detail.content = marked(detail.content)
+          detail.content = detail.content.replace(/<pre>/ig, '<pre class="hljs">')
+          detail.createAt = tool.formatTime(detail.createAt, 3)
+          this.detail = detail
+        }
+      })
+    }
   }
 }
 </script> 
