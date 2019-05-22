@@ -147,9 +147,6 @@ class BlogEdit extends Component {
           abstract: values.abstract.substr(0, 66) + '...'
         }
         params.content = editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-        console.log(editorState.getCurrentContent())
-        console.log(convertToRaw(editorState.getCurrentContent()))
-        console.log(params.content)
         http.insertArticle(params).then(res => {
           if (res.data.status === 200 && res.data.data === 1) {
             message.success('添加成功');

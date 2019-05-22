@@ -11,14 +11,46 @@
       </div>
     </div>
     <div class="article__content">
-
+      <div v-html="msg"></div>
     </div>
   </div>
 </template>
 
 <script>
+import marked from 'marked'
+import hljs from "highlight.js"
+import '../utils/markdown.css'
 export default {
-  name: 'ArticlesDetail'
+  name: 'ArticlesDetail',
+  data () {
+    return {
+      msg: '#### 撒地方撒范德萨发的\n#### 撒地方撒范德萨发的\n```javascript\n \/\/ 测试 \n console.log(111)\n alert(234324);\nfor(var i=0;i<10;i++){\n  console.log(i);\n}\n```\n'
+    }
+  },
+  mounted () {
+    // this.msg = markdown.parse(this.msg)
+    marked.setOptions({
+        renderer: new marked.Renderer(),
+        highlight: function(code) {
+          return hljs.highlightAuto(code).value;
+        },
+        pedantic: false,
+        gfm: true,
+        tables: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      }
+    );
+    this.msg = marked(this.msg)
+    this.msg = this.msg.replace(/<pre>/ig, '<pre class="hljs">')
+    console.log(this.msg)
+  },
+  components: {
+    // VueMarkdown
+  }
 }
 </script> 
 <style lang="scss" scoped>
@@ -94,5 +126,8 @@ export default {
   margin: 40px auto;
   border: 1px solid rgba(0,0,0,0.08);
   min-height: 400px;
+  .hljs {
+    font-size: 14px;
+  }
 }
 </style>
