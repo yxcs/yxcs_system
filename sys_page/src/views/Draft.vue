@@ -2,7 +2,7 @@
   <div class="wrap">
     <Top />
     <div ref="draft" class="home__wrap">
-      <div class="home__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>全部</h1></div>
+      <div class="home__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>杂文</h1></div>
       <ArticleBlock :list="list"/>
       <div class="page">
         <el-pagination

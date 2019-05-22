@@ -2,7 +2,7 @@
   <div class="article__wrap">
     <template v-for="(item, index) in list">
       <div :key="item._id" class="article__item">
-        <div :class="['post-list-thumb', index % 2 ? 'left' : 'right']">
+        <div :class="['post-list-thumb', index % 2 ? 'right' : 'left']">
           <div class="post-thumb-desc">
             <p class="time"><i class="el-icon-time"></i>发布于 {{item.createAt}}</p>
             <div class="post-title"><router-link :to="`/article/${item._id}`"><h3>{{item.title}}</h3></router-link></div>
