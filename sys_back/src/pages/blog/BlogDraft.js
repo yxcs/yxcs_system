@@ -68,7 +68,7 @@ class BlogDraft extends Component {
   }
 
   gotoAddArticle = () => {
-    this.props.history.push('/blog/edit')
+    this.props.history.push('/blog/add')
   }
 
   onEditDraft = (id) => {

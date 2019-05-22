@@ -150,7 +150,7 @@ class LayoutPage extends Component {
                 <PrivateRoute exact path="/menu" component={MenuPage}></PrivateRoute>
                 <PrivateRoute exact path="/blog/list" component={BlogList}></PrivateRoute>
                 <PrivateRoute exact path="/blog/add" component={BlogAdd}></PrivateRoute>
-                <PrivateRoute exact path="/blog/edit" component={BlogEdit}></PrivateRoute>
+                <PrivateRoute exact path="/blog/edit/:id" component={BlogEdit}></PrivateRoute>
                 <PrivateRoute exact path="/blog/draft" component={BlogDraft}></PrivateRoute>
                 <PrivateRoute exact path="/bookmark" component={LinkList}></PrivateRoute>
                 <PrivateRoute exact path="/bookmark/edit" component={LinkEdit}></PrivateRoute>

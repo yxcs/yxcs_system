@@ -52,8 +52,8 @@ class LinkList extends Component {
         let lists = res.data.data;
         lists = lists.map(item => {
           linkType.forEach(sItem => {
-            if (item.type === sItem.type) {
-              item.typeText = sItem.value
+            if (item.type === +sItem.key) {
+              item.typeTxt = sItem.value
             }
           })
           item.createText = tool.formatTime(item.createAt);
@@ -225,8 +225,8 @@ class LinkList extends Component {
         }
       }, {
         title: '分类',
-        dataIndex: 'typeText',
-        key: 'typeText',
+        dataIndex: 'typeTxt',
+        key: 'typeTxt',
       }, {
         title: '创建时间',
         dataIndex: 'createText',

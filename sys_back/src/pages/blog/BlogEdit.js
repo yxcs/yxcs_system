@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import './blog.less'
 import http from '../../services/blog';
-import { convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToMarkdown from 'draftjs-to-markdown';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import {
   Form, Input, Radio, Select, Checkbox, Button, message
 } from 'antd';
+
+import Editor from 'for-editor'
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -68,21 +66,42 @@ class BlogEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: '',
       title: '',
-      editorState: null,
       type: '1',
       subType:'11',
       source: '1',
-      subTypeList: []
+      subTypeList: [],
+      abstract: [],
+      markValue: '',
+      draft: true
     }
   }
 
   componentDidMount() {
+    const id = this.props.match.params.id
     let subTypeList = type[0].subType;
     subTypeList = subTypeList.map(item => {
       return <Option key={item.key} value={item.key}>{item.name}</Option>
     })
-    this.setState({ subTypeList })
+    this.setState({ subTypeList, id })
+    this.getDetail(id)
+  }
+
+  getDetail = (id) => {
+    http.getArticle({id}).then(res => {
+      if (res.status === 200 && res.data.status === 200) {
+        const detail = res.data.data;
+        this.setState({
+          title: detail.title,
+          markValue: detail.content,
+          type: '' + detail.type,
+          abstract: detail.abstract,
+          subType: detail.subType,
+          source: '' + detail.source
+        })
+      }
+    })
   }
 
   onTitleChange = (v) => {
@@ -96,12 +115,6 @@ class BlogEdit extends Component {
       absrtact: v.target.value
     })
   }
-
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-    });
-  };
 
   onTypeChange = (v) => {
     const currType = v.target.value;
@@ -120,16 +133,14 @@ class BlogEdit extends Component {
     })
   }
 
-  onSubTypeChange = (v) => {
-
-  }
-
-  onSourceChange = (v) => {
-
+  onMarkdownchange = (value) => {
+    this.setState({
+      markValue: value
+    })
   }
 
   handleSubmit = (e) => {
-    const { title, editorState, type } = this.state;
+    const { id, title, markValue } = this.state;
     e.preventDefault();
     if (!title) {
       message.success('请填写标题');
@@ -142,14 +153,13 @@ class BlogEdit extends Component {
           type: values.type,
           subType: values.subType,
           source: values.source,
-          content: '',
+          content: markValue,
           title: title,
           abstract: values.abstract.substr(0, 66) + '...'
         }
-        params.content = editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-        http.insertArticle(params).then(res => {
+        http.updateArticle({ id, params }).then(res => {
           if (res.data.status === 200 && res.data.data === 1) {
-            message.success('添加成功');
+            message.success('更新成功');
             if (values.draft) {
               this.props.history.push('/blog/list');
             } else {
@@ -191,15 +201,12 @@ class BlogEdit extends Component {
     return (
       <div className="blog__edit--wrap">
         <div className="blog__edit--title">
-          <Input onChange={this.onTitleChange.bind(this)} placeholder="填写标题" />
+          <Input value={this.state.title} onChange={this.onTitleChange.bind(this)} placeholder="填写标题" />
         </div>
-        <Editor
-          localization={{ locale: 'zh' }}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          onEditorStateChange={this.onEditorStateChange.bind(this)}
-        />
+
+        <div className="blog__markdown--editer">
+          <Editor value={this.state.markValue} onChange={this.onMarkdownchange.bind(this)} />
+        </div>
 
         <div className="form-wrap">
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -208,7 +215,7 @@ class BlogEdit extends Component {
                 rules: [{
                   required: true, message: '请选择分类',
                 }],
-                initialValue: '1'
+                initialValue: this.state.type
               })(
                 <Radio.Group onChange={this.onTypeChange.bind(this)}>
                 {
@@ -223,7 +230,8 @@ class BlogEdit extends Component {
              {getFieldDecorator('abstract', {
                 rules: [{
                   required: true, message: '请添加摘要'
-                }]
+                }],
+                initialValue: this.state.abstract
               })(
                 <TextArea onChange={this.onAbstractChange.bind(this)} placeholder="填写简介，66字以内"></TextArea>
               )}
@@ -232,12 +240,12 @@ class BlogEdit extends Component {
              {getFieldDecorator('subType', {
                 rules: [{
                   required: true, message: '请添加标签',
-                }]
+                }],
+                initialValue: this.state.subType
               })(
                 <Select
                   mode="multiple"
                   placeholder="请选择 多选"
-                  onChange={this.onSubTypeChange.bind(this)}
                   style={{ width: '100%' }}
                 >
                   {subTypeList}
@@ -249,9 +257,9 @@ class BlogEdit extends Component {
                 rules: [{
                   required: true, message: '请选择来源',
                 }],
-                initialValue: '1'
+                initialValue: this.state.source
               })(
-                <Radio.Group onChange={this.onSourceChange}>
+                <Radio.Group>
                   {
                     source.map(item => {
                       return <Radio.Button key={item.key} value={item.key}>{item.name}</Radio.Button>

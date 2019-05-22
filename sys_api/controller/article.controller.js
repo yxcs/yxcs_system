@@ -67,7 +67,7 @@ class ArticleController {
       options = JSON.parse(options);
     }
     const data = await Article.findById(id, showOpts, options);
-    if (data && data.id) {
+    if (data && data._id) {
       ctx.body = {
         status: 200,
         data: data,
