@@ -5,7 +5,7 @@
         <div class="article__top--title">{{detail.title}}</div>
         <div class="article__top--line"></div>
         <div class="article__top--desc">
-          <div class="avatar"><img src="../assets/logo.png" /></div>
+          <div class="avatar"><img src="../assets/avatar.png" /></div>
           <div>{{detail.authorName}}<span>·</span>{{detail.createAt}}<span>·</span>{{detail.readCount}} 次阅读</div>
         </div>
       </div>

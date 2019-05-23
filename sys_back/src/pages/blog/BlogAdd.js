@@ -3,7 +3,7 @@ import './blog.less'
 import http from '../../services/blog';
 
 import {
-  Form, Input, Radio, Select, Checkbox, Button, message
+  Form, Input, Radio, Select, Checkbox, Button, message, Upload, Icon
 } from 'antd';
 
 import Editor from 'for-editor'
@@ -72,7 +72,8 @@ class BlogAdd extends Component {
       subType:'11',
       source: '1',
       subTypeList: [],
-      markValue: ''
+      markValue: '',
+      coverImg: ''
     }
   }
 
@@ -120,12 +121,8 @@ class BlogAdd extends Component {
   }
 
   handleSubmit = (e) => {
-    const { title, markValue } = this.state;
+    const { markValue, coverImg } = this.state;
     e.preventDefault();
-    if (!title) {
-      message.success('请填写标题');
-      return false;
-    }
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const params = {
@@ -134,8 +131,9 @@ class BlogAdd extends Component {
           subType: values.subType,
           source: values.source,
           content: markValue,
-          title: title,
-          abstract: values.abstract.substr(0, 66) + '...'
+          title: values.title,
+          abstract: values.abstract.substr(0, 66) + '...',
+          coverImg: coverImg
         }
         http.insertArticle(params).then(res => {
           if (res.data.status === 200 && res.data.data === 1) {
@@ -151,9 +149,38 @@ class BlogAdd extends Component {
     })
   }
 
+  beforeUpload = (file) => {
+    const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+    const size = 2
+    if (type.indexOf(file.type) === -1) {
+      message.error('请上传jpeg、jpg、png、gif格式的图片')
+      return false
+    }
+    if (size * 1024 * 1024 < file.size) {
+      message.error('图片在2M以内')
+      return false
+    }
+    return true
+  }
+
+  handleChange = ({file = {}}) => {
+    if (file && file.response) {
+      this.setState({
+        coverImg: file.response.url
+      })
+    }
+  }
+
+  normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form;
-    const { subTypeList } = this.state;
+    const { subTypeList, coverImg } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -178,18 +205,29 @@ class BlogAdd extends Component {
       },
     };
 
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+
     return (
       <div className="blog__edit--wrap">
-        <div className="blog__edit--title">
-          <Input onChange={this.onTitleChange.bind(this)} placeholder="填写标题" />
-        </div>
-
         <div className="blog__markdown--editer">
           <Editor value={this.state.markValue} onChange={this.onMarkdownchange.bind(this)} />
         </div>
-
         <div className="form-wrap">
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form.Item label="标题">
+              {getFieldDecorator('abstract', {
+                rules: [{
+                  required: true, message: '请填写标题'
+                }]
+              })(
+                <Input onChange={this.onTitleChange.bind(this)} placeholder="填写标题" />
+              )}
+            </Form.Item>
             <Form.Item label="分类">
               {getFieldDecorator('type', {
                 rules: [{
@@ -245,6 +283,29 @@ class BlogAdd extends Component {
                   }
                 </Radio.Group>
               )}
+            </Form.Item>
+            <Form.Item label="封面图片">
+              <div className="coverImg">
+                {getFieldDecorator('coverImg', {
+                  rules: [{
+                    required: true, message: '请上传封面图'
+                  }],
+                  valuePropName: 'fileList',
+                  getValueFromEvent: this.normFile,
+                })(
+                  <Upload
+                    name="file"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="http://localhost:4001/uploadfile"
+                    beforeUpload={this.beforeUpload}
+                    onChange={this.handleChange}
+                  >
+                    {coverImg ? <img src={coverImg} alt="avatar" /> : uploadButton}
+                  </Upload>
+                )}
+              </div>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               {getFieldDecorator('draft', {

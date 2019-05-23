@@ -2,7 +2,7 @@
   <div class="top__wrap">
     <div class="top__user">
       <div class="top__user--avatar">
-        <router-link to="/test"><img src="../assets/logo.png" /></router-link>
+        <router-link to="/test"><img src="../assets/avatar.png" /></router-link>
       </div>
       <div class="top__user--solgan">
         抓不住的逝水流年，留不住的曾经少年

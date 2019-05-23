@@ -14,6 +14,9 @@ const verifyToken = (_token) => {
 
 class ArticleController {
 
+  constructor() {
+  }
+
   async insertArticle(ctx) {
     const { body } = ctx.request
     const art = new Article(body);
@@ -73,6 +76,7 @@ class ArticleController {
         data: data,
         message: '查找成功'
       }
+      await Article.findByIdAndUpdate(data._id, {readCount: data.readCount + 1})
     } else {
       ctx.body = {
         status: 200,
