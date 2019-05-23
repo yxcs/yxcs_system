@@ -29,9 +29,7 @@
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
     "koa2-cors": "^2.0.6",
-    "mongoose": "^4.4.3"
-  },
-  "devDependencies": {
+    "mongoose": "^4.4.3",
     "babel-cli": "^6.5.1",
     "babel-eslint": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",

@@ -10,6 +10,8 @@ const koaBody = require('koa-body')
 // 跨域相关
 const cors = require('koa2-cors')
 
+const config = require('./config')
+
 const index = require('./routes/index')
 const users = require('./routes/users')
 
@@ -33,9 +35,9 @@ app.use(cors({
     const upload = new RegExp('/uploadfile');
     const static = new  RegExp('/static|images');
     if (upload.test(ctx.url)) {
-      return 'http://localhost:3000'
+      return config.BACK_URL
     } else if (static.test(ctx.url)) {
-      return 'http://localhost:8080'
+      return config.FRONT_URL
     }
     return false;
   },

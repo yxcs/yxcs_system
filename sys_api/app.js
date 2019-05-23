@@ -37,9 +37,9 @@ app
       } else if (~String(ctx.url).indexOf('/imgs/')) {
         return `http://${config.url.image}`;
       } else if (regexp.test(ctx.url)) {
-        return 'http://localhost:3000'
+        return config.BACK_URL
       } else if (front_rep.test(ctx.url)) {
-        return 'http://localhost:8080'
+        return config.FRONT_URL
       }
       return false;
     },

@@ -96,7 +96,7 @@ router.post('/uploadfile', async (ctx, next) => {
   const upStream = fs.createWriteStream(filePath);
   reader.pipe(upStream);
   return ctx.body = {
-    url: config.BASE_URL + '/static/' + file.name,
+    url: config.STATIC_URL + '/static/' + file.name,
     fileCount: 1,
     message: '上传成功'
   }
@@ -111,7 +111,7 @@ router.post('/uploadfiles', async (ctx, next) => {
     let filePath = Path.join(__dirname, 'public/upload/') + `/${file.name}`;
     const upStream = fs.createWriteStream(filePath);
     reader.pipe(upStream);
-    filenames.push(config.BASE_URL + '/static/' + file.name)
+    filenames.push(config.STATIC_URL + '/static/' + file.name)
   }
   return ctx.body = {
     url: filenames,
