@@ -8,6 +8,8 @@ import {
 
 import Editor from 'for-editor'
 
+import config from '../../config'
+
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -298,7 +300,7 @@ class BlogAdd extends Component {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action="http://localhost:4001/uploadfile"
+                    action={`${config.static_url}/uploadfile`}
                     beforeUpload={this.beforeUpload}
                     onChange={this.handleChange}
                   >

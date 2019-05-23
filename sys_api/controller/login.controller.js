@@ -6,9 +6,6 @@ import User from '../dbs/user/userSchema';
 
 class LoginController {
 
-  /** you can login with
-   * curl -X POST http://localhost:3200/api/login/ -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' -d 'username=superman2&password=123456'
-   */
   async login(ctx) {
     const { body } = ctx.request
     try {
@@ -49,10 +46,6 @@ class LoginController {
     }
   }
 
-  /**
-   * you can register with
-   * curl -X POST http://localhost:3200/api/register  -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded'  -d 'username=superman2&password=123456'
-   */
   async register(ctx) {
     const { body } = ctx.request;
     try {
