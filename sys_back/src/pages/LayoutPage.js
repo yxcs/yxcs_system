@@ -144,7 +144,7 @@ class LayoutPage extends Component {
               })
             }
             </Breadcrumb>
-            <Content style={{ background: '#fff', padding: 24, margin: 0}}>
+            <Content className="main__content" style={{ background: '#fff', padding: 24, margin: 0}}>
               <Switch>
                 <PrivateRoute exact path="/" component={HomePage}></PrivateRoute>
                 <PrivateRoute exact path="/menu" component={MenuPage}></PrivateRoute>
