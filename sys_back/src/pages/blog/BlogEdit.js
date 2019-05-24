@@ -71,13 +71,14 @@ class BlogEdit extends Component {
       id: '',
       title: '',
       type: '1',
-      subType:'11',
+      subType: '11',
       source: '1',
       subTypeList: [],
       abstract: [],
       markValue: '',
       draft: true,
-      coverImg: ''
+      coverImg: '',
+      fileList: [{url: ''}]
     }
   }
 
@@ -95,6 +96,15 @@ class BlogEdit extends Component {
     http.getArticle({id}).then(res => {
       if (res.status === 200 && res.data.status === 200) {
         const detail = res.data.data;
+        let subTypeList = [];
+        type.forEach(item => {
+          if(+item.key === +detail.type) {
+            subTypeList = item.subType;
+          }
+        })
+        subTypeList = subTypeList.map(item => {
+          return <Option key={item.key} value={item.key}>{item.name}</Option>
+        })
         this.setState({
           title: detail.title,
           markValue: detail.content,
@@ -102,7 +112,9 @@ class BlogEdit extends Component {
           abstract: detail.abstract,
           subType: detail.subType,
           source: '' + detail.source,
-          coverImg : detail.coverImg
+          coverImg : detail.coverImg,
+          subTypeList: [...subTypeList],
+          fileList: [{url: detail.coverImg}]
         })
       }
     })
@@ -133,7 +145,8 @@ class BlogEdit extends Component {
     })
     this.setState({
       type: currType,
-      subTypeList: [...subTypeList]
+      subTypeList: [...subTypeList],
+      subType: []
     })
   }
 
@@ -186,15 +199,19 @@ class BlogEdit extends Component {
     return true
   }
 
-  handleChange = ({file = {}}) => {
+  handleChange = ({file, fileList}) => {
     if (file && file.response) {
       this.setState({
-        coverImg: file.response.url
+        coverImg: file.response.url,
+        fileList
       })
     }
   }
 
   normFile = e => {
+    console.log(e)
+    e.file = {}
+    e.fileList = []
     if (Array.isArray(e)) {
       return e;
     }
@@ -237,9 +254,6 @@ class BlogEdit extends Component {
 
     return (
       <div className="blog__edit--wrap">
-        <div className="blog__edit--title">
-          <Input value={this.state.title} onChange={this.onTitleChange.bind(this)} placeholder="填写标题" />
-        </div>
 
         <div className="blog__markdown--editer">
           <Editor value={this.state.markValue} onChange={this.onMarkdownchange.bind(this)} />
@@ -318,11 +332,6 @@ class BlogEdit extends Component {
             <Form.Item label="封面图片">
               <div className="coverImg">
                 {getFieldDecorator('coverImg', {
-                  rules: [{
-                    required: true, message: '请上传封面图'
-                  }],
-                  valuePropName: 'fileList',
-                  getValueFromEvent: this.normFile,
                 })(
                   <Upload
                     name="file"

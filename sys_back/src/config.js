@@ -1,7 +1,7 @@
 let config = {
-  apiHost: 'http://localhsot:8808',
-  static_url: 'http://localhsot:4001',
-  baseUrl: 'http://localhsot:3000',
+  apiHost: 'http://localhost:8808',
+  static_url: 'http://localhost:4001',
+  baseUrl: 'http://localhost:3000',
   secret: 'bradhcp95qc'
 }
 
