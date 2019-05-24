@@ -12,7 +12,6 @@ const ArticlesDetail = () => import('@/views/ArticlesDetail')
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
   routes: [{
     path: '/home',
     name: 'MainLayout',
