@@ -1,6 +1,6 @@
 export default {
   port: '8808',
-  dbHost: '106.13.141.26:27017',
+  dbHost: '172.16.0.4:27017',
   dbName: 'sys',
   secret: 'DXkO5OulaS5E0VUM1Uypjs3eQayV38',    // jwt 秘钥
   url: {
