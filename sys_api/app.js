@@ -1,25 +1,25 @@
-import Koa from 'koa'
-import views from 'koa-views'
-import helmet from 'koa-helmet'
-import json from 'koa-json'
-import onerror from 'koa-onerror'
-import bodyparser from 'koa-bodyparser'
-import logger from 'koa-logger'
-import cors from 'koa2-cors'
+const Koa = require('koa')
+const views = require('koa-views')
+const helmet = require('koa-helmet')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const logger = require('koa-logger')
+const cors = require('koa2-cors')
 
-import config from './config';
+const config = require('./config')
 
 // jwt 验证
-import jwtKoa from 'koa-jwt'
+const jwtKoa = require('koa-jwt')
 
 const app = new Koa()
 
 // 自定义中间件
-import pv from './middleware/koa-pv'
+const pv = require('./middleware/koa-pv')
 app.use(pv())
 
 // Token 错误处理
-import errorHandle from './middleware/error';
+const errorHandle = require('./middleware/error')
 app
   .use(errorHandle)
   .use(logger())
@@ -56,10 +56,10 @@ app
   }))
   .use(json())
 
-import index from './routes/index'
-import users from './routes/users'
-import api from './routes/api'
-import v1 from './routes/v1'
+const index = require('./routes/index')
+const users = require('./routes/users')
+const api = require('./routes/api')
+const v1 = require('./routes/v1')
 
 // error handler
 onerror(app)
