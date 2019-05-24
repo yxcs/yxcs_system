@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Top from '@/components/Top'
-import ArticleBlock from '@/components/ArticleBlock'
+const Top = () => import('@/components/Top')
+const ArticleBlock = () => import('@/components/ArticleBlock')
 import { mapMutations } from 'vuex'
 import tool from '../utils/tool'
 export default {

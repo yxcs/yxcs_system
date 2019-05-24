@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Bottom from '@/components/Bottom'
+const Bottom = () => import('@/components/Bottom')
 export default {
   name: 'MainLayout',
   components: {

@@ -2,16 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import MainLayout from "@/views/MainLayout";
-import Home from '@/views/Home'
-import FrontEnd from '@/views/FrontEnd'
-import BackEnd from '@/views/BackEnd'
-import Interview from '@/views/Interview'
-import Draft from '@/views/Draft'
-import ArticlesDetail from '@/views/ArticlesDetail'
+const Home = () => import('@/views/Home')
+const FrontEnd = () => import('@/views/FrontEnd')
+const BackEnd = () => import('@/views/BackEnd')
+const Interview = () => import('@/views/Interview')
+const Draft = () => import('@/views/Draft')
+const ArticlesDetail = () => import('@/views/ArticlesDetail')
 
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [{
     path: '/home',
     name: 'MainLayout',
