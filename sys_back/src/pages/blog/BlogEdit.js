@@ -248,7 +248,7 @@ class BlogEdit extends Component {
         <div className="form-wrap">
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="标题">
-              {getFieldDecorator('abstract', {
+              {getFieldDecorator('title', {
                 rules: [{
                   required: true, message: '请填写标题'
                 }],
