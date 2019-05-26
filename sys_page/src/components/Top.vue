@@ -18,6 +18,9 @@
           </div>
         </template>
       </div>
+      <div :class="['top__nav--user', getNavType === 'user' ? 'active': '']">
+        <router-link to="/user/00"><i class="el-icon-user"></i></router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -82,36 +85,46 @@ export default {
     }
 
     .top__nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 60px;
       background: #fff;
       box-shadow: 0px 1px 5px 2px rgba(0,0,0,0.1);
+
+      a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        transition: .5s all;
+      }
+      a:hover {
+        background: #91BFEF;
+        color: #fff;
+      }
+      .active a {
+        background: #409EFF;
+        color: #fff;
+      }
       .top__nav--inner {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        width: 800px;
-        margin: 0 auto;
+        width: 720px;
         font-size: 14px;
         .nav-item {
           width: 80px;
           height: 60px;
           line-height: 60px;
           text-align: center;
-          a {
-            display: inline-block;
-            width: 100%;
-            height: 100%;
-            transition: .5s all;
-          }
-          a:hover {
-            background: #91BFEF;
-            color: #fff;
-          }
-          &.active a {
-            background: #409EFF;
-            color: #fff;
-          }
         }
+      }
+      .top__nav--user {
+        width: 80px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        font-size: 28px;
       }
     }
   }

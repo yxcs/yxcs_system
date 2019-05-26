@@ -8,6 +8,7 @@ const BackEnd = () => import('@/views/BackEnd')
 const Interview = () => import('@/views/Interview')
 const Draft = () => import('@/views/Draft')
 const ArticlesDetail = () => import('@/views/ArticlesDetail')
+const User = () => import('@/views/User')
 
 Vue.use(Router)
 
@@ -63,6 +64,14 @@ const router = new Router({
       meta:{
         title: '文章详情',
         page: 'article'
+      }
+    }, {
+      path: '/user/:id',
+      name: 'User',
+      component: User,
+      meta:{
+        title: '用户详情',
+        page: 'user'
       }
     }]
   }, {

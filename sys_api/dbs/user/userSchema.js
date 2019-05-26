@@ -15,7 +15,19 @@ const UserSchema = new Schema({
   logindate: {
     type: Date,
     default: Date.now
-  } //最近登录时间
+  },
+  avatar: {
+    type: String,
+    default: 'http://106.13.141.26:4001/static/20190512184540_ceWhn.jpeg'
+  },
+  slogan: {
+    type: String,
+    default: '这个人很懒什么都没留下...'
+  },
+  notice: {
+    type: String,
+    default: '这个人很懒什么都没留下...'
+  }
 });
 
 export default mongoose.model('User', UserSchema);
