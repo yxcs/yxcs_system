@@ -27,6 +27,10 @@ const UserSchema = new Schema({
   notice: {
     type: String,
     default: '这个人很懒什么都没留下...'
+  },
+  power: {
+    type: String,
+    default: 'BLOG_MANAGEMENT'
   }
 });
 
