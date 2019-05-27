@@ -4,7 +4,7 @@
     <div class="user__update">
       <el-form v-if="isUpdate" label-position="right" label-width="80px" :model="updateForm">
         <el-form-item label="名称">
-          <el-input size="small" v-model="updateForm.username"></el-input>
+          <el-input size="small" v-model="updateForm.username" disabled></el-input>
         </el-form-item>
         <el-form-item size="small" label="座右铭">
           <el-input size="small" v-model="updateForm.slogan"></el-input>
@@ -120,16 +120,15 @@ export default {
           notice: updateForm.notice,
           slogan: updateForm.slogan,
         }
-        if (!params.username) {
-          this.$message.warning('请输入用户名')
-          return false
-        }
       } else {
         params = {
           password: resetPwd.pwd
         }
         if (!resetPwd.pwd) {
           this.$message.warning('请输入密码')
+          return false
+        } else if (resetPwd.pwd.length < 4) {
+          this.$message.warning('密码至少4个字符')
           return false
         }
         if (resetPwd.pwd !== resetPwd.resPwd) {

@@ -108,9 +108,15 @@ export default {
       if (!params.username) {
         this.$message.warning('请输入用户名')
         return false
+      } else if (params.username.length < 4) {
+        this.$message.warning('用户名至少4个字符')
+        return false
       }
       if (!params.password) {
         this.$message.warning('请输入密码')
+        return false
+      } else if (params.password.length < 4) {
+        this.$message.warning('密码至少4个字符')
         return false
       }
       if (params.password !== this.registerFrom.rePassword) {

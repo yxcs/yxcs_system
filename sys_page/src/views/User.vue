@@ -3,54 +3,104 @@
     <Top />
     <div class="user__info">
       <div class="user__info--msg">
-        <img src="../assets/avatar.png" />
+        <img :src="user.avatar" />
         <div class="user__info--desc">
-          <p class="user-name">Kitty Cat</p>
-          <p class="user-slogan">真正的英雄主义，是认清生活的真相后还依然热爱它</p>
+          <p class="user-name">{{user.username}}</p>
+          <p v-if="user.slogan" class="user-slogan">{{user.slogan}}</p>
         </div>
       </div>
-      <div class="user__info--notice">
+      <div v-if="user.notice" class="user__info--notice">
         <div class="notice">
-          <p class="notice-desc">真正的英雄主义，是认清生活的真相后还依然热爱它</p>
-          <p class="notice-time"><i class="el-icon-time"></i>发布于 2019-08-09</p>
+          <p class="notice-desc">{{user.notice}}</p>
+          <p class="notice-time"><i class="el-icon-time"></i>发布于 {{user.noticeAt}}</p>
         </div>
-        <img src="../assets/avatar.png" />
+        <img :src="user.avatar" />
       </div>
     </div>
     <div class="user__works">
-      <template v-for="i in 10">
-        <div :key="i" class="user__works--item">
+      <template v-for="item in list">
+        <div :key="item._id" class="user__works--item">
           <div class="line"><hr /></div>
           <div class="user__works--msg">
-            <router-link :to="`/article/${111}`"><img src="../assets/avatar.png" alt=""></router-link>
+            <router-link :to="`/article/${item._id}`"><img :src="item.coverImg" alt=""></router-link>
             <div>
-              <p class="title"><router-link to="/article/00">ASky 1.8修改记录</router-link> <span><i class="el-icon-time"></i>发布于 2019-03-03</span></p>
-              <p class="desc">1.7更新得比较草率，1.8还是做下记录…… 增加文章目录——主功能从小猫博客取得，优化正则格式，调整前端表达优化数据统计——但还是无法分辩出真访客和机器人...</p>
+              <p class="title"><router-link :to="`/article/${item._id}`">{{item.title}}</router-link> <span><i class="el-icon-time"></i>发布于 {{item.createAt}}</span></p>
+              <p class="desc">{{item.abstract}}</p>
             </div>
           </div>
           <div class="more"><router-link :to="`/article/${111}`"><i class="el-icon-more"></i></router-link></div>
         </div>
       </template>
     </div>
-    <div class="pagination">下一页</div>
+    <div v-if="total > list.length" class="pagination" @click="nexPage()">下一页</div>
   </div>
 </template>
 
 <script>
 const Top = () => import('@/components/Top')
 import { mapMutations } from 'vuex'
+import tool from '../utils/tool'
 export default {
   name: 'User',
+  data () {
+    return {
+      id: '',
+      user: {},
+      page: {
+        limit: 10,
+        current: 1
+      },
+      total: 0,
+      list: []
+    }
+  },
   components: {
     Top
   },
   mounted () {
-    this.setNavType('user')
+    this.setNavType('')
+    this.id = this.$route.params.id
+    this.getUerMsg(this.id)
   },
   methods: {
     ...mapMutations('global', [
       'setNavType'
     ]),
+    getUerMsg (id) {
+      this.$http.login.getUserById({id}).then(res => {
+        if (res.status === 200 && res.data.status === 200) {
+          const user = res.data.data
+          user.noticeAt = user.noticeAt && tool.formatTime(user.noticeAt, 3)
+          this.user = user
+          this.getList()
+        }
+      })
+    },
+    getList(page) {
+      const params = {
+        where: {
+          // authorId: this.id
+        },
+        limit: this.page.limit,
+        current: page || this.page.current
+      }
+      this.page.current = 1
+      this.$http.article.getArticleList(params).then(res => {
+        if (res.status === 200 && res.data.status === 200) {
+          this.total = res.data.total
+          const list = res.data.data.map(item => {
+            item.createAt = tool.formatTime(item.createAt, 3)
+            item.typeTxt = tool.blogType[''+item.type]
+            return item
+          })
+          this.list = this.list.concat(list)
+        }
+      })
+    },
+    nexPage() {
+      this.page.current += 1;
+      this.getList(this.page.current)
+    }
   }
 }
 </script>

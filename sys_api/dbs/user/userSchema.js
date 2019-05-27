@@ -22,11 +22,15 @@ const UserSchema = new Schema({
   },
   slogan: {
     type: String,
-    default: '这个人很懒什么都没留下...'
+    default: ''
   },
   notice: {
     type: String,
-    default: '这个人很懒什么都没留下...'
+    default: ''
+  },
+  noticeAt: {
+    type: Date,
+    default: Date.now
   },
   power: {
     type: String,

@@ -14,14 +14,8 @@ class UserController {
   async updateUser(ctx) {
     const { body } = ctx.request;
     const user = await User.findOne({ username: body.params.username });
-    if (user && user._id !== body.id) {
-      ctx.status = 200
-      ctx.body = {
-        status: 1001,
-        message: '用户名已存在',
-        data: false
-      }
-      return;
+    if (user.notice !== body.params.notice) {
+      body.params.noticeAt = Date.now()
     }
     if (body.params.password) {
       body.params.password = await bcrypt.hash(body.params.password, 5)
@@ -58,7 +52,8 @@ class UserController {
             logindate: data.logindate,
             notice: data.notice,
             slogan: data.slogan,
-            id: data._id
+            id: data._id,
+            noticeAt: data.noticeAt
           },
           message: '查找成功'
         }
