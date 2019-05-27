@@ -1,12 +1,45 @@
 html,body {
   height: 100%;
 }
-.header .logo {
+.header .sys__name {
   width: 120px;
-  height: 31px;
-  background: rgba(255,255,255,.2);  
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: rgba(255,255,255, 0.2);  
   margin: 16px 28px 16px 0;
   float: left;
+  padding: 0;
+  color: #fff;
+}
+.header .sys__user {
+  float: right;
+  color: #fff;
+}
+.header .sys__user > div {
+  position: relative;
+}
+.header .sys_logout {
+  position: absolute;
+  z-index: 9;
+  top: 56px;
+  width: 80px;
+  padding-top: 0;
+  padding-bottom: 0;
+  cursor: pointer;
+}
+.header .ant-card-body {
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+.header .sys_logout p {
+  padding: 0;
+}
+.header .sys__user img{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  margin-right: 10px;
 }
 .sider {
   overflow-x: hidden;

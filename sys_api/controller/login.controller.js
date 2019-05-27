@@ -25,7 +25,11 @@ class LoginController {
           data: {
             logindate: user.logindate,
             username: user.username,
-            id: user._id
+            id: user._id,
+            username: user.username,
+            avatar: user.avatar,
+            notice: user.notice,
+            slogan: user.slogan
           },
           // 生成 token 返回给客户端
           token: jsonwebtoken.sign({

@@ -20,3 +20,8 @@ export const updateLink = `${config.apiHost}/api/updateLink`
 export const deleteLink = `${config.apiHost}/api/deleteLink`
 export const getLink = `${config.apiHost}/api/getLink`
 export const getLinks = `${config.apiHost}/api/getLinks`
+
+// 用户相关
+export const getUsers = `${config.apiHost}/api/getUsers`
+export const getUser = `${config.apiHost}/api/getUser`
+export const updateUser = `${config.apiHost}/api/updateUser`

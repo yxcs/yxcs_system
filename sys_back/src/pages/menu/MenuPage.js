@@ -24,13 +24,16 @@ class MenuPage extends Component {
         path: '',
         sub: []
       },
-      lists: []
+      lists: [],
+      user: {}
     }
   }
 
   componentDidMount() {
-    
-    this.getMenuList();
+    let user = localStorage.getItem('user')
+    user = typeof user === 'string' ? JSON.parse(user) : user
+    this.setState({ user })
+    this.getMenuList(user.id);
   }
 
 
@@ -77,9 +80,9 @@ class MenuPage extends Component {
     })
   }
 
-  getMenuList = () => {
+  getMenuList = (id) => {
     this.handleHideAdd();
-    http.getMenu().then(res => {
+    http.getMenu({id}).then(res => {
       if (res.data.status === 200) {
         let lists = res.data.data;
         lists = lists.map(item => {

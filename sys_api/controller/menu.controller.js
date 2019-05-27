@@ -1,12 +1,27 @@
 import Menu from '../dbs/menus/menuSchema';
+import User from '../dbs/user/userSchema';
 
 class MenuController {
 
   async getMenuList(ctx) {
-    const menu = await Menu.find()
-    ctx.body = {
-      status: 200,
-      data: menu
+    const { query } = ctx.request
+    const user = await User.findById(query.id, {}, {})
+    if (!user || !query.id) {
+      ctx.body = {
+        status: 401,
+        data: false,
+        message: '获取菜单失败'
+      }
+    } else {
+      let menu = await Menu.find()  // SYS 的时候表示有全部权限 BLOG_MANAGEMENT 表示只有博客的权限
+      if (user.power.indexOf('BLOG_MANAGEMENT') > -1) {
+        menu = menu.filter(item => item.key === user.power || item.key === 'HOME_PAGE')
+      }
+      console.log(menu)
+      ctx.body = {
+        status: 200,
+        data: menu
+      }
     }
   }
 

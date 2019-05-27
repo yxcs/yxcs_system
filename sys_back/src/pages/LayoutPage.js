@@ -11,7 +11,7 @@ import BlogDraft from './blog/BlogDraft'
 import LinkList from './link/LinkList'
 import LinkEdit from './link/LinkEdit'
 import {
-  Layout, Menu, Breadcrumb, Icon,
+  Layout, Menu, Breadcrumb, Icon, Card
 } from 'antd';
 import http from '../services/login'
 
@@ -27,6 +27,8 @@ class LayoutPage extends Component {
       openKeys: [''],
       selectedKeys: ['HOME_PAGE_1'],
       menus: [],
+      user: {},
+      showLogout: false,
       breadcrumb: [
         // {idx: 1, name: '首页', path: '/', key: 0,},
         // {idx: 2, name: '列表', path: '/list', key: 1,},
@@ -36,13 +38,17 @@ class LayoutPage extends Component {
   }
 
   componentDidMount() {
-    this.getMenuList();
+    let user = localStorage.getItem('user')
+    user = typeof user === 'string' ? JSON.parse(user) : user
+    this.setState({ user })
+    this.getMenuList(user.id);
   }
 
-  getMenuList = () => {
+  getMenuList = (id) => {
+    console.log(id)
     const pathname = this.props.location.pathname
     let {openKeys, selectedKeys} = this.state;
-    http.getMenu().then(res => {
+    http.getMenu({id}).then(res => {
       if (res.data.status === 200) {
         const lists = res.data.data;
         lists.forEach(item => {
@@ -98,11 +104,32 @@ class LayoutPage extends Component {
     this.props.history.push(path);
   }
 
+  showLogout = (v) => {
+    this.setState({
+      showLogout: v
+    })
+  }
+
+  logout = () => {
+    localStorage.removeItem('J_TOKEN')
+    localStorage.removeItem('user')
+    window.location.reload()
+  }
+
   render() {
     return (
       <Layout>
         <Header className="header">
-          <div className="logo" />
+          <div className="sys__name">SYS 后台</div>
+          <div 
+            className="sys__user"
+            onMouseEnter={this.showLogout.bind(this, true)}
+            onMouseLeave={this.showLogout.bind(this, false)}>
+            <div>
+              <img src={this.state.user.avatar} />{this.state.user.username}
+              {this.state.showLogout ? <Card onClick={this.logout} className="sys_logout"><p>退出</p></Card> : ''}
+            </div>
+          </div>
         </Header>
         <Layout>
           <Sider className="sider" width={200} style={{ background: '#fff' }}>

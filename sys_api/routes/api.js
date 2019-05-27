@@ -11,11 +11,15 @@ router.prefix('/api')
 
 router.post('/login', LoginController.login)
 router.post('/register', LoginController.register)
-router.get('/getUser', UserController.getUsers)
 router.get('/getMenu', MenuController.getMenuList)
 router.post('/insertMenu', MenuController.insertMenu)
 router.post('/updateMenu', MenuController.updateMenu)
 router.post('/deleteMenu', MenuController.deleteMenu)
+
+// user
+router.get('/getUsers', UserController.getUsers)
+router.get('/getUser', UserController.getUserById)
+router.post('/updateUser', UserController.updateUser)
 
 // blog
 router.post('/insertArticle', ArticleController.insertArticle)
