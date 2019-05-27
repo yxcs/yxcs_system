@@ -9,6 +9,8 @@ const Interview = () => import('@/views/Interview')
 const Draft = () => import('@/views/Draft')
 const ArticlesDetail = () => import('@/views/ArticlesDetail')
 const User = () => import('@/views/User')
+const CurrentUser = () => import('@/views/CurrentUser')
+const Login = () => import('@/views/Login')
 
 Vue.use(Router)
 
@@ -73,7 +75,19 @@ const router = new Router({
         title: '用户详情',
         page: 'user'
       }
+    }, {
+      path: '/user',
+      name: 'CurrentUser',
+      component: CurrentUser,
+      meta:{
+        title: '用户编辑',
+        page: 'loginUser'
+      }
     }]
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login
   }, {
     path: '/test',
     name: 'HelloWorld',

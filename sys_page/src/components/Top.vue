@@ -19,7 +19,8 @@
         </template>
       </div>
       <div :class="['top__nav--user', getNavType === 'user' ? 'active': '']">
-        <router-link to="/user/00"><i class="el-icon-user"></i></router-link>
+        <router-link class="lh60" v-if="isLogin" to="/user"><i class="el-icon-user"></i></router-link>
+        <router-link class="lh50" v-else :to="`/login?redirect=${redirect}`"><span>登录</span></router-link>
       </div>
     </div>
   </div>
@@ -32,16 +33,22 @@ export default {
   name: 'Top',
   data () {
     return {
+      isLogin: false,
+      redirect: '/home',
       menu: []
     }
   },
   mounted () {
     this.menu = tool.menu
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
+    this.isLogin = token && userId
+    this.redirect = encodeURIComponent(this.$route.fullPath)
   },
   computed: {
     ...mapGetters('global', [
       'getNavType'
-    ])
+    ]),
   }
 }
 </script>
@@ -122,9 +129,17 @@ export default {
       .top__nav--user {
         width: 80px;
         height: 60px;
-        line-height: 60px;
         text-align: center;
-        font-size: 28px;
+        font-size: 22px;
+        a.lh50 {
+          line-height: 50px;
+        }
+         a.lh60 {
+          line-height: 60px;
+        }
+        span {
+          font-size: 14px;
+        }
       }
     }
   }

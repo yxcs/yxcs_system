@@ -1,9 +1,13 @@
 import axios from 'axios'
 // 超时时间
 axios.defaults.timeout = 5000
-//http request 请求拦截器，有token值则配置上token值
+import { Loading, Message } from 'element-ui'
+import router from '../router/index'
+
+var loadinginstace
 axios.interceptors.request.use(
   config => {
+    loadinginstace = Loading.service({ fullscreen: true })
     const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -11,25 +15,36 @@ axios.interceptors.request.use(
     return config;
   },
   err => {
+    loadinginstace.close()
+    Message.error({
+      essage: '加载超时'
+    })
     return Promise.reject(err);
   });
 
 axios.interceptors.response.use(
   response => {
+    loadinginstace.close()
     return response;
   },
   error => {
-    console.log(error)
+    loadinginstace.close()
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          localStorage.removeItem('token')
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
-            }
+          Message.error({
+            message: error.response.data.message
           })
+          localStorage.removeItem('token')
+          localStorage.removeItem('userId')
+          if (router.currentRoute.path !== '/login') {
+            router.replace({
+              path: '/login',
+              query: {
+                redirect: router.currentRoute.fullPath
+              }
+            })
+          }
         default: 
            // do someting
       }

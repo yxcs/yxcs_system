@@ -1,6 +1,7 @@
 const state = {
   navType: 'home',
-  isFixed: false
+  isFixed: false,
+  user: {}
 }
 const getters = {
   getNavType (state) {
@@ -8,6 +9,9 @@ const getters = {
   },
   getFooterFixed (state) {
     return state.isFixed
+  },
+  getUser (state) {
+    return state.user
   }
 }
 const mutations = {
@@ -20,6 +24,9 @@ const mutations = {
     if (wrap.clientHeight > document.body.clientHeight) {
       state.isFixed = false
     }
+  },
+  setUser (state, user) {
+    state.user = user
   }
 }
 const actions = {

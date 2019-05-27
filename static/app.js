@@ -34,10 +34,13 @@ app.use(cors({
   origin: function (ctx) {
     const upload = new RegExp('/uploadfile');
     const static = new  RegExp('/static|images');
-    if (upload.test(ctx.url)) {
-      return config.BACK_URL
-    } else if (static.test(ctx.url)) {
-      return config.FRONT_URL
+    if (upload.test(ctx.url) || static.test(ctx.url)) {
+      if (ctx.header.origin === config.BACK_URL) {
+        return config.BACK_URL
+      } else if (ctx.header.origin === config.FRONT_URL) {
+        return config.FRONT_URL
+      }
+      return false
     }
     return false;
   },
