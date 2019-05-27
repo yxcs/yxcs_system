@@ -22,10 +22,13 @@ const getArticle = (params) => {
 }
 
 const getArticles = (where = {}, limit = 10, current = 1) => {
+  let user = localStorage.getItem('user')
+  user = JSON.parse(user);
   return axios.post(api.getArticles, {
     where: where,
     limit: limit,
-    current: current
+    current: current,
+    authorId: user.id
   })
 }
 

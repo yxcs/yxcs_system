@@ -79,7 +79,7 @@ export default {
     getList(page) {
       const params = {
         where: {
-          // authorId: this.id
+          authorId: this.id
         },
         limit: this.page.limit,
         current: page || this.page.current

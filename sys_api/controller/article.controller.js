@@ -1,6 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import config from '../config';
 import Article from '../dbs/blog/ArticleSchema';
+import User from '../dbs/user/userSchema';
 
 const verifyToken = (_token) => {
   let verify = jsonwebtoken.verify(_token, config.secret, (error, decoded) => {
@@ -88,12 +89,18 @@ class ArticleController {
 
   async getArticleList(ctx) {
     const { body } = ctx.request;
-    let { where = {}, limit = 10, current = 1, sort = {'updateAt': -1} } = body;
+    let { where = {}, limit = 10, current = 1, sort = {'updateAt': -1}, authorId = 0 } = body;
     if (typeof where === 'string') {
       where = JSON.parse(where);
     }
     if (typeof sort === 'string') {
       sort = JSON.parse(sort);
+    }
+    if (authorId) {
+      const user = await User.findById(authorId, {}, {})
+      if (user.power.indexOf('BLOG_MANAGEMENT') > -1) {
+        where.authorId = authorId
+      }
     }
     const skipnum = (current - 1) * limit;
     const data = await Article.find(where).skip(skipnum).limit(limit).sort(sort).exec();
