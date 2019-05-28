@@ -45,6 +45,7 @@ axios.interceptors.response.use(
               }
             })
           }
+          break ;
         default: 
            // do someting
       }

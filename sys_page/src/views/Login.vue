@@ -138,7 +138,7 @@ export default {
           const user = res.data.data
           localStorage.setItem('userId', user.id)
           this.setUser(user)
-          this.$nextTick(_ => {
+          this.$nextTick(() => {
             const path = this.$route.query.redirect ? this.$route.query.redirect : '/home'
             this.$router.replace(path)
           })

@@ -18,7 +18,7 @@ const mutations = {
   setNavType (state, type) {
     state.navType = type
   },
-  setFooterFixed (state, type) {
+  setFooterFixed (state) {
     // this.$store.commit('global/setNavType', 'front')
     const wrap = document.querySelector('.layout__wrap')
     if (wrap.clientHeight > document.body.clientHeight) {
