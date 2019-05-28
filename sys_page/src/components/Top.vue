@@ -2,10 +2,13 @@
   <div class="top__wrap">
     <div class="top__user">
       <div class="top__user--avatar">
-        <router-link to="/test"><img src="../assets/avatar.png" /></router-link>
+        <router-link :to="getUser.id ? `/user/${getUser.id}` : '/home'">
+          <img v-if="getUser.avatar" :src="getUser.avatar" alt="个人头像">
+          <img v-else src="../assets/avatar.png" alt="个人头像">
+        </router-link>
       </div>
       <div class="top__user--solgan">
-        抓不住的逝水流年，留不住的曾经少年
+        {{getUser.slogan || '抓不住的逝水流年，留不住的曾经少年'}}
       </div>
     </div>
     <div class="top__nav">
@@ -47,7 +50,8 @@ export default {
   },
   computed: {
     ...mapGetters('global', [
-      'getNavType'
+      'getNavType',
+      'getUser'
     ]),
   }
 }
