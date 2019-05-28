@@ -10,6 +10,7 @@ const login = (params) => {
 
 const register = (params) => {
   params.password = md5(md5(params.password + config.secret))
+  params.power = 'SYS'
   return axios.post(api.register, {...params})
 }
 
