@@ -35,7 +35,7 @@ export default {
 }
 .article__top {
   height: 300px;
-  background-image: url('../assets/bg_img.jpg');
+  background-image: url('http://img.oyxco.com/bg_img.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

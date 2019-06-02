@@ -4,7 +4,7 @@
       <div class="top__user--avatar">
         <router-link :to="getUser.id ? `/user/${getUser.id}` : '/home'">
           <img v-if="getUser.avatar" :src="getUser.avatar" alt="个人头像">
-          <img v-else src="../assets/avatar.png" alt="个人头像">
+          <img v-else src="http://img.oyxco.com/blog_avatar.png" alt="个人头像">
         </router-link>
       </div>
       <div class="top__user--solgan">
@@ -67,7 +67,7 @@ export default {
       justify-content: center;
       align-items: center;
       height: 300px;
-      background-image: url('../assets/bg_img.jpg');
+      background-image: url('http://img.oyxco.com/bg_img.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
