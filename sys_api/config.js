@@ -21,14 +21,14 @@ if (process.env.NODE_ENV === 'production') {
     dbName: 'sys',
     secret: 'DXkO5OulaS5E0VUM1Uypjs3eQayV38',
     url: {
-      base: 'http://106.13.141.26:8808',
-      download: 'http://106.13.141.26:8808',
-      image: 'http://106.13.141.26:8808'
+      base: 'http://api.oyxco.com',
+      download: 'http://api.oyxco.com',
+      image: 'http://api.oyxco.com'
     },
-    STATIC_URL: 'http://106.13.141.26:4001',
-    API_URL: 'http://106.13.141.26:8808',
-    BACK_URL: 'http://106.13.141.26:3000',
-    FRONT_URL: 'http://106.13.141.26:8080'
+    STATIC_URL: 'http://static.oyxco.com',
+    API_URL: 'http://api.oyxco.com',
+    BACK_URL: 'http://manage.oyxco.com',
+    FRONT_URL: 'http://blog.oyxco.com'
   }
 }
 

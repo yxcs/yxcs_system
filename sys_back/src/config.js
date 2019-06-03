@@ -7,9 +7,9 @@ let config = {
 
 if (process.env.NODE_ENV === 'production') {
   config = {
-    apiHost: 'http://106.13.141.26:8808',
-    static_url: 'http://106.13.141.26:4001',
-    baseUrl: 'http://106.13.141.26:3000',
+    apiHost: 'http://api.oyxco.com',
+    static_url: 'http://static.oyxco.com',
+    baseUrl: 'http://manage.oyxco.com',
     secret: 'bradhcp95qc'
   }
 }
