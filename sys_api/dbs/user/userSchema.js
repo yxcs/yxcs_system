@@ -18,7 +18,7 @@ const UserSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: 'http://106.13.141.26:4001/static/20190512184540_ceWhn.jpeg'
+    default: 'http://img.oyxco.com/avatar/5e766f2f4ff24c8779c94f9d426d32d0.jpg'
   },
   slogan: {
     type: String,
