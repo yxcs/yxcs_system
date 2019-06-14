@@ -32,10 +32,9 @@ class LoginPage extends Component {
               this.setState({
                 user: res.data.data
               })
-              window.location.href = this.state.redirectUrl;
-              this.props.router.replace({
-                pathname: this.state.redirectUr
-              })
+              setTimeout(_ => {
+                window.location.replace(config.baseUrl); //this.state.redirectUrl
+              }, 2000)
             } else {
               message.error('服务器出错，稍后重试')
             }
@@ -84,8 +83,14 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
+    const query = {};
+    const aParams = window.location.search.substr(1).split("&");
+    for (let i = 0; i < aParams.length; i++) {
+  　　 let aParam = aParams[i].split("=");
+  　　 query[aParam[0]] = aParam[1]
+    }
     this.setState({
-      redirectUrl: this.props.location.query.redirectUrl || config.baseUrl
+      redirectUrl: query.redirectUrl || config.baseUrl
     })
   }
 
