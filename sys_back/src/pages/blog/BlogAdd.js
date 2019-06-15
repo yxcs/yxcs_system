@@ -180,6 +180,10 @@ class BlogAdd extends Component {
     return e && e.fileList;
   }
 
+  goBack = () => {
+    this.props.history.goBack()
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form;
     const { subTypeList, coverImg } = this.state;
@@ -216,6 +220,7 @@ class BlogAdd extends Component {
 
     return (
       <div className="blog__edit--wrap">
+        <div className="blog-back"><Button onClick={this.goBack}>返回</Button></div>
         <div className="blog__markdown--editer">
           <Editor value={this.state.markValue} onChange={this.onMarkdownchange.bind(this)} />
         </div>
