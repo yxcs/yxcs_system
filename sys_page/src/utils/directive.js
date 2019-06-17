@@ -180,8 +180,7 @@ var doCheck = function (force) {
 
 export default {
 	infiniteScroll: {
-    bind: (el, binding, vnode) => {
-      console.log(binding)
+    bind: function(el, binding, vnode) {
       el[ctx] = {
         el,
         vm: vnode.context,

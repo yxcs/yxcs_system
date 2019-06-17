@@ -5,19 +5,20 @@
       <div class="home__list--title"><h1 class="main-title"><i class="el-icon-s-comment"></i>杂文</h1></div>
       <ArticleBlock :list="list"/>
       <div class="page">
-        <el-pagination
+        <Pagination
           background
           layout="prev, pager, next"
           :total="total"
           :page-size="10"
           @current-change="getList">
-        </el-pagination>
+        </Pagination>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Pagination } from 'element-ui'
 const Top = () => import('@/components/Top')
 const ArticleBlock = () => import('@/components/ArticleBlock')
 import { mapMutations } from 'vuex'
@@ -36,7 +37,8 @@ export default {
   },
   components: {
     Top,
-    ArticleBlock
+    ArticleBlock,
+    Pagination
   },
   mounted () {
     this.setNavType('draft')

@@ -7,15 +7,13 @@
           <img v-else src="http://img.oyxco.com/blog_avatar.png" alt="个人头像">
         </router-link>
       </div>
-      <div class="top__user--solgan">
-        {{getUser.slogan || '抓不住的逝水流年，留不住的曾经少年'}}
-      </div>
+      <div class="top__user--solgan">抓不住的逝水流年，留不住的曾经少年</div>
     </div>
     <div class="top__nav">
       <div class="top__nav--inner">
         <template v-for="item in menu">
           <div 
-            :key="item.page" 
+            :key="item.page"
             :class="['nav-item', item.page === getNavType ? 'active': '']">
             <router-link :to="item.url">{{item.title}}</router-link>
           </div>

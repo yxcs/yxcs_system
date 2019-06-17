@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { Form, FormItem, Input, Upload, Button } from 'element-ui'
 const Top = () => import('@/components/Top')
 import { mapMutations } from 'vuex'
 import { static_url } from '../config'
@@ -76,7 +77,12 @@ export default {
     }
   },
   components: {
-    Top
+    Top,
+    'el-form': Form,
+    'el-form-item': FormItem,
+    'el-input': Input,
+    'el-upload': Upload,
+    'el-button': Button
   },
   mounted () {
     this.uploadUrl = `${static_url}/uploadfile`

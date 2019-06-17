@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { Form, FormItem, Input, Upload, Button } from 'element-ui'
 import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
@@ -53,6 +54,13 @@ export default {
         rePassword: ''
       }
     }
+  },
+  components: {
+    'el-form': Form,
+    'el-form-item': FormItem,
+    'el-input': Input,
+    'el-upload': Upload,
+    'el-button': Button
   },
   mounted () {
     const token = localStorage.getItem('token')

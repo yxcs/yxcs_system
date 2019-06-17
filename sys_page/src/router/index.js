@@ -1,16 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import MainLayout from "@/views/MainLayout";
-const Home = () => import('@/views/Home')
-const FrontEnd = () => import('@/views/FrontEnd')
-const BackEnd = () => import('@/views/BackEnd')
-const Interview = () => import('@/views/Interview')
-const Draft = () => import('@/views/Draft')
-const ArticlesDetail = () => import('@/views/ArticlesDetail')
-const User = () => import('@/views/User')
-const CurrentUser = () => import('@/views/CurrentUser')
-const Login = () => import('@/views/Login')
+import MainLayout from '@/views/MainLayout'
 
 Vue.use(Router)
 
@@ -22,7 +12,7 @@ const router = new Router({
     children: [{
       path: '',
       name: 'Home',
-      component: Home,
+      component: () => import('@/views/Home'),
       meta:{
         title: '首页',
         page: 'home'
@@ -30,7 +20,7 @@ const router = new Router({
     }, {
       path: '/front',
       name: 'FrontEnd',
-      component: FrontEnd,
+      component: () => import('@/views/FrontEnd'),
       meta:{
         title: '前端',
         page: 'front'
@@ -38,7 +28,7 @@ const router = new Router({
     }, {
       path: '/back',
       name: 'BackEnd',
-      component: BackEnd,
+      component: () => import('@/views/BackEnd'),
       meta:{
         title: '后端',
         page: 'back'
@@ -46,7 +36,7 @@ const router = new Router({
     }, {
       path: '/interview',
       name: 'Interview',
-      component: Interview,
+      component: () => import('@/views/Interview'),
       meta:{
         title: '面试',
         page: 'interview'
@@ -54,7 +44,7 @@ const router = new Router({
     }, {
       path: '/draft',
       name: 'Draft',
-      component: Draft,
+      component: () => import('@/views/Draft'),
       meta:{
         title: '杂文',
         page: 'draft'
@@ -62,7 +52,7 @@ const router = new Router({
     }, {
       path: '/article/:id',
       name: 'ArticlesDetail',
-      component: ArticlesDetail,
+      component: () => import('@/views/ArticlesDetail'),
       meta:{
         title: '文章详情',
         page: 'article'
@@ -70,7 +60,7 @@ const router = new Router({
     }, {
       path: '/user/:id',
       name: 'User',
-      component: User,
+      component: () => import('@/views/User'),
       meta:{
         title: '用户详情',
         page: 'user'
@@ -78,7 +68,7 @@ const router = new Router({
     }, {
       path: '/user',
       name: 'CurrentUser',
-      component: CurrentUser,
+      component: () => import('@/views/CurrentUser'),
       meta:{
         title: '用户编辑',
         page: 'loginUser'
@@ -87,11 +77,11 @@ const router = new Router({
   }, {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import('@/views/Login')
   }, {
     path: '/test',
     name: 'HelloWorld',
-    component: HelloWorld
+    component: () => import('@/components/HelloWorld')
   }, {
     path: '/*',
     redirect: '/home'
