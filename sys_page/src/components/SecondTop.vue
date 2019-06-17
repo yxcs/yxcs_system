@@ -4,8 +4,8 @@
       <div class="article__top--title">{{title}}</div>
       <div class="article__top--line"></div>
       <div class="article__top--desc">
-        <div class="avatar"><router-link :to="`/user/${authorId}`"><img :src="avatar" /></router-link></div>
-        <div><router-link :to="`/user/${authorId}`">{{authorName}}</router-link><span>·</span>{{createAt}}<span>·</span>{{readCount}} 次阅读</div>
+        <div class="avatar"><router-link to="/user"><img src="http://img.oyxco.com/blog_avatar.png" /></router-link></div>
+        <div><router-link to="/user">{{authorName}}</router-link><span>·</span>{{createAt}}<span>·</span>{{readCount}} 次阅读</div>
       </div>
     </div>
   </div>

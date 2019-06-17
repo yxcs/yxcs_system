@@ -5,9 +5,12 @@ import store from './model'
 import services from '@/services'
 import Directive from '@/utils/directive'
 
+import { Message } from 'element-ui'
+Vue.prototype.$message = Message
+
 Vue.config.productionTip = false
 Vue.prototype.$http = services
-for(let key in Directive){
+for (let key in Directive) {
   Vue.directive(key, Directive[key]);
 }
 

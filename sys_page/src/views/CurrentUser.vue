@@ -41,9 +41,9 @@
         </el-form-item>
       </el-form>
       <el-form label-width="80px">
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button class="logout" size="small" type="default" @click="gotoWorks()">我的作品集</el-button>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button class="logout" size="small" type="danger" @click="logout()">退出</el-button>
         </el-form-item>
@@ -131,7 +131,7 @@ export default {
           password: resetPwd.pwd
         }
         if (!resetPwd.pwd) {
-          this.$message.warning('请输入密码')
+          this.$.warning('请输入密码')
           return false
         } else if (resetPwd.pwd.length < 4) {
           this.$message.warning('密码至少4个字符')

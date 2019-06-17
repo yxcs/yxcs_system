@@ -2,9 +2,8 @@
   <div class="top__wrap">
     <div class="top__user">
       <div class="top__user--avatar">
-        <router-link :to="getUser.id ? `/user/${getUser.id}` : '/home'">
-          <img v-if="getUser.avatar" :src="getUser.avatar" alt="个人头像">
-          <img v-else src="http://img.oyxco.com/blog_avatar.png" alt="个人头像">
+        <router-link to="/user">
+          <img src="http://img.oyxco.com/blog_avatar.png" alt="个人头像">
         </router-link>
       </div>
       <div class="top__user--solgan">抓不住的逝水流年，留不住的曾经少年</div>
@@ -12,7 +11,7 @@
     <div class="top__nav">
       <div class="top__nav--inner">
         <template v-for="item in menu">
-          <div 
+          <div
             :key="item.page"
             :class="['nav-item', item.page === getNavType ? 'active': '']">
             <router-link :to="item.url">{{item.title}}</router-link>
