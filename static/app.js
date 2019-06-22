@@ -32,8 +32,8 @@ app.use(views(__dirname + '/views', {
 
 app.use(cors({
   origin: function (ctx) {
-    const upload = new RegExp('/uploadfile');
-    const static = new  RegExp('/static|images');
+    const upload = new RegExp('(/uploadfile)|(/qiniu)');
+    const static = new  RegExp('(/static)|(/images)');
     if (upload.test(ctx.url) || static.test(ctx.url)) {
       if (ctx.header.origin.indexOf('oyxco') > -1) {
         return config.BACK_URL
