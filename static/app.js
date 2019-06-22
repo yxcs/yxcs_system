@@ -35,9 +35,9 @@ app.use(cors({
     const upload = new RegExp('/uploadfile');
     const static = new  RegExp('/static|images');
     if (upload.test(ctx.url) || static.test(ctx.url)) {
-      if (ctx.header.origin === config.BACK_URL) {
+      if (ctx.header.origin.indexOf('oyxco') > -1) {
         return config.BACK_URL
-      } else if (ctx.header.origin === config.FRONT_URL) {
+      } else {
         return config.FRONT_URL
       }
       return false
