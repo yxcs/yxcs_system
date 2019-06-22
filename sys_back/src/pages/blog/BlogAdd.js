@@ -305,7 +305,7 @@ class BlogAdd extends Component {
                     listType="picture-card"
                     className="avatar-uploader"
                     showUploadList={false}
-                    action={`${config.static_url}/uploadfile`}
+                    action={`${config.static_url}/qiniu`}
                     beforeUpload={this.beforeUpload}
                     onChange={this.handleChange}
                   >
