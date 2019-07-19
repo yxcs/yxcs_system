@@ -32,6 +32,7 @@ app
       const regexp = new RegExp('/api');
       const front_rep = new RegExp('/v1');
       const regexpWith = new RegExp('/download');
+      const toolReg = new RegExp('/tool');
       if (regexpWith.test(ctx.url)) {
         return `http://${config.url.download}`;
       } else if (~String(ctx.url).indexOf('/imgs/')) {
@@ -40,6 +41,8 @@ app
         return config.BACK_URL
       } else if (front_rep.test(ctx.url)) {
         return config.FRONT_URL
+      } else if (toolReg.test(ctx.url)) {
+        return '*'
       }
       return false;
     },
@@ -52,7 +55,7 @@ app
   .use(jwtKoa({
     secret: config.secret
   }).unless({
-    path: [/\/register/, /\/login/, /\/v1/],
+    path: [/\/register/, /\/login/, /\/v1/, /\/tool/],
   }))
   .use(json())
 
@@ -60,6 +63,7 @@ import index from './routes/index'
 import users from './routes/users'
 import api from './routes/api'
 import v1 from './routes/v1'
+import tool from './routes/tool'
 
 // error handler
 onerror(app)
@@ -83,6 +87,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
 app.use(v1.routes(), v1.allowedMethods())
+app.use(tool.routes(), tool.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
