@@ -25,3 +25,15 @@ export const getLinks = `${config.apiHost}/api/getLinks`
 export const getUsers = `${config.apiHost}/api/getUsers`
 export const getUser = `${config.apiHost}/api/getUser`
 export const updateUser = `${config.apiHost}/api/updateUser`
+
+// 工具相关
+export const insertPro = `${config.apiHost}/tool/insertPro`
+export const updatePro = `${config.apiHost}/tool/updatePro`
+export const deletePro = `${config.apiHost}/tool/deletePro`
+export const getProById = `${config.apiHost}/tool/getProById`
+export const getProList = `${config.apiHost}/tool/getProList`
+export const insertFlow = `${config.apiHost}/tool/insertFlow`
+export const updateFlow = `${config.apiHost}/tool/updateFlow`
+export const deleteFlow = `${config.apiHost}/tool/deleteFlow`
+export const getFlowById = `${config.apiHost}/tool/getFlowById`
+export const getFlowList = `${config.apiHost}/tool/getFlowList`

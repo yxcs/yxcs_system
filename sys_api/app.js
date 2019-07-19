@@ -42,7 +42,7 @@ app
       } else if (front_rep.test(ctx.url)) {
         return config.FRONT_URL
       } else if (toolReg.test(ctx.url)) {
-        return '*'
+        return config.BACK_URL
       }
       return false;
     },
@@ -55,7 +55,7 @@ app
   .use(jwtKoa({
     secret: config.secret
   }).unless({
-    path: [/\/register/, /\/login/, /\/v1/, /\/tool/],
+    path: [/\/register/, /\/login/, /\/v1/],
   }))
   .use(json())
 

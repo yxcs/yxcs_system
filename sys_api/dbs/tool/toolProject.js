@@ -10,10 +10,6 @@ const ToolProjectSchema = new Schema({
     type: String,
     default: null
   },
-  description: {
-    type: String,
-    default: null
-  },
   startTime: {
     type: Date,
     default: null
@@ -45,14 +41,6 @@ const ToolProjectSchema = new Schema({
   status: {
     type: Number,
     default: 1                                 // {1: 待开发, 2: 详设中, 3: 开发中, 4: 联调中, 5: 测试中, 6: 延期, 7: 已上线}
-  },
-  repoenStartTime: {                           // 延期时重开时间和结束时间
-    type: Date,
-    default: null
-  },
-  repoenEndTime: {
-    type: Date,
-    default: null
   },
   docUrl: {
     type: String,
