@@ -9,14 +9,16 @@ router.prefix('/tool')
 router.post('/insertPro', ToolController.insertPro)
 router.post('/updatePro', ToolController.updatePro)
 router.post('/deletePro', ToolController.deletePro)
-router.get('/getProById', ToolController.getProById)
-router.get('/getProList', ToolController.getProList)
+router.post('/getProById', ToolController.getProById)
+router.post('/getProList', ToolController.getProList)
 
 // 流程
 router.post('/insertFlow', ToolController.insertFlow)
 router.post('/updateFlow', ToolController.updateFlow)
+router.post('/dealFlow', ToolController.dealFlow)
 router.post('/deleteFlow', ToolController.deleteFlow)
-router.get('/getFlowById', ToolController.getFlowById)
-router.get('/getFlowList', ToolController.getFlowList)
+router.post('/getFlowById', ToolController.getFlowById)
+router.post('/getFlowList', ToolController.getFlowList)
+router.post('/getFlowByProId', ToolController.getFlowByProId)
 
 export default router

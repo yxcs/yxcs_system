@@ -10,15 +10,21 @@ const ToolFlowSchema = new Schema({
     type: String,
     default: null
   },
+  stage: {
+    type: Number,
+    default: 0                            // {10000-10036} 1:已完成
+  },
   prdLearn: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10000,
       onlySign: 'PRD_LEARN',
       title: 'PRD学习',
       type: 1,                                      // {1:开启，需手动关闭, 2: 关闭，无需手动关闭, 3: 解释说明类，不可操作}
-      status: 1,                                    // {0: clog, 1: pending, 2: fulfilled}
+      status: 1,                                    // {0: close, 1: pending, 2: doing, 3: fulfilled}
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -34,12 +40,14 @@ const ToolFlowSchema = new Schema({
   prdBug: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10001,
       onlySign: 'PRD_BUG',
       title: 'PRD问题反馈',
       type: 1,
       status: 1,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -55,12 +63,14 @@ const ToolFlowSchema = new Schema({
   prdExplain: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10002,
       onlySign: 'PRD_EXPLAIN',
       title: 'PRD宣讲',
       type: 1,
       status: 1,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -76,12 +86,14 @@ const ToolFlowSchema = new Schema({
   prdConfirm: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10003,
       onlySign: 'PRD_CONFIRM',
       title: 'PRD初稿宣讲问题反馈及确认',
       type: 2,
       status: 0,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -95,12 +107,14 @@ const ToolFlowSchema = new Schema({
   prdSign: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10004,
       onlySign: 'PRD_SIGN',
       title: 'PRD定稿签字',
       type: 2,
       status: 0,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -114,12 +128,14 @@ const ToolFlowSchema = new Schema({
   effortEstimation: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10005,
       onlySign: 'EFFORT_ESTIMATION',
       title: '工作量评估',
       type: 2,
       status: 0,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -133,12 +149,14 @@ const ToolFlowSchema = new Schema({
   scheduling: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10006,
       onlySign: 'SCHEDULING',
       title: '排期',
       type: 1,
       status: 1,
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -154,15 +172,14 @@ const ToolFlowSchema = new Schema({
   newWebsite: {
     type: Schema.Types.Mixed,
     default: {
-      onlySign: { 
-        type: String,
-        default: 'NEW_WEBSITE'
-      },
+      primaryKey: 10007,
+      onlySign: 'NEW_WEBSITE',
       title: '新站点提前两天申请服务器和部署',
       type: 3,
       status: 0, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -176,12 +193,14 @@ const ToolFlowSchema = new Schema({
   apiDesign: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10008,
       onlySign: 'API_DESIGN',
       title: '前端-接口需求详设',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -195,12 +214,14 @@ const ToolFlowSchema = new Schema({
   frontDesign: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10009,
       onlySign: 'FRONT_DESIGN',
       title: '前端详设',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -214,12 +235,14 @@ const ToolFlowSchema = new Schema({
   designEmail: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10010,
       onlySign: 'DESIGN_EMAIL',
       title: '发详设评审邮件',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           hi，all：
@@ -237,7 +260,7 @@ const ToolFlowSchema = new Schema({
         '@后端开发',
         '抄送：@前端主管'
       ],
-      document: 'http://192.168.99.65/svn/biyao-web/公共支撑/项目管理/',
+      document: ['http://192.168.99.65/svn/biyao-web/公共支撑/项目管理/'],
       account: [
         'http://192.168.99.65',
         'BY_acount'
@@ -257,12 +280,14 @@ const ToolFlowSchema = new Schema({
   frontExplain: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10011,
       onlySign: 'FRONT_EXPLAIN',
       title: '前端详设宣讲',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -281,12 +306,14 @@ const ToolFlowSchema = new Schema({
   meetingMinute: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10012,
       onlySign: 'MEETING_MINUTE',
       title: '发详设会议纪要',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           Hi，all：
@@ -330,12 +357,14 @@ const ToolFlowSchema = new Schema({
   backExplain: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10013,
       onlySign: 'BACL_EXPLAIN',
       title: '后端详设宣讲',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -349,12 +378,14 @@ const ToolFlowSchema = new Schema({
   pullBranch: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10014,
       onlySign: 'PULL_BRANCH',
       title: '拉取新分支',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -374,12 +405,14 @@ const ToolFlowSchema = new Schema({
   devCoding: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10015,
       onlySign: 'DEV_CODING',
       title: '开发',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -396,12 +429,14 @@ const ToolFlowSchema = new Schema({
   testExplain: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10016,
       onlySign: 'TEST_EXPLAIN',
       title: '测试用例评审',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -420,12 +455,14 @@ const ToolFlowSchema = new Schema({
   testBySelf: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10017,
       onlySign: 'TEST_BY_SELF',
       title: '自测',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -444,12 +481,14 @@ const ToolFlowSchema = new Schema({
   mailTestDoc: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10018,
       onlySign: 'MAIL_TEST_DOC',
       title: '发送自测报告',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           问好：
@@ -483,12 +522,14 @@ const ToolFlowSchema = new Schema({
   sendTestApiPlan: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10019,
       onlySign: 'SEND_TEST_API_PLAN',
       title: '联调拆解计划表',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -504,12 +545,14 @@ const ToolFlowSchema = new Schema({
   testApiVersion: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10020,
       onlySign: 'TEST_API_VERSION',
       title: '联调发版',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -527,12 +570,14 @@ const ToolFlowSchema = new Schema({
   testApi: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10021,
       onlySign: 'TEST_API',
       title: '联调',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -548,12 +593,14 @@ const ToolFlowSchema = new Schema({
   testVersion: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10022,
       onlySign: 'TEST_VERSION',
       title: '提测',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -571,12 +618,14 @@ const ToolFlowSchema = new Schema({
   testOrder: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10023,
       onlySign: 'TEST_ORDER',
       title: '提测工单',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           标题：【老客专项1.1&一起拼2.1】cms.biyao.com
@@ -614,12 +663,14 @@ const ToolFlowSchema = new Schema({
   debug: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10024,
       onlySign: 'DEBUG',
       title: 'bug修复',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -645,12 +696,14 @@ const ToolFlowSchema = new Schema({
   mergeMaster: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10025,
       onlySign: 'MERGE_MASTER',
       title: '合并主干',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -667,12 +720,14 @@ const ToolFlowSchema = new Schema({
   testMainOrder: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10026,
       onlySign: 'MERGE_ORDER',
       title: '提主干测试工单',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           标题：【老客专项1.1&一起拼2.1】cms.biyao.com
@@ -713,12 +768,14 @@ const ToolFlowSchema = new Schema({
   sendVersion: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10027,
       onlySign: 'SEND_VERSION',
       title: 'online发版',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -738,12 +795,14 @@ const ToolFlowSchema = new Schema({
   mainVerison: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10028,
       onlySign: 'MAIN_VERSION',
       title: '上线工单',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           标题：【老客专项1.1&一起拼2.1】cms.biyao.com
@@ -785,12 +844,14 @@ const ToolFlowSchema = new Schema({
   sendToRatify: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10029,
       onlySign: 'SEND_TO_RATIFY',
       title: '必要技术企业群发送工单审批',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [
         `
           图片
@@ -816,12 +877,14 @@ const ToolFlowSchema = new Schema({
   confirmVersionPersion: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10030,
       onlySign: 'CONFIRM_VERSION_PERSION',
       title: '上线跟进人员',
       type: 2,
       status: 0, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -835,12 +898,14 @@ const ToolFlowSchema = new Schema({
   followSendVersion: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10031,
       onlySign: 'FOLLOW_SEND_VERSION',
       title: '跟上线',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -857,12 +922,14 @@ const ToolFlowSchema = new Schema({
   confirmOrderMail: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10032,
       onlySign: 'CONFIRM_ORDR_MAIL',
       title: '确认上线邮件',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -881,16 +948,18 @@ const ToolFlowSchema = new Schema({
   updateDocument: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10033,
       onlySign: 'UPDATE_DOCUMENT',
       title: '更新文档',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
-      document: 'http://192.168.99.65/svn/biyao-web/公共支撑/项目管理/',
+      document: ['http://192.168.99.65/svn/biyao-web/公共支撑/项目管理/'],
       account: [
         'http://192.168.99.65',
         'BY_acount'
@@ -903,16 +972,18 @@ const ToolFlowSchema = new Schema({
   updateConfluence: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10034,
       onlySign: 'UPDATE_CONFLUENCE',
       title: '更新前端各分支文档',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
-      document: 'http://wiki.biyao.com/pages/viewpage.action?pageId=2589810',
+      document: ['http://wiki.biyao.com/pages/viewpage.action?pageId=2589810'],
       account: [
         'http://wiki.biyao.com',
         'BY_account'
@@ -925,12 +996,14 @@ const ToolFlowSchema = new Schema({
   report: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10035,
       onlySign: 'REPORT',
       title: '首周运营观察报告',
       type: 2,
       status: 0, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],
@@ -944,12 +1017,14 @@ const ToolFlowSchema = new Schema({
   review: {
     type: Schema.Types.Mixed,
     default: {
+      primaryKey: 10036,
       onlySign: 'REVIEW',
       title: '项目复盘',
       type: 1,
       status: 1, 
       startTime: null,
       endTime: null,
+      updateTime: null,
       example: [],
       persion: [],
       mailTo: [],

@@ -37,3 +37,5 @@ export const updateFlow = `${config.apiHost}/tool/updateFlow`
 export const deleteFlow = `${config.apiHost}/tool/deleteFlow`
 export const getFlowById = `${config.apiHost}/tool/getFlowById`
 export const getFlowList = `${config.apiHost}/tool/getFlowList`
+export const getFlowByProId = `${config.apiHost}/tool/getFlowByProId`
+export const dealFlow = `${config.apiHost}/tool/dealFlow`

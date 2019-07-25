@@ -4,7 +4,7 @@ import http from '../../services/tool';
 import tool from '../../utils/tool'
 
 import {
-  Button, Table, Tag
+  Button, Table, Tag, message
 } from 'antd';
 
 const statusEnum = {1: '待开发', 2: '详设中', 3: '开发中', 4: '联调中', 5: '测试中', 6: '延期', 7: '已上线'}
@@ -65,11 +65,30 @@ class ToolProjectList extends Component {
   }
 
   onEditProject = (record) => {
+    this.props.history.push(`/tool/project/edit/${record._id}`)
+  }
 
+  onGoToFlow = (record) => {
+    this.props.history.push(`/tool/project/flow/${record._id}`)
   }
 
   onSetDelay = (record) => {
-
+    const params = {
+      status: 6
+    }
+    http.updatePro({id: record._id, params}).then(res => {
+      if (res.data.status === 200 && res.data.data === 1) {
+        message.success('延期成功');
+        this.setState({
+          pager: {
+            size: 10,
+            page: 1
+          }
+        }, _ => {
+          this.getList()
+        })
+      }
+    })
   }
 
   render () {
@@ -197,9 +216,17 @@ class ToolProjectList extends Component {
         render: (id, record, index) => {
           return (
             <div>
-              <Button type="primary" size="small" onClick={this.onEditProject.bind(this, record)}>编辑</Button>
+              <Button type="default" size="small" onClick={this.onEditProject.bind(this, record)}>编辑</Button>
               <span className="btn-pad"></span>
-              <Button type="primary" size="small" onClick={this.onSetDelay.bind(this, record)}>延期</Button>
+              <Button type="primary" size="small" onClick={this.onGoToFlow.bind(this, record)}>流程</Button>
+              {
+                +record.status !== 6 && +record.status !== 7 ? (
+                  <span>
+                    <span className="btn-pad"></span>
+                    <Button type="danger" size="small" onClick={this.onSetDelay.bind(this, record)}>延期</Button>
+                  </span>
+                ) : ''
+              }
             </div>
           )
         }

@@ -1,12 +1,35 @@
 import axios from 'axios'
 import * as api from './apis'
 
+
+const parseParam = (param) => {
+  const curParam = {}
+  for (let key in param) {
+    if (param[key] !== '' && param[key] !== null && param[key] !== undefined) {
+      if (typeof param[key] === 'object') {
+        if (param[key] instanceof Array) {
+          if (param[key].length > 0) {
+            curParam[key] = param[key]
+          }
+        } else if (JSON.stringify(param[key]) !== '{}') {
+          curParam[key] = param[key]
+        }
+      } else {
+        curParam[key] = param[key]
+      }
+    }
+  }
+  return curParam
+}
+
 const insertPro = (params) => {
-  return axios.post(api.insertPro, {...params})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.insertPro, {...paramsFormat})
 }
 
 const updatePro = (params) => {
-  return axios.post(api.updatePro, {...params})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.updatePro, {...paramsFormat})
 }
 
 const deletePro = (id) => {
@@ -14,25 +37,33 @@ const deletePro = (id) => {
 }
 
 const getProById = (params) => {
-  return axios.get(api.getProById, {params: {...params}})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.getProById, {...paramsFormat})
 }
 
 const getProList = (where = {}, limit = 10, current = 1) => {
-  return axios.get(api.getProList, {
-    params: {
-      where: where,
-      limit: limit,
-      current: current
-    }
-  })
+  let params = {
+    where: where,
+    limit: limit,
+    current: current
+  }
+  params = parseParam(params)
+  return axios.post(api.getProList, params)
 }
 
 const insertFlow = (params) => {
-  return axios.post(api.insertFlow, {...params})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.insertFlow, {...paramsFormat})
 }
 
 const updateFlow = (params) => {
-  return axios.post(api.updateFlow, {...params})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.updateFlow, {...paramsFormat})
+}
+
+const dealFlow = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.dealFlow, {...paramsFormat})
 }
 
 const deleteFlow = (id) => {
@@ -40,17 +71,23 @@ const deleteFlow = (id) => {
 }
 
 const getFlowById = (params) => {
-  return axios.get(api.getFlowById, {params: {...params}})
+  const paramsFormat = parseParam(params)
+  return axios.post(api.getFlowById, {...paramsFormat})
+}
+
+const getFlowByProId = (where = {}) => {
+  const paramsFormat = parseParam(where)
+  return axios.post(api.getFlowByProId, {paramsFormat})
 }
 
 const getFlowList = (where = {}, limit = 10, current = 1) => {
-  return axios.get(api.getFlowList, {
-    params: {
-      where: where,
-      limit: limit,
-      current: current
-    }
-  })
+  let params = {
+    where: where,
+    limit: limit,
+    current: current
+  }
+  params = parseParam(params)
+  return axios.post(api.getFlowList, params)
 }
 
 export default {
@@ -64,5 +101,7 @@ export default {
   updateFlow,
   deleteFlow,
   getFlowById,
-  getFlowList
+  getFlowList,
+  getFlowByProId,
+  dealFlow
 }

@@ -17,7 +17,6 @@ class MenuController {
       if (user.power.indexOf('BLOG_MANAGEMENT') > -1) {
         menu = menu.filter(item => item.key === user.power || item.key === 'HOME_PAGE')
       }
-      console.log(menu)
       ctx.body = {
         status: 200,
         data: menu
@@ -49,7 +48,6 @@ class MenuController {
   async deleteMenu(ctx) {
     const { body } = ctx.request;
     const menu = await Menu.findByIdAndRemove(body.id, {})
-    console.log(menu)
     ctx.status = 200;
     ctx.body = {
       message: '删除成功',
