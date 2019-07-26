@@ -61,14 +61,6 @@ const ToolProjectSchema = new Schema({
   updateAt: {
     type: Date,
     default: Date.now
-  },
-  stage: {
-    type: Number,
-    default: 0                            // {10000-10036} 1: 已完成, 0: 未开始
-  },
-  stageTxt: {
-    type: String,
-    default: '未开始'
   }
 });
 
