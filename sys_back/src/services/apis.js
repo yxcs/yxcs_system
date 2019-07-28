@@ -39,3 +39,6 @@ export const getFlowById = `${config.apiHost}/tool/getFlowById`
 export const getFlowList = `${config.apiHost}/tool/getFlowList`
 export const getFlowByProId = `${config.apiHost}/tool/getFlowByProId`
 export const dealFlow = `${config.apiHost}/tool/dealFlow`
+export const finishFlow = `${config.apiHost}/tool/finishFlow`
+export const cancelPro = `${config.apiHost}/tool/cancelPro`
+export const delayPro = `${config.apiHost}/tool/delayPro`

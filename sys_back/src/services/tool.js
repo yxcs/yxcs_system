@@ -90,6 +90,21 @@ const getFlowList = (where = {}, limit = 10, current = 1) => {
   return axios.post(api.getFlowList, params)
 }
 
+const finishFlow = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.finishFlow, {...paramsFormat})
+}
+
+const cancelPro = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.cancelPro, {...paramsFormat})
+}
+
+const delayPro = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.delayPro, {...paramsFormat})
+}
+
 export default {
   insertPro,
   updatePro,
@@ -103,5 +118,8 @@ export default {
   getFlowById,
   getFlowList,
   getFlowByProId,
-  dealFlow
+  dealFlow,
+  finishFlow,
+  cancelPro,
+  delayPro
 }

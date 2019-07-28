@@ -20,5 +20,8 @@ router.post('/deleteFlow', ToolController.deleteFlow)
 router.post('/getFlowById', ToolController.getFlowById)
 router.post('/getFlowList', ToolController.getFlowList)
 router.post('/getFlowByProId', ToolController.getFlowByProId)
+router.post('/finishFlow', ToolController.finishFlow)
+router.post('/cancelPro', ToolController.cancelPro)
+router.post('/delayPro', ToolController.delayPro)
 
 export default router

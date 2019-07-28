@@ -17,8 +17,8 @@ const list = [
       "updateTime": null,
       "endTime": null,
       "startTime": null,
-      "status": 1,
-      "type": 1,
+      "status": 1,                     // {0: 关闭，主动关闭, 1: 待开始, 2: 进行中, 3: 完成}
+      "type": 1,                       // {0: 默认关闭,不可关闭, 1: 可操作, 2: 提示}
       "title": "项目复盘",
       "onlySign": "REVIEW",
       "primaryKey": 10036
@@ -847,6 +847,26 @@ const list = [
       "primaryKey": 10000
   }
 ]
+
+const key2status = (key) => {
+  if (key >= 10000 && key <= 10007) {
+    return 1
+  } else if (key >= 1000 && key <= 10013) {
+    return 2
+  } else if (key >= 10014 && key <= 10018) {
+    return 3
+  } else if (key >= 10019 && key <= 10021) {
+    return 4
+  } else if (key >= 10022 && key <= 10026) {
+    return 5
+  } else if (key >= 10027 && key <= 10032) {
+    return 6
+  } else if (key >= 10032 && key <= 10036) {
+    return 7
+  } else {
+    return 102 //[101, 102, 103] 这三个需要单独设置
+  }
+}
 class ToolController {
   constructor() {}
 
@@ -984,44 +1004,182 @@ class ToolController {
   }
 
   async dealFlow(ctx) {
-    const { body } = ctx.request;
-    const curr = body.params[body.key]
+    const { body } = ctx.request;  // request params = {flow_id, project_id, primary_key} 
     const pParams = {
       updateAt: Date.now()
     }
-    if (curr.status < 3) {
-      body.params.stage = curr.primaryKey
-      if (curr.status === 2) {
-        body.params[body.key].startTime = Date.now()
-      }
-      pParams.stageTxt = curr.title
-      pParams.stage = body.params.stage
-    } else {
-      if (curr.endTime === 3) {
-        body.params.startTime = Date.now()
-      }
-      body.params.stage = curr.primaryKey + 1
-      if (body.params.stage > 10036) {
-        body.params.stage = 1
-        pParams.stageTxt = '已完成'
+    const flowData = await Flow.findById(body.id)
+    const params = {
+      stage: flowData.stage,
+      status: flowData.status,
+      list: []
+    }
+    let flowList = flowData.list
+    flowList = flowList.sort((a, b) => {
+      return a.primaryKey - b.primaryKey
+    })
+    const len = flowList.length
+    let idx = -1
+    for (let i = 0; i < len; i++) {
+      if (idx > -1) {
+        if (flowList[i].type === 1 && flowList[i].status === 1) {
+          flowList[i].status = 2
+          flowList[i].updateTime = Date.now()
+          flowList[i].startTime = Date.now()
+          params.status = key2status(flowList[i].primaryKey)
+          params.stage = flowList[i].primaryKey
+          break
+        }
       } else {
-        for (let key in body.params) {
-          if (body.params[key].primaryKey === body.params.stage) {
-            pParams.stageTxt = body.params[key].title
+        if (flowList[i].primaryKey === body.primaryKey) {
+          if (flowList[i].status === 1) {
+            flowList[i].status = 2
+            params.status = key2status(flowList[i].primaryKey)
+            params.stage = flowList[i].primaryKey
+            flowList[i].startTime = Date.now()
+            flowList[i].updateTime = Date.now()
+            flowList[i].endTime = Date.now()
+          } else if (flowList[i].status === 2) {
+            flowList[i].status = 3
+            params.status = key2status(flowList[i].primaryKey)
+            params.stage = flowList[i].primaryKey
+            flowList[i].updateTime = Date.now()
+            flowList[i].endTime = Date.now()
+            idx = i
+          } else if (flowList[i].status === 3) {
+            idx = i
+          } else if (!flowList[i].status) {
+            console.log('-更改状态错误-')
+          } else {
+            idx = i
           }
         }
       }
-      pParams.stage = body.params.stage
+    }
+
+    pParams.status = params.status
+    params.list = flowList
+
+    const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
+    const flow = await Flow.findByIdAndUpdate(body.id, params)
+    
+    if (pro._id && flow._id) {
+      ctx.body = {
+        message: '更新成功',
+        data: 1,
+        status: 200
+      }
+    } else {
+      ctx.body = {
+        message: '更新失败',
+        data: 0,
+        status: 10011
+      }
+    }
+  }
+
+  async finishFlow (ctx) {
+    const { body } = ctx.request // request params = {flowI_id, peoject_id}
+    let flowData = await await Flow.find({projectId: body.pId}).exec()
+    flowData = flowData[0]
+    const proData = await Flow.findById(body.pId)
+
+    const pParams = {
+      updateAt: Date.now(),
+      status: 102
+    }
+
+    const params = {
+      stage: 1,
+      status: 102,
+      updateTime: Date.now()
     }
 
     const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
-    const flow = await Flow.findByIdAndUpdate(body.id, body.params)
+    const flow = await Flow.findByIdAndUpdate(body.id, params)
     
-    ctx.status = 200;
-    ctx.body = {
-      message: '更新成功',
-      data: 1,
-      status: 200
+    if (pro._id && flow._id) {
+      ctx.body = {
+        message: '更新成功',
+        data: 1,
+        status: 200
+      }
+    } else {
+      ctx.body = {
+        message: '更新失败',
+        data: 0,
+        status: 10011
+      }
+    }
+  }
+
+  async cancelPro (ctx) {
+    const { body } = ctx.request // request params = {flowI_id, peoject_id}
+    let flowData = await await Flow.find({projectId: body.pId}).exec()
+    flowData = flowData[0]
+    const proData = await Flow.findById(body.pId)
+
+    const pParams = {
+      updateAt: Date.now(),
+      status: 103
+    }
+
+    const params = {
+      stage: 0,
+      status: 103,
+      updateTime: Date.now()
+    }
+
+    const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
+    const flow = await Flow.findByIdAndUpdate(body.id, params)
+    
+    if (pro._id && flow._id) {
+      ctx.body = {
+        message: '取消成功',
+        data: 1,
+        status: 200
+      }
+    } else {
+      ctx.body = {
+        message: '取消失败',
+        data: 0,
+        status: 10011
+      }
+    }
+  }
+
+  async delayPro (ctx) {
+    const { body } = ctx.request // request params = {flowI_id, peoject_id}
+    let flowData = await await Flow.find({projectId: body.pId}).exec()
+    flowData = flowData[0]
+    const proData = await Flow.findById(body.pId)
+
+    const pParams = {
+      updateAt: Date.now(),
+      status: 101
+    }
+
+    const params = {
+      stage: 0,
+      status: 101,
+      updateTime: Date.now()
+    }
+
+    const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
+    const flow = await Flow.findByIdAndUpdate(body.id, params)
+    
+    if (pro._id && flow._id) {
+      ctx.body = {
+        message: '延期成功',
+        data: 1,
+        status: 200
+      }
+    } else {
+      ctx.body = {
+        message: '延期失败',
+        data: 0,
+        status: 10011
+      }
     }
   }
 
