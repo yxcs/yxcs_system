@@ -7,7 +7,7 @@ import {
   Button, Table, Tag, message
 } from 'antd';
 
-const statusEnum = {1: '待开发', 2: '详设中', 3: '开发中', 4: '联调中', 5: '测试中', 6: '延期', 7: '已上线'}
+const statusEnum = {1: 'prd准备', 2: '详设中', 3: '开发中', 4: '联调中', 5: '测试中', 6: '上线', 7: '上线后处理', 101: '延期', 102: '已上线', 103: '项目已取消'}
 const websiteEnum = {1: 'cms.biyao.com', 2: 'ark.biyao.com'}
 
 class ToolProjectList extends Component {
@@ -74,11 +74,30 @@ class ToolProjectList extends Component {
 
   onSetDelay = (record) => {
     const params = {
-      status: 6
+      pId: record._id
     }
-    http.updatePro({id: record._id, params}).then(res => {
+    http.delayPro(params).then(res => {
       if (res.data.status === 200 && res.data.data === 1) {
-        message.success('延期成功');
+        message.success('项目延期成功')
+        this.setState({
+          pager: {
+            size: 10,
+            page: 1
+          }
+        }, _ => {
+          this.getList()
+        })
+      }
+    })
+  }
+
+  onSetCancel = (record) => {
+    const params = {
+      pId: record._id
+    }
+    http.cancelPro(params).then(res => {
+      if (res.data.status === 200 && res.data.data === 1) {
+        message.success('项目取消成功')
         this.setState({
           pager: {
             size: 10,
@@ -220,10 +239,12 @@ class ToolProjectList extends Component {
               <span className="btn-pad"></span>
               <Button type="primary" size="small" onClick={this.onGoToFlow.bind(this, record)}>流程</Button>
               {
-                +record.status !== 6 && +record.status !== 7 ? (
+                +record.status < 100 ? (
                   <span>
                     <span className="btn-pad"></span>
                     <Button type="danger" size="small" onClick={this.onSetDelay.bind(this, record)}>延期</Button>
+                    <span className="btn-pad"></span>
+                    <Button type="danger" size="small" onClick={this.onSetCancel.bind(this, record)}>取消</Button>
                   </span>
                 ) : ''
               }

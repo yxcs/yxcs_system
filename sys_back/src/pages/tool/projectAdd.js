@@ -117,7 +117,7 @@ class ToolProjectAdd extends Component {
               }],
               initialValue: detail.name
             })(
-              <Input disabled={this.state.id} type="text" placeholder="请输入项目名称"/>
+              <Input disabled={!!this.state.id} type="text" placeholder="请输入项目名称"/>
             )}
           </Form.Item>
           <Form.Item

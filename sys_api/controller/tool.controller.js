@@ -1114,10 +1114,9 @@ class ToolController {
   }
 
   async cancelPro (ctx) {
-    const { body } = ctx.request // request params = {flowI_id, peoject_id}
+    const { body } = ctx.request // request params = {peoject_id}
     let flowData = await await Flow.find({projectId: body.pId}).exec()
     flowData = flowData[0]
-    const proData = await Flow.findById(body.pId)
 
     const pParams = {
       updateAt: Date.now(),
@@ -1131,7 +1130,7 @@ class ToolController {
     }
 
     const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
-    const flow = await Flow.findByIdAndUpdate(body.id, params)
+    const flow = await Flow.findByIdAndUpdate(flowData._id, params)
     
     if (pro._id && flow._id) {
       ctx.body = {
@@ -1149,10 +1148,9 @@ class ToolController {
   }
 
   async delayPro (ctx) {
-    const { body } = ctx.request // request params = {flowI_id, peoject_id}
+    const { body } = ctx.request // request params = {peoject_id}
     let flowData = await await Flow.find({projectId: body.pId}).exec()
     flowData = flowData[0]
-    const proData = await Flow.findById(body.pId)
 
     const pParams = {
       updateAt: Date.now(),
@@ -1166,7 +1164,7 @@ class ToolController {
     }
 
     const pro = await Pro.findByIdAndUpdate(body.pId, pParams)
-    const flow = await Flow.findByIdAndUpdate(body.id, params)
+    const flow = await Flow.findByIdAndUpdate(flowData._id, params)
     
     if (pro._id && flow._id) {
       ctx.body = {
