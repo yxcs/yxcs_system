@@ -250,7 +250,7 @@ class ProjectFlow extends Component {
           <Form className="footer-btn" {...tailFormItemLayout}>
             <Form.Item>
               <Button type="default" onClick={this.goBack}> 返回 </Button>
-              { flow.status < 100 ? <Button type="primary" onClick={this.onUpdateFlow} className="back-btn"> 更新 </Button> : ''}
+              <Button type="primary" onClick={this.onUpdateFlow} className="back-btn"> 更新 </Button>
               { isShowFinish && flow.status < 100 ? <Button type="danger" onClick={this.onEndFlow} className="back-btn"> 上线 </Button> : ''}
             </Form.Item>
           </Form>
