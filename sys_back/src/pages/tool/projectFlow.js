@@ -152,6 +152,16 @@ class ProjectFlow extends Component {
     const params = {
       list: flow.list
     }
+    params.list = params.list.map(item => {
+      item.remarks = item.remarks || item.remarks.split('\n')
+      item.operate = item.operate || item.operate.split('\n')
+      item.account = item.account || item.account.split('\n')
+      item.document = item.document || item.document.split('\n')
+      item.mailTo = item.mailTo || item.mailTo.split('\n')
+      item.persion = item.persion || item.persion.split('\n')
+      item.example = item.example || item.example.split('\n')
+      return item
+    })
     http.updateFlow({id: flow._id, params}).then(res => {
       if (res.data.status === 200 && res.data.data) {
         message.success('更新成功')
