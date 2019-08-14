@@ -15,6 +15,9 @@ import LinkEdit from './link/LinkEdit'
 import ProjectList from './tool/projectList'
 import ProjectAdd from './tool/projectAdd'
 import projectFlow from './tool/projectFlow'
+
+import BookmarkView from './bookmark/views'
+
 import {
   Layout, Menu, Breadcrumb, Icon, Card
 } from 'antd';
@@ -190,6 +193,7 @@ class LayoutPage extends Component {
                 <PrivateRoute exact path="/tool/project/add" component={ProjectAdd}></PrivateRoute>
                 <PrivateRoute exact path="/tool/project/edit/:id" component={ProjectAdd}></PrivateRoute>
                 <PrivateRoute exact path="/tool/project/flow/:id" component={projectFlow}></PrivateRoute>
+                <PrivateRoute exact path="/tool/bookmark" component={BookmarkView}></PrivateRoute>
                 <Redirect exact from="*" to="/"/>
               </Switch>
             </Content>

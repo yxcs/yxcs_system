@@ -1,13 +1,13 @@
-import Link from '../dbs/link/LinkSchema';;
+import Book from '../dbs/bookmark/BookmarkSchema';
 
-class LinkController {
+class BookController {
 
-  async insertLink(ctx) {
+  async insertBook(ctx) {
     const { body } = ctx.request
-    const order = await Link.find({}).limit(1).sort({createAt: 'asc'}).exec()
+    const order = await Book.find({}).limit(1).sort({createAt: 'asc'}).exec()
     body.order = order && order.length ? order[0].order + 1 : 1
-    const link = new Link(body);
-    const res = await link.save();
+    const book = new Book(body);
+    const res = await book.save();
     if (res._id) {
       ctx.body = {
         status: 200,
@@ -24,9 +24,10 @@ class LinkController {
     }
   }
 
-  async updateLink(ctx) {
+  async updateBook(ctx) {
     const { body } = ctx.request;
-    const link = await Link.findByIdAndUpdate(body.id, body.params)
+    body.params.updateAt = Date.now()
+    const book = await Book.findByIdAndUpdate(body.id, body.params)
     ctx.status = 200;
     ctx.body = {
       message: '更新成功',
@@ -35,9 +36,9 @@ class LinkController {
     }
   }
 
-  async deleteLink(ctx) {
+  async deleteBook(ctx) {
     const { body } = ctx.request;
-    const link = await Link.findByIdAndRemove(body.id, {})
+    const book = await Book.findByIdAndRemove(body.id, {})
     ctx.status = 200;
     ctx.body = {
       message: '删除成功',
@@ -47,7 +48,7 @@ class LinkController {
   }
 
   // 查找
-  async getLinkById(ctx) {
+  async getBookById(ctx) {
     const { body } = ctx.request;
     let { id, showOpts = {}, options = {} } = body;
     if (typeof showOpts === 'string') {
@@ -56,7 +57,7 @@ class LinkController {
     if (typeof options === 'string') {
       options = JSON.parse(options);
     }
-    const data = await Link.findById(id, showOpts, options);
+    const data = await Book.findById(id, showOpts, options);
     if (data && data.id) {
       ctx.body = {
         status: 200,
@@ -72,7 +73,7 @@ class LinkController {
     }
   }
 
-  async getLinkList(ctx) {
+  async getBookList(ctx) {
     const { body } = ctx.request;
     let { where = {}, limit = 10, current = 1, sort = {'updateAt': -1} } = body;
     if (typeof where === 'string') {
@@ -82,8 +83,8 @@ class LinkController {
       sort = JSON.parse(sort);
     }
     const skipnum = (current - 1) * limit;
-    const data = await Link.find(where).skip(skipnum).limit(limit).sort(sort).exec();
-    const count = await Link.count(where);
+    const data = await Book.find(where).skip(skipnum).limit(limit).sort(sort).exec();
+    const count = await Book.count(where);
     ctx.body = {
       status: 200,
       data: data,
@@ -94,4 +95,4 @@ class LinkController {
 
 }
 
-export default new LinkController()
+export default new BookController()

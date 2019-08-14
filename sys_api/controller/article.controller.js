@@ -20,6 +20,8 @@ class ArticleController {
 
   async insertArticle(ctx) {
     const { body } = ctx.request
+    const order = await Link.find({}).limit(1).sort({createAt: 'asc'}).exec()
+    body.order = order && order.length ? order[0].order + 1 : 1
     const art = new Article(body);
     const res = await art.save();
     if (res._id) {
