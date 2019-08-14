@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import ToolController from '../controller/tool.controller'
+import BookmarkController from '../controller/bookmark.controller'
 
 const router = new Router();
 
@@ -20,5 +21,12 @@ router.post('/deleteFlow', ToolController.deleteFlow)
 router.post('/getFlowById', ToolController.getFlowById)
 router.post('/getFlowList', ToolController.getFlowList)
 router.post('/getFlowByProId', ToolController.getFlowByProId)
+
+// 书签
+router.post('/insertBookmark', BookmarkController.insertBook)
+router.post('/updateBookmark', BookmarkController.updateBook)
+router.post('/deleteBookmark', BookmarkController.deleteBook)
+router.post('/getBookmarkById', BookmarkController.getBookById)
+router.post('/getBookmarkList', BookmarkController.getBookList)
 
 export default router

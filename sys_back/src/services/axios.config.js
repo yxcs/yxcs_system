@@ -26,7 +26,7 @@ axios.interceptors.response.use(
   error => {
     const response = error.response
     if (response && response.status && response.status === 401) {
-      if (response.data.errorCode == 4001) {
+      if (+response.data.errorCode === 4001) {
         message.error(response.data.message);
       } else {
         localStorage.removeItem('J_TOKEN');

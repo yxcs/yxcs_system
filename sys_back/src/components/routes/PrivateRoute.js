@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Redirect, withRouter} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 //私有路由，只有登录的用户才能访问
 class PrivateRoute extends React.Component{

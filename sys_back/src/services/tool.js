@@ -90,6 +90,36 @@ const getFlowList = (where = {}, limit = 10, current = 1) => {
   return axios.post(api.getFlowList, params)
 }
 
+/** bookmark */
+const insertBookmark = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.insertBookmark, {...paramsFormat})
+}
+
+const updateBookmark = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.updateBookmark, {...paramsFormat})
+}
+
+const deleteBookmark = (id) => {
+  return axios.post(api.deleteBookmark, {id})
+}
+
+const getBookmarkById = (params) => {
+  const paramsFormat = parseParam(params)
+  return axios.post(api.getBookmarkById, {...paramsFormat})
+}
+
+const getBookmarkList = (where = {}, limit = 10, current = 1) => {
+  let params = {
+    where: where,
+    limit: limit,
+    current: current
+  }
+  params = parseParam(params)
+  return axios.post(api.getBookmarkList, params)
+}
+
 export default {
   insertPro,
   updatePro,
@@ -103,5 +133,11 @@ export default {
   getFlowById,
   getFlowList,
   getFlowByProId,
-  dealFlow
+  dealFlow,
+  
+  insertBookmark,
+  updateBookmark,
+  deleteBookmark,
+  getBookmarkById,
+  getBookmarkList
 }

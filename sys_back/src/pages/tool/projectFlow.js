@@ -4,12 +4,11 @@ import http from '../../services/tool';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import {
-  Collapse, Select, Button, message, Form, Input, Tag,
+  Collapse, Button, message, Form, Input, Tag,
 } from 'antd';
 moment.locale('zh-cn');
 
 const { Panel } = Collapse;
-const { Option } = Select;
 const keys = ['projectId', 'projectName', 'stage', 'prdLearn', 'prdBug', 'prdExplain', 'prdConfirm', 'prdSign', 'effortEstimation', 'scheduling', 'newWebsite', 'apiDesign', 'frontDesign', 'designEmail', 'frontExplain', 'meetingMinute', 'backExplain', 'pullBranch', 'devCoding', 'testExplain', 'testBySelf', 'mailTestDoc', 'sendTestApiPlan', 'testApiVersion', 'testApi', 'testVersion', 'testOrder', 'debug', 'mergeMaster', 'testMainOrder', 'sendVersion', 'mainVerison', 'sendToRatify', 'confirmVersionPersion', 'followSendVersion', 'confirmOrderMail', 'updateDocument', 'updateConfluence', 'report', 'review']
 class ProjectFlow extends Component {
 

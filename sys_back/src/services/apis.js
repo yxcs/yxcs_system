@@ -39,3 +39,9 @@ export const getFlowById = `${config.apiHost}/tool/getFlowById`
 export const getFlowList = `${config.apiHost}/tool/getFlowList`
 export const getFlowByProId = `${config.apiHost}/tool/getFlowByProId`
 export const dealFlow = `${config.apiHost}/tool/dealFlow`
+// 工具-书签
+export const insertBookmark = `${config.apiHost}/tool/insertBookmark`
+export const updateBookmark = `${config.apiHost}/tool/updateBookmark`
+export const deleteBookmark = `${config.apiHost}/tool/deleteBookmark`
+export const getBookmarkById = `${config.apiHost}/tool/getBookmarkById`
+export const getBookmarkList = `${config.apiHost}/tool/getBookmarkList`

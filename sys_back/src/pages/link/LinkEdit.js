@@ -1,24 +1,7 @@
 import React, { Component } from 'react';
 import './link.less'
 
-import {
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
-} from 'antd';
-
-const { Option } = Select;
-
-const linkType = {
-  '1': 'js',
-  '2': 'css',
-  '3': 'react',
-  '4': 'vue',
-  '5': 'node',
-  '6': '面试',
-  '7': 'PHP',
-  '8': 'python',
-  '9': '产品',
-  '10': '规划',
-}
+import { Form, Input, Button } from 'antd';
 class LinkEdit extends Component {
 
   render () {

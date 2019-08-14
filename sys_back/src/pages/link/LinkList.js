@@ -210,7 +210,7 @@ class LinkList extends Component {
         key: 'coverImg',
         render: (v, r, i) => {
           if(v) {
-            return <img width="30" src={v}></img>
+            return <img alt="封面图片" width="30" src={v}></img>
           }
           return '';
         }

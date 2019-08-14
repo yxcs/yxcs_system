@@ -14,3 +14,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.cancel-btn {
+  margin-left: 20px;
+}
+.tooltip-wrap {
+  width: 300px;
+}
+.tooltip-wrap .tooltip-img {
+  width: 235px;
+}

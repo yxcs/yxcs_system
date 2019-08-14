@@ -94,7 +94,7 @@ class LayoutPage extends Component {
     const lists = this.state.lists;
     let path = '/';
     lists.forEach(item => {
-      if (item.type == 1 && item.sub.length) {
+      if (+item.type === 1 && item.sub.length) {
         item.sub.forEach(sItem => {
           if (e.key === sItem.key) {
             path = sItem.path;
@@ -134,7 +134,7 @@ class LayoutPage extends Component {
             onMouseEnter={this.showLogout.bind(this, true)}
             onMouseLeave={this.showLogout.bind(this, false)}>
             <div>
-              <img src={this.state.user.avatar} />{this.state.user.username}
+              <img alt="封面图片" src={this.state.user.avatar} />{this.state.user.username}
               {this.state.showLogout ? <Card onClick={this.logout} className="sys_logout"><p>退出</p></Card> : ''}
             </div>
           </div>
@@ -153,7 +153,7 @@ class LayoutPage extends Component {
               {
                 this.state.lists.map(item => {
                   let menu = '';
-                  if (item.type == 1 && item.sub.length) {
+                  if (+item.type === 1 && item.sub.length) {
                     menu = (
                       <SubMenu key={item.key} title={<span> {item.icon && <Icon type={item.icon} />}{item.name}</span>}>
                         {

@@ -12,15 +12,16 @@ const BookmarkSchema = new Schema({
     type: String
   },
   coverImg: {
-    type: String
+    type: String,
+    default: 'http://img.oyxco.com/default/20190512184540_ceWhn.jpeg'
   },
   sourceType: {
     type: String,
-    default: 'bookmark'         // bookmark、toutiao、weixin、juejin
+    default: 'bookmark'         // bookmark、toutiao、weixin、shequ
   },
   type: {
-    type: String,
-    default: 'interview'         // 面试、资源、小程序、微信、移动端，github、服务器、文档、学习
+    type: Number,
+    default: 1         // 面试、资源、小程序、微信、移动端，github、服务器、文档、学习
   },
   createAt: {
     type: Date,
