@@ -25,7 +25,7 @@ a {
   text-decoration: none;
   color: #333;
 }
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   background-color: #f5f5f5;

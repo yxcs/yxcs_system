@@ -73,6 +73,14 @@ const router = new Router({
         title: '用户编辑',
         page: 'loginUser'
       }
+    }, {
+      path: '/tool',
+      name: 'ToolList',
+      component: () => import('@/views/tool/list'),
+      meta:{
+        title: '用户编辑',
+        page: 'toolList'
+      }
     }]
   }, {
     path: '/login',

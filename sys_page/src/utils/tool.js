@@ -4,6 +4,7 @@ const menu = [
   {url: '/back', title: '后端', page: 'back'},
   {url: '/interview', title: '面试', page: 'interview'},
   {url: '/draft', title: '杂文', page: 'draft'},
+  {url: '/tool', title: '工具', page: 'toolList'},
 ]
 
 const formatTime = (dateTime, type = 1) => {
