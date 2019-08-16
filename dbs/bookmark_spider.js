@@ -54,9 +54,9 @@ MongoClient.connect(dbURL,function(err, db) {
         $(item).find('A').each(function (idx, sItem) {
           var obj = {}
           obj.linkTo = $(sItem).attr('href')
-          obj.type = currentTag[index - 1]
+          obj.type = currentTag[index]
           obj.title =  $(sItem).text()
-          obj.source = currentTag[index - 1]
+          obj.source = currentTag[index]
           docs.push(obj)
         })
       })
