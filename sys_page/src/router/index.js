@@ -78,8 +78,16 @@ const router = new Router({
       name: 'ToolList',
       component: () => import('@/views/tool/list'),
       meta:{
-        title: '用户编辑',
+        title: '工具列表',
         page: 'toolList'
+      }
+    }, {
+      path: '/tool/mark/:type',
+      name: 'ToolMark',
+      component: () => import('@/views/tool/mark'),
+      meta:{
+        title: '工具-书签',
+        page: 'toolMark'
       }
     }]
   }, {
