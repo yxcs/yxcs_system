@@ -1,7 +1,9 @@
 let config =  {
   port: '8808',
-  dbHost: '127.0.0.1:27017',
+  dbHost: '106.13.141.26:27017',
   dbName: 'sys',
+  dbUser: 'yxcs',
+  dbPwd: 'p@ss_4d',
   secret: 'DXkO5OulaS5E0VUM1Uypjs3eQayV38',    // jwt 秘钥
   url: {
     base: 'http://localhost:8808',
@@ -17,8 +19,10 @@ let config =  {
 if (process.env.NODE_ENV === 'production') {
   config = {
     port: '8808',
-    dbHost: '127.0.0.1:27017',
+    dbHost: '106.13.141.26:27017',
     dbName: 'sys',
+    dbUser: 'yxcs',
+    dbPwd: 'p@ss_4d',
     secret: 'DXkO5OulaS5E0VUM1Uypjs3eQayV38',
     url: {
       base: 'http://api.oyxco.com',

@@ -2,7 +2,13 @@ import mongoose from 'mongoose';
 import config from '../config';
 
 // mongodb:// + [用户名:密码@] +数据库地址[:端口] + 数据库名
-var DB_URL = 'mongodb://' + config.dbHost + '/' + config.dbName;
+var DB_URL = 'mongodb://' +
+  config.dbUser + ':' +
+  config.dbPwd +
+  '@' +
+  config.dbHost +
+  '/' +
+  config.dbName;
 
 // mongoose promise 风格 [mongoose.Promise = require('bluebird')]
 mongoose.Promise = global.Promise
