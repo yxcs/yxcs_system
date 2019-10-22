@@ -18,10 +18,7 @@ export default {
     msg: String
   },
   methods: {
-    loadMore() {
-      console.log('------------more------------')
-      console.log(this.busy)
-    }
+    loadMore() {}
   }
 }
 </script>

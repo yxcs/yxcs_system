@@ -21,7 +21,10 @@ const typeTxt = {
   6: 'github',
   7: '服务器',
   8: '文档',
-  9: '学习'
+  9: '学习',
+  10: '掘金',
+  11: 'cnodejs',
+  12: '其他'
 }
 class BookmarkView extends Component {
 

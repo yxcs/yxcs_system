@@ -119,7 +119,7 @@ class LoginPage extends Component {
                 </Form.Item>
                 <div className="button__group">
                   <Button type="primary" htmlType="submit">登录</Button>
-                  <a onClick={this.goRegister.bind(this)} href="javascript:void(0)">注册</a>
+                  {/* <a onClick={this.goRegister.bind(this)} href="javascript:void(0)">注册</a> */}
                 </div>
               </Form>
             </div>

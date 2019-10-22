@@ -14,7 +14,7 @@
           <div class="desc">
             <div class="title">{{item.title}}</div>
             <div class="source">{{item.source}}</div>
-            <div class="type">{{item.sourceType}} {{item.type}}</div>
+            <div class="type"><el-tag size="small">{{item.sourceType | sourceTxt}}</el-tag> <el-tag size="small" type="info">{{item.type | typeTxt}}</el-tag></div>
           </div>
         </div>
       </template>
@@ -32,7 +32,27 @@
 </template>
 
 <script>
-import { RadioGroup, RadioButton, Pagination } from 'element-ui'
+import { RadioGroup, RadioButton, Pagination, Tag } from 'element-ui'
+const sourceTxt = {
+  bookmark: '书签',
+  toutiao: '头条',
+  weixin: '公众号',
+  shequ: '社区'
+}
+const typeTxt = {
+  1: '面试',
+  2: '资源',
+  3: '小程序',
+  4: '微信',
+  5: '移动端',
+  6: 'github',
+  7: '服务器',
+  8: '文档',
+  9: '学习',
+  10: '掘金',
+  11: 'cnodejs',
+  12: '其他'
+}
 export default {
   name: 'ToolMark',
   data () {
@@ -67,7 +87,8 @@ export default {
   components: {
     'el-radio-group': RadioGroup,
     'el-radio-button': RadioButton,
-    Pagination
+    Pagination,
+    'el-tag': Tag
   },
   mounted () {
     const type = this.$route.params.type || ''
@@ -105,6 +126,14 @@ export default {
     },
     goto (url) {
       window.open(url)
+    }
+  },
+  filters: {
+    sourceTxt (v) {
+      return sourceTxt[v]
+    },
+    typeTxt (v) {
+      return typeTxt[v]
     }
   }
 }
@@ -165,6 +194,9 @@ export default {
   padding: 6px 0;
 }
 .mark__content--item .type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 12px;
 }
 .page {
