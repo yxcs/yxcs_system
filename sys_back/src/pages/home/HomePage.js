@@ -6,9 +6,7 @@ class HomePage extends Component {
   render () {
 
     return (
-      <div>
-        home
-      </div>
+      <div>首页</div>
     )
   }
 }
