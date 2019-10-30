@@ -29,7 +29,7 @@ const moduleAns = (filename) => {
     }
 }
 //2.依赖图谱
-const dependenciesGraph = (entry) =>{
+const dependenciesGraph = (entry) => {
     const entryModule = moduleAns(entry);
     let graphArray = [entryModule];
     for( let i=0;i<graphArray.length;i++ ){

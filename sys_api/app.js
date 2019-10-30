@@ -55,7 +55,7 @@ app
   .use(jwtKoa({
     secret: config.secret
   }).unless({
-    path: [/\/register/, /\/login/, /\/v1/],
+    path: [/\/register/, /\/login/, /\/v1/, /\/tool\/saveGooglePluginBookmarks/],
   }))
   .use(json())
 

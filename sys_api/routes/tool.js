@@ -28,5 +28,7 @@ router.post('/updateBookmark', BookmarkController.updateBook)
 router.post('/deleteBookmark', BookmarkController.deleteBook)
 router.post('/getBookmarkById', BookmarkController.getBookById)
 router.post('/getBookmarkList', BookmarkController.getBookList)
+// 获取google爬取到的书签列表
+router.post('/saveGooglePluginBookmarks', BookmarkController.saveGooglePluginBookmarks)
 
 export default router

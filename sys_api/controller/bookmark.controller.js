@@ -78,6 +78,7 @@ const icons = [
   'http://img.oyxco.com/avatarede2c0f99cff22ca66c4b971f09f55a6.jpg',
   'http://img.oyxco.com/avatareec690b7a064227dc9da6f85f85b5ea9.jpg'
 ]
+const types = ['', '面试', '资源', '小程序', '微信', '移动端', 'github', '服务器', '文档', '学习']
 class BookController {
 
   async insertBook(ctx) {
@@ -169,6 +170,31 @@ class BookController {
       data: data,
       total: count || 0,
       message: '查找成功'
+    }
+  }
+
+  async saveGooglePluginBookmarks(ctx) {
+    const { body } = ctx.request
+    console.log(body)
+    let params = body.map(item => {
+      let type = types.indexOf(item.path) > -1 || 2
+      
+      return {
+        title: item.title,
+        source: item.path,
+        linkTo: item.url,
+        coverImg: item.coverImg ? item.coverImg : icons[Math.ceil(Math.random()*75)] || '',
+        sourceType: item.path === '掘金' ? 'shequ' : 'bookmark',
+        type,
+        createAt: item.createAt
+      }
+    })
+    const books = await Book.insertMany(params)
+    ctx.status = 200;
+    ctx.body = {
+      message: `插入${books.length}成功`,
+      data: 1,
+      status: 200
     }
   }
 
