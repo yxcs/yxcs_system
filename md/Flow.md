@@ -46,6 +46,8 @@
 1. 原理和应用
 2. flow
 
+## Svelte
+
 ## English
 
 ## npm插件开发
