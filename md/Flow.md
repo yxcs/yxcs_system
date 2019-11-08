@@ -5,7 +5,7 @@
 1. webpack 实现原理
 2. webpack 简单实现 my-webpack
 3. weboack loader 原理和实现
-4. webpack使用实例：vue开发搭建  
+4. webpack使用实例：vue开发搭建
 
 ## babel学习
 
@@ -26,6 +26,14 @@
 抽象语法树（abstract syntax tree或者缩写为AST），或者语法树（syntax tree），是源代码的抽象语法结构的树状表现形式，这里特指编程语言的源代码。
 和抽象语法树相对的是具体语法树（concrete syntaxtree），通常称作分析树（parse tree）。
 一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树。一旦AST被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。
+
+## 微前端
+
+1. https://www.jianshu.com/p/41ab812df9e7
+2. https://tech.meituan.com/2018/09/06/fe-tiny-spa.html
+3. https://yq.aliyun.com/articles/715922?spm=a2c4e.11153940.0.0.5d5e58d8WkunqN&type=2
+
+## web componments
 
 ## PWA
 
