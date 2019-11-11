@@ -75,7 +75,8 @@ class BlogAdd extends Component {
       source: '1',
       subTypeList: [],
       markValue: '',
-      coverImg: ''
+      coverImg: '',
+      coverImgType: 'upload'
     }
   }
 
@@ -90,6 +91,12 @@ class BlogAdd extends Component {
   onTitleChange = (v) => {
     this.setState({
       title: v.target.value
+    })
+  }
+
+  onCoverImageChange = (v) => {
+    this.setState({
+      coverImg: v.target.value
     })
   }
 
@@ -184,9 +191,14 @@ class BlogAdd extends Component {
     this.props.history.goBack()
   }
 
+  onUploadTypeChange = (v) => {
+    const coverImgType = v.target.value
+    this.setState({ coverImgType })
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form;
-    const { subTypeList, coverImg } = this.state;
+    const { subTypeList, coverImg, coverImgType } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -210,7 +222,6 @@ class BlogAdd extends Component {
         },
       },
     };
-
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -252,7 +263,7 @@ class BlogAdd extends Component {
               )}
             </Form.Item>
             <Form.Item label="摘要">
-             {getFieldDecorator('abstract', {
+              {getFieldDecorator('abstract', {
                 rules: [{
                   required: true, message: '请添加摘要'
                 }]
@@ -261,7 +272,7 @@ class BlogAdd extends Component {
               )}
             </Form.Item>
             <Form.Item label="标签">
-             {getFieldDecorator('subType', {
+              {getFieldDecorator('subType', {
                 rules: [{
                   required: true, message: '请添加标签',
                 }]
@@ -291,28 +302,48 @@ class BlogAdd extends Component {
                 </Radio.Group>
               )}
             </Form.Item>
+            <Form.Item label="封面类型">
+              <Radio.Group onChange={this.onUploadTypeChange} value={this.state.coverImgType}>
+                <Radio.Button value="upload">上传七牛</Radio.Button>
+                <Radio.Button value="url">填写URL</Radio.Button>
+              </Radio.Group>
+            </Form.Item>
             <Form.Item label="封面图片">
-              <div className="coverImg">
-                {getFieldDecorator('coverImg', {
-                  rules: [{
-                    required: true, message: '请上传封面图'
-                  }],
-                  valuePropName: 'fileList',
-                  getValueFromEvent: this.normFile,
-                })(
-                  <Upload
-                    name="file"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action={`${config.static_url}/qiniu`}
-                    beforeUpload={this.beforeUpload}
-                    onChange={this.handleChange}
-                  >
-                    {coverImg ? <img src={coverImg} alt="avatar" /> : uploadButton}
-                  </Upload>
-                )}
-              </div>
+              {
+                coverImgType === 'upload' ? (
+                  <div className="coverImg">
+                    {getFieldDecorator('coverImg', {
+                      rules: [{
+                        required: true, message: '请上传封面图'
+                      }],
+                      valuePropName: 'fileList',
+                      getValueFromEvent: this.normFile,
+                    })(
+                      <Upload
+                        name="file"
+                        listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        action={`${config.static_url}/qiniu`}
+                        beforeUpload={this.beforeUpload}
+                        onChange={this.handleChange}
+                      >
+                        {coverImg ? <img src={coverImg} alt="avatar" /> : uploadButton}
+                      </Upload>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    {getFieldDecorator('coverImg', {
+                      rules: [{
+                        required: true, message: '请填写封面图URl'
+                      }]
+                    })(
+                      <Input onChange={this.onCoverImageChange.bind(this)} placeholder="请填写封面图URl" />
+                    )}
+                  </div>
+                )
+              }
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               {getFieldDecorator('draft', {

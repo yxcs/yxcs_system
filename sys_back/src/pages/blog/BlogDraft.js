@@ -102,7 +102,7 @@ class BlogDraft extends Component {
       this.getDrafList();
     })
   }
-  
+
   render () {
     const { pager } = this.state;
     const columns = [

@@ -155,7 +155,7 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
 
     打开 http://localhost:8081，或者使用服务器公网IP，看到一下页面：
 
-    ![jenkins安装后首页](./jenkins/jenkins_home_pic.png)  
+    ![jenkins安装后首页](http://img.oyxco.com/blog/jenkins/jenkins_home_pic.png)  
 
     然后进入容器内容：
 
@@ -172,20 +172,20 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
     将得到的密码粘贴到管理员密码输入框中，点击继续。  
     看到如下页面，选择【安装推荐的插件】  
 
-    ![安装推荐的插件](./jenkins/jenkins_plugins_select.png) 
+    ![安装推荐的插件](http://img.oyxco.com/blog/jenkins/jenkins_plugins_select.png) 
 
     之后跳到插件安装进程的页面，插件安装需要等一段时间，这个时候就耐心等待就好了。  
     插件安装成功之后，跳到创建管理员页面，可以创建，也可以继续使用之前，复制的那个超长的密码，个人建议创建一个新管理员用户。 
 
-    ![创建新的管理员](./jenkins/jenkins_admin_create.png) 
+    ![创建新的管理员](http://img.oyxco.com/blog/jenkins/jenkins_admin_create.png) 
 
     继续下一步，跳到实例配置页面
 
-    ![实例配置页面](./jenkins/jenkins_example.png)
+    ![实例配置页面](http://img.oyxco.com/blog/jenkins/jenkins_example.png)
 
     一切准备就绪，我们可以进到jenkins的正式页面了  
     
-    ![jenkins欢迎页面](./jenkins/jenkins_weclome.png)
+    ![jenkins欢迎页面](http://img.oyxco.com/blog/jenkins/jenkins_weclome.png)
 
 ## Jenkins 配置 Vue 自动化
 
@@ -195,15 +195,15 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
 
 1. 点击系统管理 -> 插件管理(Manage Plugins) -> 搜索Publish Over SSH,并安装
 
-    ![系统配置](./jenkins/jenkins_vue_1.png)
+    ![系统配置](http://img.oyxco.com/blog/jenkins/jenkins_vue_1.png)
 
-    ![插件管理](./jenkins/jenkins_vue_2.png)
+    ![插件管理](http://img.oyxco.com/blog/jenkins/jenkins_vue_2.png)
 
 2. 配置ssh
 
     系统管理 -> 系统设置[configure system] -> 拉到最下面
 
-    ![插件管理](./jenkins/jenkins_ssh_setting.png)
+    ![插件管理](http://img.oyxco.com/blog/jenkins/jenkins_ssh_setting.png)
 
     配置好之后，点击右下方的 [Test Configuration]，测试是否成功。这里指定构建好之后的vue项目发送到远程服务器的地址，当然需要在创建任务时进行相应的脚本配置
 
@@ -211,7 +211,7 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
 
 1.  点击系统管理 -> 插件管理(Manage Plugins) -> Nodejs,并安装
 
-    ![插件管理](./jenkins/jenkins_node_plugin.png)
+    ![插件管理](http://img.oyxco.com/blog/jenkins/jenkins_node_plugin.png)
 
 2. 配置node
 
@@ -219,7 +219,7 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
 
     配置node名称和选择node版本  
 
-    ![配置node](./jenkins/jenkins_node.png)
+    ![配置node](http://img.oyxco.com/blog/jenkins/jenkins_node.png)
 
 
 ### Vue项目创建
@@ -230,21 +230,21 @@ docker run --name jenkins_node -d -v /var/jenkins_node:/var/jenkins_home -p 8081
 
 ### Vue任务创建
 
-![创建任务](./jenkins/jenkins_create_vue_task.png)
+![创建任务](http://img.oyxco.com/blog/jenkins/jenkins_create_vue_task.png)
 
-![选择创建类型](./jenkins/jenkins_vue_task_select.png)
+![选择创建类型](http://img.oyxco.com/blog/jenkins/jenkins_vue_task_select.png)
 
-![设置github地址](./jenkins/jenkins_vue_github.png)
+![设置github地址](http://img.oyxco.com/blog/jenkins/jenkins_vue_github.png)
 
-![设置node](./jenkins/jenkins_vue_node.png)
+![设置node](http://img.oyxco.com/blog/jenkins/jenkins_vue_node.png)
 
-![设置jenkins的运行脚本，打包](./jenkins/jenkisn_vue_shell.png)
+![设置jenkins的运行脚本，打包](http://img.oyxco.com/blog/jenkins/jenkisn_vue_shell.png)
 
-![打包后在远程服务器进行目录构建](./jenkins/jenkins_vue_build_tar.png)
+![打包后在远程服务器进行目录构建](http://img.oyxco.com/blog/jenkins/jenkins_vue_build_tar.png)
 
 ### 执行构建
 
-![执行构建](./jenkins/jenkins_building.png)
+![执行构建](http://img.oyxco.com/blog/jenkins/jenkins_building.png)
 
 这时就可以在远程服务器看到对应的打包之后解压出来的文件了，在配置相应的nginx，就可以运行vue构建的网站了
 
@@ -270,28 +270,28 @@ docker run -d --name=gitea -p 10022:22 -p 3000:3000 -v /var/lib/gitea:/data gite
 
 打开gitea网站进行配置，打开http://localhost:3000，点击注册或者登录，进行配置
 
-![gitea登录](./jenkins/jenkins_gitea_login.png)
+![gitea登录](http://img.oyxco.com/blog/jenkins/jenkins_gitea_login.png)
 
 第 1 步：选择 MySQL 数据库  
 第 2 步：填入 MySQL 数据库容器的名称（container_name）  
 第 3 步：填入数据库用户密码（此处设置密码为：gitea，您可以根据自己需要设置）  
 
-![gitea配置](./jenkins/jenkins_gitea_setting.webp)
+![gitea配置](http://img.oyxco.com/blog/jenkins/jenkins_gitea_setting.webp)
 
 第 4 步：填入宿主机的域名或IP地址  
 第 5 步：填入Gitea网站的访问地址和端口  
 
-![gitea ssh 配置](./jenkins/jenkins_gitea_ssh.webp)
+![gitea ssh 配置](http://img.oyxco.com/blog/jenkins/jenkins_gitea_ssh.webp)
 
 第 6 步：配置管理员账号
 
-![配置管理员账号](./jenkins/jenkis_gitea_account.webp)
+![配置管理员账号](http://img.oyxco.com/blog/jenkins/jenkis_gitea_account.webp)
 
 之后创建仓库，并且向仓库里推送代码
 
-![创建仓库](./jenkins/jenkins_gitea_create_code.png)
+![创建仓库](http://img.oyxco.com/blog/jenkins/jenkins_gitea_create_code.png)
 
-![代码推送](./jenkins/jenkins_gitea_code_push.png)
+![代码推送](http://img.oyxco.com/blog/jenkins/jenkins_gitea_code_push.png)
 
 ## 线上体验地址
 
