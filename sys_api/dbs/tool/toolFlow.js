@@ -24,11 +24,11 @@ const ToolFlowSchema = new Schema({
   }
 });
 
-/** 
+/**
  * list default
   {
-   "remarks" : [],
-    "explain" : [ 
+  "remarks" : [],
+    "explain" : [
         "提出问题"
     ],
     "operate" : [],
