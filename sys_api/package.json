@@ -42,7 +42,7 @@
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
     "koa2-cors": "^2.0.6",
-    "mongoose": "^4.4.3",
+    "mongoose": "^5.7.7",
     "nodemon": "^1.8.1",
     "should": "^11.1.2",
     "supertest": "^4.0.2"
